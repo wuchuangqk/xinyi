@@ -1,0 +1,63 @@
+.un-read {
+	position: relative;
+
+	&::before {
+		content: '';
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background-color: red;
+		position: absolute;
+		left: -9px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+.has-read {
+	color: gray;
+}
+
+.card-title {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+
+	.left {
+		color: #b1b1b1;
+	}
+}
+
+.list-item {
+	border-bottom: 1px solid #f1f1f1;
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+
+	&:last-of-type {
+		border-bottom: none;
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
+
+	.top {
+		display: flex;
+		justify-content: space-between;
+		font-size: 15px;
+
+		.item-title {
+			flex: 1;
+		}
+
+		.state {
+			flex-shrink: 0;
+		}
+	}
+
+	.bottom {
+		color: #adadad;
+		font-size: 13px;
+		margin-top: 10px;
+		display: flex;
+		justify-content: space-between;
+	}
+}

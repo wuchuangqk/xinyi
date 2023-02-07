@@ -1,0 +1,31 @@
+.state {
+	display: inline-block;
+	height: 22px;
+	padding: 0 5px;
+	line-height: 22px;
+	font-size: 12px;
+	border-radius: 4px;
+	box-sizing: border-box;
+	white-space: nowrap;
+	margin-left: 5px;
+	&.success {
+		background-color: #f0f9eb;
+		border-color: #e1f3d8;
+		color: #67c23a;
+	}
+	&.danger {
+		background-color: #fef0f0;
+		border-color: #fde2e2;
+		color: #f56c6c;
+	}
+	&.primary {
+		color: #409eff;
+		border: 1px solid #d9ecff;
+		background-color: #ecf5ff;
+	}
+	&.info {
+		background-color: #f4f4f5;
+		border-color: #e9e9eb;
+		color: #909399;
+	}
+}

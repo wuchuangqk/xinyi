@@ -1,0 +1,47 @@
+<template>
+	<div>
+		<map style="width: 100%; height: 600rpx;" :latitude="latitude" :longitude="longitude" :circles="circles">
+		</map>
+	</div>
+</template>
+
+<script>
+	import {
+		getOne
+	} from '../../api/system/attendance.js'
+	export default {
+		data() {
+			return {
+				id: 0, // 使用 marker点击事件 需要填写id
+				title: 'map',
+				latitude: 39.909,
+				longitude: 116.39742,
+				circles: {
+					latitude: 39.909,
+					longitude: 116.39742,
+					radius: 1,
+					color: '#ff0000',
+					strokeWidth: 1
+				}
+			}
+		},
+		created() {
+			getOne().then(res => {
+				const {
+					longitude,
+					latitude,
+					maxRange
+				} = res
+				this.latitude = latitude
+				this.longitude = longitude
+				this.circles.latitude = latitude
+				this.circles.longitude = longitude
+				this.circles.radius = maxRange
+			})
+		}
+	}
+</script>
+
+<style>
+
+</style>

@@ -1,0 +1,38 @@
+.app-tab-bar {
+  position: fixed;
+  display: flex;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #dadada;
+  height: 50px;
+  background-color: white;
+  z-index: 99;
+
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #a5a5a7;
+
+    &.active {
+
+      .tab-name,
+      .tab-icon {
+        color: #1989fa;
+      }
+    }
+  }
+
+  .tab-icon {
+    font-size: 24px;
+  }
+
+  .tab-name {
+    color: rgb(153, 153, 153);
+    font-size: 10px;
+    margin-top: 3px;
+  }
+}
