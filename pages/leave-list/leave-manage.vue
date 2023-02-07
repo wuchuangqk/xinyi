@@ -153,56 +153,11 @@ export default {
 		};
 	},
 	onLoad() {
-		const userId = uni.getStorageSync(this.$const.USER_INFO).userId;
-		// 设置菜单权限
-		this.tabItems = this.tabItems.filter(v => this.$hasPermission(v.permissionKey, this.$const.OA_PERMISSION));
-		for (let i = 0; i < this.tabItems.length; i++) {
-			const item = {
-				dataList: [], // 数据列表
-				isLoadAll: false, // 是否已加载全部数据
-				more: 'more', // laodmore状态
-				isLoadingMore: false, // 是否正在请求下一页数据
-				showSearch: false,
-				searchParams: {
-					pageIndex: 1,
-					pageSize: 10,
-					userId,
-					qjleaveType: '', // 请假类型
-					creatorName: '', // 申请人
-				}, // 搜索条件
-				queryMethod: this.tabItems[i].queryMethod,
-				moduleKey: this.tabItems[i].permissionKey
-			};
-			if (this.tabItems[i].permissionKey === 'FlowManagerMonitoring') {
-				item.searchParams.userId = this.$hasPermission('qing_jia_monitor_permission', this.$const.OA_PERMISSION) ? null : userId;
-			}
-			this.modules.push(item);
-		}
+		const userId = uni.getStorageSync(this.$const.USER_INFO).id;
 		this.fetchData();
-		// 监听阅读状态更新事件
-		uni.$on(this.$events.UPDATE_LEAVE_STATE, () => {
-			const module = this.modules[this.activeTabIndex];
-			// 更新列表数据时，要保证和之前的数据个数一致
-			module.searchParams.pageSize *= module.searchParams.pageIndex;
-			module.searchParams.pageIndex = 1;
-			module.isLoadAll = false;
-			module.dataList.length = 0;
-			this.fetchData();
-			module.searchParams.pageSize = 10;
-		});
-		// 获取请假类型
-		getLeaveType().then(res => {
-			this.leaveTypeList = res.map((v, index) => {
-				return {
-					label: v.pname,
-					value: v.pid
-				};
-			});
-			this.leaveTypeList.unshift({
-				label: '请选择',
-				value: ''
-			})
-		});
+	},
+	onShow() {
+		
 	},
 	onPullDownRefresh() {
 		this.pulling = true;

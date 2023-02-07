@@ -1,4 +1,7 @@
 {
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
 	"pages": [
 		{
 			"path": "pages/tabbar/tabbar1",
@@ -314,10 +317,10 @@
 			}
 
 		}, {
-			"path": "pages/leave-list/leave-manage",
+			"path": "pages/leave-list/list",
 			"style": {
-				"navigationBarTitleText": "请假调休",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "请假管理",
+				"enablePullDownRefresh": false
 			}
 		}, {
 			"path": "pages/user-info/modify-ohoto",
@@ -547,18 +550,19 @@
 				"navigationBarTitleText": "进场交底",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/office/leave-office-confirm",
+		}, 
+		{
+			"path": "pages/jiaban/list",
 			"style": {
-				"navigationBarTitleText": "离职单确认",
+				"navigationBarTitleText": "加班管理",
 				"enablePullDownRefresh": false
 			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#FFFFFF",
-		"backgroundColor": "#FFFFFF"
+		"navigationBarBackgroundColor": "#3880ff",
+		"backgroundColor": "#f2f2f2"
 	}
 }

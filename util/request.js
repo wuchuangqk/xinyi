@@ -1,5 +1,4 @@
 import sryptoJs from 'crypto-js';
-import axios from 'axios'
 import { storageKeys } from './constants.js'
 
 const SECERET_KEY = 'com.8bpm.yuansong.keys.2020.05.89' // 加密参数
@@ -40,7 +39,7 @@ const sortParams = (params) => {
   });
 
   let finalStr = '';
-  length = keys.length;
+  let length = keys.length;
   let i = 0;
   for (const key of keys) {
     const value = encodeURIComponent(params[key]);
@@ -59,7 +58,7 @@ const sortParams = (params) => {
  * @param {*} data 
  * @returns 
  */
-const doGet = (url, data) => {
+export const doGet = (url, data = {}) => {
   return new Promise((resolved, rejected) => {
     const token = uni.getStorageSync(storageKeys.TOKEN)
     if (token) {
@@ -67,45 +66,31 @@ const doGet = (url, data) => {
     }
     data.timestamp = new Date().getTime() + ''
     const queryString = '?' + sortAndEncrypt(data, SECERET_KEY)
-		uni.request({
-			url: BASE_URL + url + queryString,
-			method: 'GET',
-			success: (res) => {
-        resolved(res)
-				// const {
-				// 	data,
-				// 	statusCode
-				// } = res
-				// if (statusCode === 500) {
-				// 	rejected(data)
-				// } else if (statusCode === 401) {
-				// 	uni.setStorageSync(storageKeys.IS_LOGIN, false); // 存储登录状态为未登录
-				// 	uni.reLaunch({
-				// 		url: '/pages/login/login'
-				// 	});
-				// 	uni.showToast({
-				// 		title: '您的登录已过期，请重新登录',
-				// 		icon: 'none'
-				// 	})
-				// 	rejected(data)
-				// } else {
-				// 	resolved(data);
-				// }
-			},
-			fail: (err) => {
-				rejected(err)
-			}
-		})
-	})
+    uni.request({
+      url: BASE_URL + url + queryString,
+      method: 'GET',
+      success: (res) => {
+        if (res.data.status_code === '200') {
+          resolved(res.data)
+        } else {
+          handleError(res.data, rejected)
+        }
+      },
+      fail: (err) => {
+        rejected(err)
+      }
+    })
+  })
 }
 
 /**
  * Post请求，使用ajax传formData
  * @param {*} url 接口路径，以“/”开头
  * @param {*} data 
+ * @param {*} axios
  * @param {*} files 文件
  */
-const doPost = (url, data, files = []) => {
+export const doPost = (url, data, axios, files = []) => {
   const token = uni.getStorageSync(storageKeys.TOKEN)
   if (token) {
     data.access_token = token
@@ -122,7 +107,7 @@ const doPost = (url, data, files = []) => {
   for (const i in data) {
     formData.append(i, encodeURIComponent(data[i]));
   }
-
+  console.log(files)
   files.forEach(file => {
     formData.append('file', file.file);
   })
@@ -130,7 +115,22 @@ const doPost = (url, data, files = []) => {
   return axios.post(BASE_URL + url, formData)
 }
 
-export default {
-  doGet,
-  doPost
+const handleError = (res, rejected) => {
+  switch (res.status_code) {
+    // 授权已过期
+    case '30000':
+      uni.showToast({
+        title: res.msg,
+        icon: 'none'
+      });
+      uni.setStorageSync(storageKeys.IS_LOGIN, 0)
+      uni.removeStorageSync(storageKeys.TOKEN)
+      uni.removeStorageSync(storageKeys.USER_INFO)
+      uni.reLaunch({
+        url: '/pages/login/login'
+      });
+      break
+    default:
+      rejected(res)
+  }
 }

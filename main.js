@@ -5,6 +5,10 @@ import {storageKeys, events} from './util/constants.js'
 import dayjs from 'dayjs'
 import {hasPermission} from '@/util/index.js'
 import { doGet, doPost } from '@/util/request'
+import ListTabbar from '@/components/list-tabbar'
+import FloatButton from '@/components/float-button'
+import PageEmpty from '@/components/page-empty'
+import uView from 'uview-ui';
 
 Vue.config.productionTip = false
 Vue.prototype.$store = store // 挂载vuex
@@ -20,4 +24,8 @@ const app = new Vue({
 	store,
 	...App
 })
+Vue.use(uView);
+Vue.component('list-tabbar', ListTabbar)
+Vue.component('float-button', FloatButton)
+Vue.component('page-empty', PageEmpty)
 app.$mount()

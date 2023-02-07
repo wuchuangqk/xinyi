@@ -1,8 +1,8 @@
 {
-    "name" : "永景工务",
-    "appid" : "__UNI__C102720",
+    "name" : "新沂城投",
+    "appid" : "__UNI__89DA8A7",
     "description" : "",
-    "versionName" : "1.9.1",
+    "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {
@@ -10,7 +10,7 @@
             "ignoreVersion" : true
         },
         "splashscreen" : {
-            "alwaysShowBeforeRender" : false,
+            "alwaysShowBeforeRender" : true,
             "waiting" : false,
             "autoclose" : false,
             "delay" : 0
@@ -19,9 +19,9 @@
         "compilerVersion" : 3,
         "modules" : {
             "UIWebview" : {},
-            "Push" : {},
             "Maps" : {},
-            "Messaging" : {}
+            "Messaging" : {},
+            "Camera" : {}
         },
         "distribute" : {
             "android" : {
@@ -58,12 +58,11 @@
                 ],
                 "abiFilters" : [ "armeabi-v7a", "x86" ]
             },
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             "sdkConfigs" : {
                 "ad" : {},
-                "push" : {
-                    "unipush" : {}
-                },
                 "speech" : {
                     "ifly" : {}
                 },

@@ -127,16 +127,17 @@ export default {
 				packagename: 'com.bnp.yuansong',
 				uuid: '1232333',
 			}).then((res) => {
+				this.submitLoading = false;
 				uni.setStorageSync(this.$const.TOKEN, res.data.access_token)
 				uni.setStorageSync(this.$const.USER_INFO, JSON.stringify(res.data))
 				uni.setStorageSync(this.$const.USER_STATUS, 1); // 存储用户状态(2:审核中)
-				uni.navigateTo({
-					url: '/pages/index/index'
+				uni.redirectTo({
+					 url: '/pages/tabbar/tabbar1'
 				});
 			}).catch(err => {
 				this.submitLoading = false;
 				uni.showToast({
-					title: err.message,
+					title: err.msg,
 					icon: 'none'
 				});
 			});
