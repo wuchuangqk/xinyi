@@ -5,6 +5,12 @@
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" :labelWidth="70" :border="true" class="form">
 					<view class="card">
 						<uni-forms-item style="border-top: none;" label="请假类型" name="leaveType">
+							<text @click="selectUser">
+								{{ selectedUsers.map(v => v.displayname).join('，') }}
+								请选择
+							</text>
+						</uni-forms-item>
+						<uni-forms-item style="border-top: none;" label="请假类型" name="leaveType">
 							<app-select v-if="qjtypeOptions.length" v-model="formData.leaveType" :selectData="qjtypeOptions" />
 						</uni-forms-item>
 						<uni-forms-item style="border-top: 1px #eee solid;" label="开始时间" name="qjstime">
@@ -15,8 +21,12 @@
 							<uni-datetime-picker type="datetime" v-model="formData.qjetime" :border="false"
 								:showClear="false"></uni-datetime-picker>
 						</uni-forms-item>
-						<uni-forms-item label="请假原因" name="qjyy" :required="true">
-							<uni-easyinput type="textarea" autoHeight v-model="formData.qjyy" placeholder="请输入请假原因"
+						<uni-forms-item label="加班事由" name="qjyy" :required="true">
+							<uni-easyinput type="textarea" autoHeight v-model="formData.qjyy" placeholder="请输入加班事由"
+								:inputBorder="false" />
+						</uni-forms-item>
+						<uni-forms-item label="加班工作内容" name="qjyy" :required="true" :label-width="100">
+							<uni-easyinput type="textarea" autoHeight v-model="formData.content" placeholder="请输入加班工作内容"
 								:inputBorder="false" />
 						</uni-forms-item>
 					</view>
@@ -29,14 +39,6 @@
 					<view class="card">
 						<view class="card-title" style="margin-bottom: 20px;">
 							<view class="left"><text>审批人</text></view>
-						</view>
-						<view class="time-line">
-							<view class="state"></view>
-							<view class="content">
-								<text class="label">部门领导审批：</text>
-								<app-select v-if="signCreator1Options.length" v-model="formData.signCreator1"
-									:selectData="signCreator1Options"></app-select>
-							</view>
 						</view>
 						<view class="time-line">
 							<view class="state"></view>
@@ -82,16 +84,17 @@ export default {
 		return {
 			formData: {
 				qjtype: '', // 请假类型
-				signCreator1: '', // 部门领导审批
+				signCreator1: '',
 				signCreator2: '', // 分管领导审批
 				signCreator3: '', // 总经理审批
-				signCreator4: '', // 人事部意见
+				signCreator4: '', // 监察室
 				qjstime: '', // 请假开始时间
 				qjetime: '', // 请假结束时间
 				qjyy: '', // 请假事由
+				userid: '', // 申请人
+				content: '', // 加班工作内容
 			},
 			qjtypeOptions: [],
-			signCreator1Options: [],
 			signCreator2Options: [],
 			signCreator3Options: [],
 			signCreator4Options: [],
@@ -141,34 +144,26 @@ export default {
 				}
 			},
 			submitLoading: false,
+			selectedUsers: [],
 		};
 	},
-	computed: {
-		dateArr: {
-			set(newVal) {
-				if (newVal) {
-					this.formData.approvalSTime = newVal[0];
-					this.formData.approvalETime = newVal[1];
-				} else {
-					this.formData.approvalSTime = '';
-					this.formData.approvalETime = '';
-				}
-			},
-			get() {
-				return [this.formData.approvalSTime, this.formData.approvalETime];
-			}
-		}
+	onShow() {
+		// 读取选择的用户
+		this.selectedUsers = this.$store.state.selectedUsers
+	},
+	onUnload() {
+		this.$store.dispatch('selectedUsers', [])
 	},
 	onReady() {
 		const fmtOptions = (arr) => {
 			return (arr || []).map(val => {
 				return {
-					label: val.DisplayName,
-					value: val.UserID,
+					label: val.displayname,
+					value: val.userid,
 				}
 			})
 		}
-		this.doGet('/qingjia/qjtype').then(res => {
+		this.doGet('/jiaban/qjtype').then(res => {
 			this.qjtypeOptions = res.data.map(val => {
 				return {
 					label: val.name,
@@ -179,25 +174,19 @@ export default {
 				this.formData.qjtype = this.qjtypeOptions[0].value
 			}
 		})
-		this.doGet("/qingjia/signCreator1").then((res) => {
-			this.signCreator1Options = fmtOptions(res.data)
-			if (this.signCreator1Options.length > 0) {
-				this.formData.signCreator1 = this.signCreator1Options[0].value;
-			}
-		});
-		this.doGet("/qingjia/signCreator2").then((res) => {
+		this.doGet("/jiaban/signFunuser").then((res) => {
 			this.signCreator2Options = fmtOptions(res.data)
 			if (this.signCreator2Options.length > 0) {
 				this.formData.signCreator2 = this.signCreator2Options[0].value;
 			}
 		});
-		this.doGet("/qingjia/signCreator3").then((res) => {
-			this.signCreator3Options = fmtOptions(res.data)
-			if (this.signCreator3Options.length > 0) {
-				this.formData.signCreator3 = this.signCreator3Options[0].value;
-			}
-		});
-		this.doGet("/qingjia/signCreator4").then((res) => {
+		// this.doGet("/jiaban/signPostuser").then((res) => {
+		// 	this.signCreator3Options = fmtOptions(res.data)
+		// 	if (this.signCreator3Options.length > 0) {
+		// 		this.formData.signCreator3 = this.signCreator3Options[0].value;
+		// 	}
+		// });
+		this.doGet("/jiaban/signJianuser").then((res) => {
 			this.signCreator4Options = fmtOptions(res.data);
 			if (this.signCreator4Options.length > 0) {
 				this.formData.signCreator4 = this.signCreator4Options[0].value;
@@ -215,9 +204,8 @@ export default {
 				uni.showLoading({
 					title: '正在提交',
 				});
-				delete this.formData.signCreator1
-				delete this.formData.signCreator3
-				this.renderModule.post(this.formData, this.files)
+				this.formData.userid = this.selectedUsers.map(val => val.userid).join(',')
+				this.renderModule.post(this.formData)
 			});
 		},
 		callback(success, res) {
@@ -235,6 +223,11 @@ export default {
 		upload(files) {
 			this.files = files;
 		},
+		selectUser() {
+			uni.navigateTo({
+				url: '/pages/jiaban/select-user'
+			});
+		}
 	}
 };
 </script>
@@ -243,7 +236,7 @@ import axios from 'axios'
 export default {
   methods: {
     post(data, files) {
-      this.doPost('/qingjia/qingjia_add', data, axios, files).then(res => {
+      this.doPost('/jiaban/jiaban_add', data, axios, files).then(res => {
 				this.callback(true)
       }).catch(err => {
 				this.callback(false, err.response)

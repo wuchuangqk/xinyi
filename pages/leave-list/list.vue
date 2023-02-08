@@ -1,7 +1,7 @@
 <template>
   <view class="app-page">
     <view class="page-main">
-      <scroll-view scroll-y style="height: 100%;" @scrolltolower="nextPage">
+      <scroll-view v-if="listData.length" scroll-y style="height: 100%;" @scrolltolower="nextPage">
         <view class="list-wrap">
           <view v-for="item in listData" :key="item.id" class="app-list-item">
             <view class="item-title">
@@ -27,6 +27,7 @@
           </view>
         </view>
       </scroll-view>
+      <page-empty v-else />
     </view>
     <list-tabbar :tab-items="tabItems" @change="changeTab" />
     <float-button @click="navAdd" />

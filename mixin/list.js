@@ -36,7 +36,6 @@ const listMixin = {
         mask: false
       });
       this.doGet(this.pathList[this.activeTabIndex], this.params).then(res => {
-        console.log(res);
         this.listData = this.listData.concat(res.data)
         this.hasnext = res.hasnext
         uni.hideLoading();

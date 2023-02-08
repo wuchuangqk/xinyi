@@ -3,36 +3,16 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
-		pushMessage: '',
-		cid: '',
-		userInfo: {}
+		selectedUsers: [], // 加班申请选择的用户
 	},
 	mutations: {
-		SET_PUSH_MESSAGE: (state, pushMessage) => {
-			state.pushMessage = pushMessage
-		},
-		SET_CID: (state, cid) => {
-			state.cid = cid
-		},
-		SET_USER_INFO: (state, userInfo) => {
-			state.userInfo = userInfo
+		selectedUsers(state, val) {
+			state.selectedUsers = val
 		}
 	},
 	actions: {
-		setPushMessage({
-			commit
-		}, pushMessage) {
-			commit('SET_PUSH_MESSAGE', pushMessage)
-		},
-		setCID({
-			commit
-		}, cid) {
-			commit('SET_CID', cid)
-		},
-		setUserInfo({
-			commit
-		}, userInfo) {
-			commit('SET_USER_INFO', userInfo)
+		selectedUsers({ commit }, val) {
+			commit('selectedUsers', val)
 		}
 	}
 })

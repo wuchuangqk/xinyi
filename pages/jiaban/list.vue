@@ -44,11 +44,14 @@ export default {
     }
   },
   onShow() {
+    this.listData = []
     this.fetchData()
   },
   methods: {
     navAdd() {
-      console.log(1)
+      uni.navigateTo({
+         url: '/pages/jiaban/form'
+      });
     }
   }
 }

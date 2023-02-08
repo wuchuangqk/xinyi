@@ -557,6 +557,20 @@
 				"navigationBarTitleText": "加班管理",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/jiaban/form",
+			"style": {
+				"navigationBarTitleText": "加班申请",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/jiaban/select-user",
+			"style": {
+				"navigationBarTitleText": "选择用户",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
