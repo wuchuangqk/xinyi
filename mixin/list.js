@@ -64,6 +64,7 @@ const listMixin = {
      */
     search() {
       this.params.pageindex = 1
+      this.listData = []
       this.fetchData()
     },
     /**

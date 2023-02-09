@@ -107,7 +107,6 @@ export const doPost = (url, data, axios, files = []) => {
   for (const i in data) {
     formData.append(i, encodeURIComponent(data[i]));
   }
-  console.log(files)
   files.forEach(file => {
     formData.append('file', file.file);
   })

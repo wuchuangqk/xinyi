@@ -22,7 +22,7 @@
 
 <script>
 import IconFont from '@/components/icon-font.vue';
-import { getTodoWork, getTodoRead } from '@/api/core/notification.js';
+// import { getTodoWork, getTodoRead } from '@/api/core/notification.js';
 export default {
 	components: {
 		IconFont

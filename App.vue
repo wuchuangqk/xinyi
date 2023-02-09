@@ -106,7 +106,11 @@ page {
   padding: 20rpx 14rpx;
   background: #ffffff;
   border-radius: 10rpx;
-  margin-top: 16rpx;
+  margin-bottom: 16rpx;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 
   .primary {
     color: #f3603f;
@@ -135,5 +139,11 @@ page {
       margin-right: 20rpx;
     }
   }
+}
+
+.list-search-wrap {
+  background-color: white;
+  padding: 5px;
+  margin-bottom: 8px;
 }
 </style>

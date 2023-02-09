@@ -45,7 +45,7 @@
 
 <script>
 import dayjs from 'dayjs';
-import { getListByMonth } from '@/api/core/schedule.js';
+// import { getListByMonth } from '@/api/core/schedule.js';
 export default {
 	props: {
 		// 日历类型：周模式(week)和月模式(month)

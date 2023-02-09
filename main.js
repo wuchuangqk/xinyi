@@ -9,6 +9,7 @@ import ListTabbar from '@/components/list-tabbar'
 import FloatButton from '@/components/float-button'
 import PageEmpty from '@/components/page-empty'
 import uView from 'uview-ui';
+import FileUploader from '@/components/file-uploader.vue';
 
 Vue.config.productionTip = false
 Vue.prototype.$store = store // 挂载vuex
@@ -28,4 +29,5 @@ Vue.use(uView);
 Vue.component('list-tabbar', ListTabbar)
 Vue.component('float-button', FloatButton)
 Vue.component('page-empty', PageEmpty)
+Vue.component('file-uploader', FileUploader)
 app.$mount()

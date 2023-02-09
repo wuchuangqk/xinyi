@@ -72,7 +72,7 @@
 
 <script>
 import AppSelect from '@/components/app-select.vue';
-import { getTodoWork, getTodoRead } from '@/api/core/notification.js';
+// import { getTodoWork, getTodoRead } from '@/api/core/notification.js';
 import todo from '@/mixin/todo.js'
 export default {
 	mixins:[todo],

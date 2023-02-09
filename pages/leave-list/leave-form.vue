@@ -74,7 +74,7 @@
 
 <script>
 import AppSelect from '@/components/app-select.vue';
-import FileViewer from '@/components/file-viewer.vue';
+import FileViewer from '@/components/file-uploader.vue';
 
 export default {
 	components: { AppSelect, FileViewer },

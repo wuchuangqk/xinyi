@@ -66,7 +66,7 @@
 import ScheduleWeek from '@/pages/index/schedule-week.vue';
 import NeilModal from '@/components/neil-modal/neil-modal.vue';
 import dayjs from 'dayjs';
-import { getListByMonth, deleteMethod } from '@/api/core/schedule.js';
+// import { getListByMonth, deleteMethod } from '@/api/core/schedule.js';
 export default {
 	components: {
 		ScheduleWeek,

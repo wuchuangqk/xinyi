@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { getById, complete, confirm } from '@/api/core/schedule.js';
+// import { getById, complete, confirm } from '@/api/core/schedule.js';
 import FileViewer from '@/components/file-viewer.vue';
 import { getFileInfo } from '@/api/system/file.js';
 export default {

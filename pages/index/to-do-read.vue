@@ -22,9 +22,9 @@
 <script>
 import dayjs from 'dayjs';
 import todo from '@/mixin/todo.js'
-import {
-		getTodoRead
-	} from '@/api/core/notification.js'
+// import {
+// 		getTodoRead
+// 	} from '@/api/core/notification.js'
 export default {
 	mixins:[todo],
 	data() {

@@ -29,7 +29,8 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}, {
+		},
+		{
 			"path": "pages/register-wait/register-wait",
 			"style": {
 				"navigationBarTitleText": "账号审核中"
@@ -41,7 +42,8 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
 			"path": "pages/test/test",
 			"style": {
 				"navigationBarTitleText": "地图",
@@ -49,113 +51,55 @@
 			}
 		},
 		{
-			"path": "pages/project-detail/project-detail",
-			"style": {
-				"navigationBarTitleText": "项目详情",
-				"enablePullDownRefresh": false,
-				"navigationBarBackgroundColor": "#3c88f2",
-				"navigationBarTextStyle": "white"
-			}
-		}, {
-			"path": "pages/test2/test2",
-			"style": {
-				"navigationStyle": "custom"
-			}
-
-		}, {
 			"path": "pages/leave-list/leave-detail",
 			"style": {
 				"navigationBarTitleText": "请假详情",
 				"enablePullDownRefresh": false
 			}
-
-		}, {
+		},
+		{
 			"path": "pages/user-info/user-info",
 			"style": {
 				"navigationBarTitleText": "个人信息",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
 			"path": "pages/user-info/user-profile",
 			"style": {
 				"navigationBarTitleText": "个人资料",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
 			"path": "pages/office/office",
 			"style": {
 				"navigationBarTitleText": "办公",
 				"enablePullDownRefresh": false
 			}
-
-		}, {
+		},
+		{
 			"path": "pages/notice/notice",
 			"style": {
 				"navigationBarTitleText": "通知公告",
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {
-						"buttons": [{
-							"type": "menu"
-						}]
+						"buttons": [
+							{
+								"type": "menu"
+							}
+						]
 					}
 				}
 			}
-
-		}, {
+		},
+		{
 			"path": "pages/noticeDetail/noticeDetail",
 			"style": {
 				"navigationBarTitleText": "通知详情",
 				"enablePullDownRefresh": false
 			}
-
-		}, {
-			"path": "pages/office/schedule",
-			"style": {
-				"navigationBarTitleText": "待办事项",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/office/schedule-form",
-			"style": {
-				"navigationBarTitleText": "添加事项",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/office/schedule-detail",
-			"style": {
-				"navigationBarTitleText": "事项详情",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/office/to-do-work",
-			"style": {
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
-			}
-
-		}, {
-			"path": "pages/office/work-exchange/index",
-			"style": {
-				"navigationBarTitleText": "工作交流",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"type": "menu"
-						}]
-					}
-				}
-			}
-		},
-
-		{
-			"path": "pages/office/work-exchange/exchange-detail",
-			"style": {
-				"navigationBarTitleText": "信息详情"
-			}
 		},
 		{
 			"path": "pages/notice/notice",
@@ -164,393 +108,43 @@
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {
-						"buttons": [{
-							"type": "menu"
-						}]
+						"buttons": [
+							{
+								"type": "menu"
+							}
+						]
 					}
 				}
 			}
-
-		}, {
-			"path": "pages/attendance/administrative",
-			"style": {
-				"navigationBarTitleText": "打卡",
-				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/attendance/attendance-detail",
-			"style": {
-				"navigationBarTitleText": "打卡详情",
-				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/project-detail/index",
-			"style": {
-				"navigationBarTitleText": "我的项目",
-				"enablePullDownRefresh": false,
-				"navigationBarBackgroundColor": "#3c88f2",
-				"navigationBarTextStyle": "white"
-			}
-		}, {
-			"path": "pages/common/ReadRecords",
-			"style": {
-				"navigationBarTitleText": "查阅情况",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/project-detail/attendance/attendance",
-			"style": {
-				"navigationBarTitleText": "项目考勤记录",
-				"enablePullDownRefresh": false
-			}
 		},
 		{
-			"path": "pages/project-detail/attendance/attend-form",
-			"style": {
-				"navigationBarTitleText": "添加考勤",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/project-detail/attendance/attend-detail",
-			"style": {
-				"navigationBarTitleText": "考勤详情",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/office/project-manager/project-manager",
-			"style": {
-				"navigationBarTitleText": "项目管理",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"type": "menu"
-						}]
-					}
-				}
-			}
-
-		}, {
-			"path": "pages/office/project-manager/manager-detail/manager-detail",
-			"style": {
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
-			},
-			"app-plus": {
-				"titleNView": false
-			}
-
-		}, {
-			"path": "pages/office/my-project/my-project",
-			"style": {
-				"navigationBarTitleText": "我的项目",
-				"enablePullDownRefresh": false,
-				"navigationBarBackgroundColor": "#3c88f2",
-				"navigationBarTextStyle": "white"
-			}
-
-		}, {
-			"path": "pages/office/project-join/project-join",
-			"style": {
-				"navigationBarTitleText": "项目交接",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/office/project-join/handover-detail",
-			"style": {
-				"navigationBarTitleText": "交接详情",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/office/project-join/handover-form",
-			"style": {
-				"navigationBarTitleText": "新增项目交接",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/index/all-calendar",
-			"style": {
-				"navigationBarTitleText": "我的考勤",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/office/regulatory",
-			"style": {
-				"navigationBarTitleText": "规章制度",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/index/wen-xuan-detail",
-			"style": {
-				"navigationBarTitleText": "详情",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/index/wen-xuan-list",
-			"style": {
-				"navigationBarTitleText": "今日永景",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/office/chuan-bang-dai/chuan-bang-dai",
-			"style": {
-				"navigationBarTitleText": "传帮带查询",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/project-detail/attendance/all-attend",
-			"style": {
-				"navigationBarTitleText": "考勤记录",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
 			"path": "pages/leave-list/list",
 			"style": {
 				"navigationBarTitleText": "请假管理",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
 			"path": "pages/user-info/modify-ohoto",
 			"style": {
 				"navigationBarTitleText": "修改头像",
 				"enablePullDownRefresh": false
 			}
-
-		}, {
+		},
+		{
 			"path": "pages/user-info/modify-password",
 			"style": {
 				"navigationBarTitleText": "修改密码",
 				"enablePullDownRefresh": false
 			}
-
-		}, {
+		},
+		{
 			"path": "pages/leave-list/leave-form",
 			"style": {
 				"navigationBarTitleText": "请假申请",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/user-info/dept-info",
-			"style": {
-				"navigationBarTitleText": "部门人员信息",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/leave-office/leave-office",
-			"style": {
-				"navigationBarTitleText": "离职办理",
-				"enablePullDownRefresh": false
-			}
-
 		},
-		{
-			"path": "pages/leave-office/leave-office-form",
-			"style": {
-				"navigationBarTitleText": "离职申请",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/leave-office/leave-office-detail",
-			"style": {
-				"navigationBarTitleText": "审批详情",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/common/carbon-copy/carbon-copy",
-			"style": {
-				"navigationBarTitleText": "选择用户",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/office/work-exchange/standard",
-			"style": {
-				"navigationBarTitleText": "标准化流程",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/project-detail/attendance/daily",
-			"style": {
-				"navigationBarTitleText": "施工日志",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/project-detail/attendance/daily-form",
-			"style": {
-				"navigationBarTitleText": "施工日志详情",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/office/salary",
-			"style": {
-				"navigationBarTitleText": "工资单",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/project-detail/project-daily",
-			"style": {
-				"navigationBarTitleText": "施工日志",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/project-detail/project-plan",
-			"style": {
-				"navigationBarTitleText": "明日安排",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/office/address-list",
-			"style": {
-				"navigationBarTitleText": "通讯录",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/claim/claim-form",
-			"style": {
-				"navigationBarTitleText": "报销申请",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/claim/claim-manage",
-			"style": {
-				"navigationBarTitleText": "报销管理",
-				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/claim/claim-detail",
-			"style": {
-				"navigationBarTitleText": "报销详情",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/seal/claim-form",
-			"style": {
-				"navigationBarTitleText": "用印申请",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/seal/claim-manage",
-			"style": {
-				"navigationBarTitleText": "用印管理",
-				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/seal/claim-detail",
-			"style": {
-				"navigationBarTitleText": "用印详情",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/certificate/claim-form",
-			"style": {
-				"navigationBarTitleText": "证照申请",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/certificate/claim-manage",
-			"style": {
-				"navigationBarTitleText": "证照管理",
-				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/certificate/claim-detail",
-			"style": {
-				"navigationBarTitleText": "证照详情",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/people-manage/index",
-			"style": {
-				"navigationBarTitleText": "人员管理",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/people-manage/people-detail",
-			"style": {
-				"navigationBarTitleText": "人员详情",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/project-detail/moneyApply/entrance",
-			"style": {
-				"navigationBarTitleText": "资金申请",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/project-detail/moneyApply/claim/claim-form",
-			"style": {
-				"navigationBarTitleText": "请款申请",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/project-detail/moneyApply/claim/claim-manage",
-			"style": {
-				"navigationBarTitleText": "请款管理",
-				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/project-detail/moneyApply/claim/claim-detail",
-			"style": {
-				"navigationBarTitleText": "请款详情",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/project-detail/invoice/invoice-list",
-			"style": {
-				"navigationBarTitleText": "开票申请",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/project-detail/invoice/invoice-form",
-			"style": {
-				"navigationBarTitleText": "开票添加",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/project-detail/invoice/invoice-detail",
-			"style": {
-				"navigationBarTitleText": "开票详情",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/project-detail/work-details",
-			"style": {
-				"navigationBarTitleText": "进场交底",
-				"enablePullDownRefresh": false
-			}
-		}, 
 		{
 			"path": "pages/jiaban/list",
 			"style": {
@@ -569,6 +163,13 @@
 			"path": "pages/jiaban/select-user",
 			"style": {
 				"navigationBarTitleText": "选择用户",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/jiaban/detail",
+			"style": {
+				"navigationBarTitleText": "加班详情",
 				"enablePullDownRefresh": false
 			}
 		}

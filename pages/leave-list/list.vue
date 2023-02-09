@@ -1,11 +1,15 @@
 <template>
   <view class="app-page">
+    <view class="list-search-wrap">
+      <u-search placeholder="搜索请假原因" v-model="params.title" :show-action="false" @search="search"
+        @clear="search"></u-search>
+    </view>
     <view class="page-main">
       <scroll-view v-if="listData.length" scroll-y style="height: 100%;" @scrolltolower="nextPage">
         <view class="list-wrap">
-          <view v-for="item in listData" :key="item.id" class="app-list-item">
+          <view v-for="item in listData" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
             <view class="item-title">
-              <text :class="{ primary: item.qjstate !== '已审批' }" class="state">[{{ item.qjstate }}]</text>
+              <text v-if="item.qjstate" :class="{ primary: item.qjstate !== '已审批' }" class="state">[{{ item.qjstate }}]</text>
               <text>{{ item.title }}</text>
             </view>
             <view class="item-sub">
@@ -56,10 +60,16 @@ export default {
       uni.navigateTo({
         url: '/pages/leave-list/leave-form'
       });
-    }
+    },
+    navToDetail(id) {
+      // 待办有审批
+      const isApprove = this.activeTabIndex === 1 ? '1' : '0'
+      uni.navigateTo({
+        url: `/pages/leave-list/leave-detail?dataId=${id}&url=/qingjia/shenpi_detail&isApprove=${isApprove}`,
+      });
+    },
   }
 }
 </script>
 <style scoped lang="scss">
-
 </style>

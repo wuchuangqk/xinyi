@@ -1,12 +1,24 @@
 <template>
   <view class="app-page">
+    <view class="list-search-wrap">
+      <u-search placeholder="搜索加班事由" v-model="params.title" :show-action="false" @search="search"
+        @clear="search"></u-search>
+    </view>
     <view class="page-main">
       <scroll-view v-if="listData.length" scroll-y style="height: 100%;" @scrolltolower="nextPage">
         <view class="list-wrap">
-          <view v-for="item in listData" :key="item.id" class="app-list-item">
+          <view v-for="item in listData" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
             <view class="item-title">
-              <text :class="{ primary: item.qjstate !== '已审批' }" class="state">[{{ item.qjstate }}]</text>
+              <text v-if="item.qjstate" :class="{ primary: item.qjstate !== '已审批' }" class="state">
+                [{{ item.qjstate }}]
+              </text>
               <text>{{ item.title }}</text>
+              <view v-if="activeTabIndex === 0" class="btn">
+                <u-button v-if="!item.sfile" plain size="mini" type="primary"
+                  @click="startJiaBan(item.id, 0)">开始加班</u-button>
+                <u-button v-if="!item.efile && item.sfile" plain size="mini" type="primary"
+                  @click="startJiaBan(item.id, 1)">结束加班</u-button>
+              </view>
             </view>
             <view class="item-sub">
               <text class="label">申请人：</text>
@@ -50,12 +62,30 @@ export default {
   methods: {
     navAdd() {
       uni.navigateTo({
-         url: '/pages/jiaban/form'
+        url: '/pages/jiaban/form'
+      });
+    },
+    navToDetail(id) {
+      // 待办有审批
+      const isApprove = this.activeTabIndex === 1 ? '1' : '0'
+      uni.navigateTo({
+        url: `/pages/leave-list/leave-detail?dataId=${id}&url=/jiaban/shenpi_detail&isApprove=${isApprove}`,
+      });
+    },
+    startJiaBan(id, isStart) {
+      uni.navigateTo({
+        url: `/pages/jiaban/detail?dataId=${id}&isStart=${isStart}`,
       });
     }
   }
 }
 </script>
 <style scoped lang="scss">
+.item-title {
+  display: flex;
 
+  .btn {
+    margin-left: auto;
+  }
+}
 </style>
