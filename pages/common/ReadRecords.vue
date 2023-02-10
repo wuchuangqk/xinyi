@@ -21,7 +21,7 @@
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y style="height: 100%;">
 					<view class="list-wrap">
-						<view v-for="item in readList.hasRead" :key="item.username" class="app-list-item">
+						<view v-for="item in readList.unRead" :key="item.username" class="app-list-item">
 							<view class="app-flex-between">
 								<text>{{ item.username }}</text>
 								<text class="color-gray">{{ item.departname }}</text>

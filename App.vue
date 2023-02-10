@@ -40,10 +40,14 @@ ul {
   margin: 10px 8px 0;
   border-radius: 8rpx;
 
+  &.form-card {
+    padding-left: 24rpx;
+  }
+
   .card-title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5rpx;
+    margin-bottom: 15px;
 
     .left {
       color: #b1b1b1;
@@ -141,5 +145,15 @@ page {
 .color-gray {
   color: #b5b5b5;
   font-size: 26rpx;
+}
+
+.app-page-footer {
+  padding: 10rpx;
+
+  .btn {
+    background-color: #3880ff;
+    color: white;
+    font-size: 28rpx;
+  }
 }
 </style>

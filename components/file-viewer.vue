@@ -33,7 +33,7 @@ export default {
 				['.pptx', '_excel'],
 				['.ppt', '_ppt'],
 			]),
-			imgTyps: ['png', 'jpeg', 'jpg', 'gif'],
+			imgTyps: ['.png', '.jpeg', '.jpg', '.gif'],
 			filesCopy: [],
 		};
 	},
@@ -45,9 +45,9 @@ export default {
 			return fileList.map((v, index) => {
 				return {
 					fileId: index,
-					fileName: v.filename + v.fileext,
+					fileName: v.filename.endsWith(v.fileext) ? v.filename : v.filename + v.fileext,
 					extend: v.fileext,
-					url: v.fileurl,
+					url: this.setFileUrl(v.fileurl),
 					isImg: this.imgTyps.includes(v.fileext)
 				}
 			})

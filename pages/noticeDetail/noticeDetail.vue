@@ -28,7 +28,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view class="page-footer">
+		<view>
 			<u-cell-group>
 				<u-cell-item :title="`已读人数：${readList.hasRead.length}人，未读人数：${readList.unRead.length}人`"
 					@click="goReadRecords"></u-cell-item>
@@ -105,7 +105,7 @@ export default {
 }
 
 /deep/ .u-cell {
-	padding: 4px 15px;
+	padding: 6px 15px;
 	color: #999;
 }
 

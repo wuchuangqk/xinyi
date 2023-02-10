@@ -14,7 +14,7 @@
 				</u-cell-group>
 			</scroll-view>
 		</view>
-		<view class="page-footer">
+		<view class="app-page-footer">
 			<button class="btn" @click="submit">确定</button>
 		</view>
 	</view>
@@ -62,16 +62,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.page-footer {
-	padding: 10rpx;
-
-	.btn {
-		background-color: #3880ff;
-		color: white;
-		font-size: 28rpx;
-	}
-}
-
 .search-wrap {
 	background-color: white;
 	padding: 5px;

@@ -89,3 +89,10 @@ export function matchLabel(value, arr, multiple = false) {
 	}
 	return result
 }
+
+export const setFileUrl = (url) => {
+	if (url.startsWith('http://36q635g350.zicp.fun:8326')) {
+		return url.replace('http://36q635g350.zicp.fun:8326', 'https://36q635g350.zicp.fun')
+	}
+	return url
+}

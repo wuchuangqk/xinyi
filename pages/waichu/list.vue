@@ -1,7 +1,7 @@
 <template>
   <view class="app-page">
     <view class="list-search-wrap">
-      <u-search placeholder="输入请假原因搜索" v-model="params.title" :show-action="false" @search="search"
+      <u-search placeholder="输入出差事由搜索" v-model="params.title" :show-action="false" @search="search"
         @clear="search"></u-search>
     </view>
     <view class="page-main">
@@ -13,6 +13,9 @@
                 [{{ item.qjstate }}]
               </text>
               <text>{{ item.title }}</text>
+              <view v-if="item.hg" class="btn">
+                <u-button plain size="mini" type="primary" @click="startJiaBan(item.id)">出差情况说明</u-button>
+              </view>
             </view>
             <view class="app-flex-between color-gray item-sub">
               <view>
@@ -20,13 +23,13 @@
                 <text class="value">{{ item.qjr }}</text>
               </view>
               <view>
-                <text class="label">请假类型：</text>
-                <text class="value">{{ item.qjtype }}</text>
+                <text class="label">审批状态：</text>
+                <text class="value">{{ item.qjstate }}</text>
               </view>
             </view>
             <view class="app-flex-between color-gray item-sub">
               <view>
-                <text class="label">请假时间：</text>
+                <text class="label">出差时间：</text>
                 <text class="value">{{ item.qjstime }}</text>
                 <text v-if="item.qjstime && item.qjetime" style="margin: 0 4px;">至</text>
                 <text class="value">{{ item.qjetime }}</text>
@@ -48,10 +51,10 @@ export default {
   data() {
     return {
       pathList: [
-        '/qingjia/qingjialist',
-        '/qingjia/shenpi_list',
-        '/qingjia/mylist',
-        '/qingjia/monitor_list'
+        '/waichu/waichu_list',
+        '/waichu/shenpi_list',
+        '/waichu/mylist',
+        '/waichu/monitor_list'
       ]
     }
   },
@@ -62,19 +65,30 @@ export default {
   methods: {
     navAdd() {
       uni.navigateTo({
-        url: '/pages/leave-list/leave-form'
+        url: '/pages/waichu/form'
       });
     },
     navToDetail(id) {
       // 待办有审批
       const isApprove = this.activeTabIndex === 1 ? '1' : '0'
       uni.navigateTo({
-        url: `/pages/leave-list/leave-detail?dataId=${id}&url=/qingjia/shenpi_detail&isApprove=${isApprove}`,
+        url: `/pages/leave-list/leave-detail?dataId=${id}&url=/waichu/shenpi_detail&isApprove=${isApprove}`,
       });
     },
+    startJiaBan(id) {
+      uni.navigateTo({
+        url: `/pages/waichu/detail?dataId=${id}`,
+      });
+    }
   }
 }
 </script>
 <style scoped lang="scss">
+.item-title {
+  display: flex;
 
+  .btn {
+    margin-left: auto;
+  }
+}
 </style>

@@ -16,9 +16,11 @@
 				</view>
 				<view class="card">
 					<view class="card-title">
-						<view class="left"><text>上传{{ isStart === '0' ? '开始' : '结束' }}加班照片</text></view>
+						<view class="left"><text>出差情况说明</text></view>
 					</view>
-					<file-uploader :album="false" @change="upload"></file-uploader>
+					<view class="input-bg">
+						<uni-easyinput type="textarea" autoHeight v-model="option" placeholder="请输入出差情况说明" :inputBorder="false" />
+					</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -31,7 +33,6 @@
 <script>
 import FileViewer from '@/components/image-viewer.vue';
 import ApprovalTimeLine from '@/components/approval-timeline.vue';
-import FileUploader from '@/components/file-uploader.vue';
 
 export default {
 	components: {
@@ -41,17 +42,12 @@ export default {
 	data() {
 		return {
 			detailList: [], // 详情字段
-			url: '', // 查询详情的接口
 			dataId: '', // 主键id
 			flowList: [], // 审批流程
-			files: [], // 图片附件
-			currentStep: null, // 当前步骤
-			isStart: null, // 0=开始加班，1=结束加班
-			files: [], // 加班照片
+			option: '', // 出差情况说明
 		};
 	},
-	onLoad({ isStart, dataId, }) {
-		this.isStart = isStart
+	onLoad({ dataId, }) {
 		this.dataId = dataId
 	},
 	onReady() {
@@ -59,28 +55,24 @@ export default {
 	},
 	methods: {
 		getDetail() {
-			this.doGet('/jiaban/shenpi_detail/' + this.dataId).then(res => {
+			this.doGet('/waichu/shenpi_detail/' + this.dataId).then(res => {
 				this.detailList = res.data.info
 				this.flowList = res.data.sign
-				this.currentStep = res.data.currentStep
 			})
 		},
-		upload(files) {
-			this.files = files
-		},
 		submit() {
-			if (this.files.length === 0) {
+			if (this.option.trim().length === 0) {
 				uni.showToast({
-					title: '请上传照片',
+					title: '请输入出差情况说明',
 					icon: 'none'
 				});
 				return
 			}
-			const url = this.isStart === '0' ? '/jiaban/jiaban_start' : '/jiaban/jiaban_end'
 			uni.showLoading({
 				title: '正在提交',
+				mask: true,
 			});
-			this.renderModule.post(url, { id: this.dataId }, this.files)
+			this.renderModule.post({ id: this.dataId, option: this.option })
 		},
 		callback(success, res) {
 			uni.hideLoading();
@@ -100,8 +92,8 @@ export default {
 import axios from 'axios'
 export default {
   methods: {
-    post(url, data, files) {
-      this.doPost(url, data, axios, files).then(res => {
+    post(data) {
+      this.doPost('/waichu/updateInfo', data, axios).then(res => {
 				this.callback(true)
       }).catch(err => {
 				this.callback(false, err.response)
@@ -113,17 +105,9 @@ export default {
 <style scoped lang="scss">
 @import '@/styles/detail.scss';
 
-.card .card-title {
-	margin-bottom: 15px;
-}
-
-.btn-wrap {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	.btn {
-		flex: 1;
-	}
+.input-bg {
+	background-color: #f7f7f7;
+	padding: 0 6px;
+	border-radius: 2px;
 }
 </style>

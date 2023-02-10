@@ -27,7 +27,7 @@
 								<u-icon name="bell" style="margin-right: 4px;" />
 								<text>通知公告</text>
 							</view>
-							<text>更多</text>
+							<text @click="nav('/pages/notice/notice')">更多</text>
 						</view>
 						<view class="notice-list">
 							<view v-for="item in noticeList" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
@@ -83,6 +83,12 @@ export default {
 					icon: 'icon-liucheng',
 					url: '/pages/notice/notice',
 					color: '#fe8007',
+				},
+				{
+					name: '出差管理',
+					icon: 'icon-baoxiaodan',
+					url: '/pages/waichu/list',
+					color: '#14bd82',
 				},
 			],
 			noticeList: [], // 通知公告

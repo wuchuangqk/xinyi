@@ -50,7 +50,7 @@ export default {
 	methods: {
 		navAdd() {
 			uni.navigateTo({
-				url: '/pages/jiaban/form'
+				url: '/pages/notice/form'
 			});
 		},
 		navToDetail(id) {

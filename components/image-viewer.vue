@@ -1,7 +1,7 @@
 <template>
 	<view class="pic-wrap">
 		<view v-for="(file, index) in files" class="pic-item">
-			<image class="img" mode="aspectFill" :src="file.fileurl" alt="" @click="preview(file)"></image>
+			<image class="img" mode="aspectFill" :src="setUrl(file.fileurl)" alt="" @click="preview(file)"></image>
 		</view>
 	</view>
 </template>
@@ -20,9 +20,12 @@ export default {
 	methods: {
 		preview(file) {
 			uni.previewImage({
-				urls: [file.fielurl],
+				urls: [this.setFileUrl(file.fileurl)],
 				current: 0
 			})
+		},
+		setUrl(url) {
+			return this.setFileUrl(url)
 		}
 	}
 }

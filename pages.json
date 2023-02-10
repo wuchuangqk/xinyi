@@ -108,22 +108,6 @@
 			}
 		},
 		{
-			"path": "pages/notice/notice",
-			"style": {
-				"navigationBarTitleText": "通知公告",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						"buttons": [
-							{
-								"type": "menu"
-							}
-						]
-					}
-				}
-			}
-		},
-		{
 			"path": "pages/leave-list/list",
 			"style": {
 				"navigationBarTitleText": "请假管理",
@@ -183,6 +167,34 @@
 			"path": "pages/common/ReadRecords",
 			"style": {
 				"navigationBarTitleText": "阅览详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/notice/form",
+			"style": {
+				"navigationBarTitleText": "新增通知公告",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/waichu/list",
+			"style": {
+				"navigationBarTitleText": "出差管理",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/waichu/form",
+			"style": {
+				"navigationBarTitleText": "出差申请",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/waichu/detail",
+			"style": {
+				"navigationBarTitleText": "出差想起",
 				"enablePullDownRefresh": false
 			}
 		}

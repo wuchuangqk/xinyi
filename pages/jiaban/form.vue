@@ -62,7 +62,7 @@
 				</uni-forms>
 			</scroll-view>
 		</view>
-		<view class="page-footer">
+		<view class="app-page-footer">
 			<button class="btn" :loading="submitLoading" @click="submit">提交</button>
 		</view>
 	</view>
@@ -240,16 +240,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.page-footer {
-	padding: 10rpx;
-
-	.btn {
-		background-color: #3880ff;
-		color: white;
-		font-size: 28rpx;
-	}
-}
-
 .time-line {
 	border-left: 1px solid #e4e4e4;
 	padding-left: 20px;
