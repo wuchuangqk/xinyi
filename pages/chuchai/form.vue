@@ -16,7 +16,7 @@
 						<u-form-item label="出差事由" prop="qjyy" required>
 							<u-input v-model="formData.qjyy" placeholder="请输入出差事由" />
 						</u-form-item>
-						<u-form-item label="费用支付单位" prop="zfdw" required>
+						<u-form-item label="费用支付单位">
 							<u-input v-model="formData.zfdw" placeholder="请输入费用支付单位" />
 						</u-form-item>
 					</view>
@@ -50,10 +50,10 @@
 						<view class="card-title" style="margin-bottom: 0;">
 							<view class="left"><text>审批人</text></view>
 						</view>
-						<u-form-item label="部门领导审批" prop="signCreator1" required label-width="200">
+						<u-form-item :label="leadText" prop="signCreator1" required label-width="200">
 							<option-picker v-model="formData.signCreator1" :list="signCreator1Options" placeholder="请选择" />
 						</u-form-item>
-						<u-form-item label="分管领导审批" prop="signCreator2" required label-width="200">
+						<u-form-item v-if="isNeedFenGuan" label="分管领导审批" prop="signCreator2" required label-width="200">
 							<option-picker v-model="formData.signCreator2" :list="signCreator2Options" placeholder="请选择" />
 						</u-form-item>
 					</view>
@@ -67,21 +67,18 @@
 </template>
 
 <script>
-import FileViewer from '@/components/file-uploader.vue';
-
 export default {
-	components: { FileViewer },
 	data() {
 		return {
 			formData: {
-				qjtype: '', // 请假类型
+				qjtype: '是', // 是否带车
 				signCreator1: '', // 部门领导审批
 				signCreator2: '', // 分管领导审批
-				qjstime: '', // 请假开始时间
-				qjetime: '', // 请假结束时间
+				qjstime: '', // 出差开始时间
+				qjetime: '', // 出差结束时间
 				qjyy: '', // 出差事由
 				zfdw: '', // 费用支付单位
-				//外出地点
+				// 外出地点
 				addr1: "",
 				addr2: "",
 				addr3: "",
@@ -99,10 +96,10 @@ export default {
 			signCreator2Options: [],
 			rules: {
 				qjyy: [{ required: true, message: '请输入出差事由' }],
-				qjtype: [{ required: true, message: '请选择请假类型' }],
-				qjstime: [{ required: true, message: '请选择请假开始时间' }],
+				qjtype: [{ required: true, message: '请选择是否带车' }],
+				qjstime: [{ required: true, message: '请选择出差开始时间' }],
 				qjetime: [
-					{ required: true, message: '请选择请假结束时间' },
+					{ required: true, message: '请选择出差结束时间' },
 					{
 						validator: () => {
 							if (this.formData.qjstime) {
@@ -110,10 +107,12 @@ export default {
 							} else {
 								return true
 							}
-						}, message: '请假结束时间必须大于请假开始时间'
+						}, message: '出差结束时间必须大于出差开始时间'
 					}
 				],
 			},
+			isNeedFenGuan: false, // 分管领导
+			leadText: '',
 		};
 	},
 	onReady() {
@@ -140,6 +139,10 @@ export default {
 		this.formData.qjstime = this.$dayjs().format('YYYY-MM-DD HH:mm:ss')
 		this.formData.qjetime = this.$dayjs().add(1, 'day').format('YYYY-MM-DD HH:mm:ss')
 		this.$refs.uForm.setRules(this.rules);
+		this.doGet("/waichu/Isfgld").then((res) => {
+			this.isNeedFenGuan = res.data[0].display === '非副总经理'
+			this.leadText = res.data[0].display === '非副总经理' ? '部门领导审批' : '总经理审批'
+		})
 	},
 	methods: {
 		submit() {
@@ -149,9 +152,8 @@ export default {
 					title: '正在提交',
 					mask: true
 				});
-				delete this.formData.signCreator1
-				delete this.formData.signCreator3
-				this.renderModule.post(this.formData, this.files)
+				if (!this.isNeedFenGuan) delete this.formData.signCreator2
+				this.renderModule.post(this.formData)
 			})
 		},
 		callback(success, res) {
@@ -172,8 +174,8 @@ export default {
 import axios from 'axios'
 export default {
   methods: {
-    post(data, files) {
-      this.doPost('/waichu/waichu_add', data, axios, files).then(res => {
+    post(data) {
+      this.doPost('/waichu/waichu_add', data, axios).then(res => {
 				this.callback(true)
       }).catch(err => {
 				this.callback(false, err.response)

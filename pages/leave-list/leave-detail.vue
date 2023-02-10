@@ -130,6 +130,10 @@ export default {
 				case '/jiaban/shenpi_detail':
 					submitUrl = '/jiaban/shenpi_save'
 					break;
+				// 出差
+				case '/waichu/shenpi_detail':
+					submitUrl = '/waichu/shenpi_save'
+					break;
 			}
 			this.renderModule.post(submitUrl, {
 				option: this.comment,

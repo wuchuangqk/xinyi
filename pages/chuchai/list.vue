@@ -65,7 +65,7 @@ export default {
   methods: {
     navAdd() {
       uni.navigateTo({
-        url: '/pages/waichu/form'
+        url: '/pages/chuchai/form'
       });
     },
     navToDetail(id) {
@@ -77,7 +77,7 @@ export default {
     },
     startJiaBan(id) {
       uni.navigateTo({
-        url: `/pages/waichu/detail?dataId=${id}`,
+        url: `/pages/chuchai/detail?dataId=${id}`,
       });
     }
   }

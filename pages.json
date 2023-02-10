@@ -151,21 +151,21 @@
 			}
 		},
 		{
-			"path": "pages/waichu/list",
+			"path": "pages/chuchai/list",
 			"style": {
 				"navigationBarTitleText": "出差管理",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/waichu/form",
+			"path": "pages/chuchai/form",
 			"style": {
 				"navigationBarTitleText": "出差申请",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/waichu/detail",
+			"path": "pages/chuchai/detail",
 			"style": {
 				"navigationBarTitleText": "出差想起",
 				"enablePullDownRefresh": false
