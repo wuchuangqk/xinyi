@@ -3,7 +3,7 @@
 export const storageKeys = {
 	TOKEN: 'token', // 登录凭证
 	USER_INFO: 'user_info', // 用户信息
-	IS_LOGIN: 'is_login', // 登录状态标识,true=已登录，false=未登录
+	IS_LOGIN: 'is_login', // 登录状态标识,1=已登录，0=未登录
 	USER_STATUS: 'user_status', // 临时工注册审核状态，值为空代表未注册，不为空代表已注册未审核
 	CID: 'cid', // 客户端唯一标识，用于消息推送
 	EMPLOYEE_INFO: 'employee_info',

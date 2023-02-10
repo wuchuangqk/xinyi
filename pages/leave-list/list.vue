@@ -9,23 +9,24 @@
         <view class="list-wrap">
           <view v-for="item in listData" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
             <view class="item-title">
-              <text v-if="item.qjstate" :class="{ primary: item.qjstate !== '已审批' }" class="state">[{{ item.qjstate }}]</text>
+              <text v-if="item.qjstate" :class="{ primary: item.qjstate !== '已审批' }" class="state">[{{
+                item.qjstate
+              }}]</text>
               <text>{{ item.title }}</text>
             </view>
-            <view class="item-sub">
-              <text class="label">申请人：</text>
-              <text class="value">{{ item.qjr }}</text>
+            <view class="app-flex-between color-gray item-sub">
+              <view>
+                <text class="label">申请人：</text>
+                <text class="value">{{ item.qjr }}</text>
+              </view>
+              <view>
+                <text class="label">请假类型：</text>
+                <text class="value">{{ item.qjtype }}</text>
+              </view>
             </view>
-            <view class="item-sub">
-              <text class="label">请假类型：</text>
-              <text class="value">{{ item.qjtype }}</text>
-            </view>
-            <view class="item-sub">
-              <text class="label">开始时间：</text>
+            <view class="app-flex-between color-gray item-sub">
               <text class="value">{{ item.qjstime }}</text>
-            </view>
-            <view class="item-sub">
-              <text class="label">结束时间：</text>
+              <text v-if="item.qjstime && item.qjetime" class="label">至</text>
               <text class="value">{{ item.qjetime }}</text>
             </view>
           </view>
@@ -72,4 +73,5 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+
 </style>

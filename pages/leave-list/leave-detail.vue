@@ -32,7 +32,7 @@
 					<approval-time-line :flowList="flowList"></approval-time-line>
 				</view>
 				<!-- 审批意见 -->
-				<view class="card">
+				<view v-if="isApprove === '1'" class="card">
 					<view class="card-title">
 						<view class="left"><text>审批意见</text></view>
 					</view>
@@ -42,7 +42,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view class="page-footer">
+		<view v-if="isApprove === '1'" class="page-footer">
 			<button v-if="isReject === '1'" class="btn danger" @click="showConfirm = true">驳回</button>
 			<button class="btn" @click="submit(1)">同意</button>
 		</view>

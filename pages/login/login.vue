@@ -130,9 +130,9 @@ export default {
 				this.submitLoading = false;
 				uni.setStorageSync(this.$const.TOKEN, res.data.access_token)
 				uni.setStorageSync(this.$const.USER_INFO, JSON.stringify(res.data))
-				uni.setStorageSync(this.$const.USER_STATUS, 1); // 存储用户状态(2:审核中)
-				uni.redirectTo({
-					 url: '/pages/tabbar/tabbar1'
+				uni.setStorageSync(this.$const.IS_LOGIN, 1); // 标识已登录
+				uni.switchTab({
+					url: '/pages/tabbar/tabbar1'
 				});
 			}).catch(err => {
 				this.submitLoading = false;

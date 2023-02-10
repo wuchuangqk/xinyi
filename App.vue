@@ -124,22 +124,11 @@ page {
 
   .item-title {
     font-size: 30rpx;
-    margin-bottom: 20rpx;
+    margin-bottom: 16rpx;
   }
 
   .item-sub {
-    font-size: 26rpx;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 16rpx;
-    word-break: break-all;
-    text-align: right;
-
-    .label {
-      color: rgba(51, 51, 51, 0.62);
-      flex-shrink: 0;
-      margin-right: 20rpx;
-    }
+    margin-top: 4px;
   }
 }
 
@@ -147,5 +136,10 @@ page {
   background-color: white;
   padding: 5px;
   margin-bottom: 8px;
+}
+
+.color-gray {
+  color: #b5b5b5;
+  font-size: 26rpx;
 }
 </style>

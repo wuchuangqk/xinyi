@@ -20,16 +20,15 @@
                   @click="startJiaBan(item.id, 1)">结束加班</u-button>
               </view>
             </view>
-            <view class="item-sub">
-              <text class="label">申请人：</text>
-              <text class="value">{{ item.qjr }}</text>
+            <view class="app-flex-between color-gray item-sub">
+              <view>
+                <text class="label">申请人：</text>
+                <text class="value">{{ item.qjr }}</text>
+              </view>
             </view>
-            <view class="item-sub">
-              <text class="label">开始时间：</text>
+            <view class="app-flex-between color-gray item-sub">
               <text class="value">{{ item.qjstime }}</text>
-            </view>
-            <view class="item-sub">
-              <text class="label">结束时间：</text>
+              <text v-if="item.qjstime && item.qjetime" class="label">至</text>
               <text class="value">{{ item.qjetime }}</text>
             </view>
           </view>
