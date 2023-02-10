@@ -25,7 +25,7 @@ export default {
 			});
 		}
 	},
-	onReday() {
+	onReady() {
 		// #ifdef APP-PLUS
 		plus.runtime.getProperty(plus.runtime.appid, widgetInfo => {
 			this.appVersion = widgetInfo.version;

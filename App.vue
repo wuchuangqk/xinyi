@@ -1,7 +1,9 @@
 <script>
+import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update.js'
 export default {
   // 应用启动时调用，应用生命周期里只执行一次
   onLaunch() {
+    checkUpdate()
   },
   onShow() {
   },
