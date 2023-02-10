@@ -1,9 +1,9 @@
 <template>
 	<view style="height: 100%;padding-bottom: 50px;box-sizing: border-box;">
-		<home v-show="activeTabKey === 'home'"></home>
+		<!-- <home v-show="activeTabKey === 'home'"></home>
 		<office v-show="activeTabKey === 'office'" v-if="isLoaded.office"></office>
 		<my-project v-if="activeTabKey === 'project'" @load-done="handlePullEnd" ref="project"></my-project>
-		<user-info v-show="activeTabKey === 'user'" v-if="isLoaded.user"></user-info>
+		<user-info v-show="activeTabKey === 'user'" v-if="isLoaded.user"></user-info> -->
 		<view class="tab">
 			<view class="tab-item" v-for="(item, index) in tabItems" :key="index" :class="{ active: index === activeTabIndex }" @click="switchTab(index)">
 				<image :src="activeTabIndex === index ? item.selectedIconPath : item.iconPath" mode="aspectFill" style="width: 24px;height: 24px;"></image>
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import Home from '@/pages/index/index';
-import Office from '@/pages/office/office';
-import MyProject from '@/pages/office/my-project/my-project';
-import UserInfo from '@/pages/user-info/user-info';
+// import Home from '@/pages/index/index';
+// import Office from '@/pages/office/office';
+// import MyProject from '@/pages/office/my-project/my-project';
+// import UserInfo from '@/pages/user-info/user-info';
 export default {
-	components: { Home, Office, MyProject, UserInfo },
+	// components: { Home, Office, MyProject, UserInfo },
 	data() {
 		return {
 			tabItems: [

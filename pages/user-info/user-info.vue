@@ -18,10 +18,9 @@
 					<u-cell-item icon="thumb-down" title="绩效减分"></u-cell-item>
 					<u-cell-item icon="lock" title="修改密码"></u-cell-item>
 					<u-cell-item icon="setting" title="版本号" :value="appVersion" :arrow="false"></u-cell-item>
+					<u-cell-item icon="info-circle" title="退出登录" @click="showConfirm = true"></u-cell-item>
 				</u-cell-group>
-				<view class="btn-wrap">
-					<u-button type="error" @click="showConfirm = true">退出登录</u-button>
-				</view>
+				<view style="height: 10px"></view>
 			</scroll-view>
 		</view>
 		<u-modal v-model="showConfirm" content="确认退出登录吗" show-cancel-button @confirm="exit"></u-modal>
@@ -38,7 +37,7 @@ export default {
 		};
 	},
 	onReady() {
-		this.userInfo = JSON.parse(uni.getStorageSync(this.$const.USER_INFO))
+		this.userInfo = uni.getStorageSync(this.$const.USER_INFO)
 		if (!this.userInfo.avatar) {
 			this.userInfo.avatar = '/static/img/default.jpg'
 		}
@@ -80,11 +79,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.btn-wrap {
-	padding: 30rpx 16rpx;
-	// margin-top: 30px;
-}
-
 .user-img {
 	padding: 40px 0 40px;
 	background: url("/static/img/mg-card-bg.png") no-repeat;

@@ -81,7 +81,7 @@ export default {
 			}).then((res) => {
 				uni.hideLoading();
 				uni.setStorageSync(this.$const.TOKEN, res.data.access_token)
-				uni.setStorageSync(this.$const.USER_INFO, JSON.stringify(res.data))
+				uni.setStorageSync(this.$const.USER_INFO, res.data)
 				uni.setStorageSync(this.$const.IS_LOGIN, 1); // 标识已登录
 				uni.switchTab({
 					url: '/pages/tabbar/tabbar1'

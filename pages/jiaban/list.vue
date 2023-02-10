@@ -27,9 +27,12 @@
               </view>
             </view>
             <view class="app-flex-between color-gray item-sub">
-              <text class="value">{{ item.qjstime }}</text>
-              <text v-if="item.qjstime && item.qjetime" class="label">至</text>
-              <text class="value">{{ item.qjetime }}</text>
+              <view>
+                <text class="label">加班时间：</text>
+                <text class="value">{{ item.qjstime }}</text>
+                <text v-if="item.qjstime && item.qjetime" style="margin: 0 4px;">至</text>
+                <text class="value">{{ item.qjetime }}</text>
+              </view>
             </view>
           </view>
         </view>

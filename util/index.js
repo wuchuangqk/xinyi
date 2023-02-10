@@ -96,3 +96,7 @@ export const setFileUrl = (url) => {
 	}
 	return url
 }
+
+export const notNull = (val) => {
+	return val !== undefined && val !== null && val !== ''
+}

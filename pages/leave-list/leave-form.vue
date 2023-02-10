@@ -11,10 +11,12 @@
 							<option-picker v-model="formData.qjtype" :list="qjtypeOptions" placeholder="请选择请假类型" />
 						</u-form-item>
 						<u-form-item label="开始时间" prop="qjstime" required>
-							<date-picker v-model="formData.qjstime" :defaultTime="formData.qjstime" placeholder="请选择开始时间" />
+							<date-picker v-model="formData.qjstime" :defaultTime="formData.qjstime" placeholder="请选择开始时间"
+								@update:modelValue="setVisable" />
 						</u-form-item>
 						<u-form-item label="结束时间" prop="qjetime" required>
-							<date-picker v-model="formData.qjetime" :defaultTime="formData.qjetime" placeholder="请选择结束时间" />
+							<date-picker v-model="formData.qjetime" :defaultTime="formData.qjetime" placeholder="请选择结束时间"
+								@update:modelValue="setVisable" />
 						</u-form-item>
 					</view>
 					<!-- 附件 -->
@@ -29,13 +31,13 @@
 						<view class="card-title" style="margin-bottom: 0;">
 							<view class="left"><text>审批人</text></view>
 						</view>
-						<u-form-item label="部门领导审批" prop="signCreator1" required label-width="200">
+						<u-form-item v-if="bumen" label="部门领导审批" prop="signCreator1" required label-width="200">
 							<option-picker v-model="formData.signCreator1" :list="signCreator1Options" placeholder="请选择" />
 						</u-form-item>
-						<u-form-item label="分管领导审批" prop="signCreator2" required label-width="200">
+						<u-form-item v-if="fenguan" label="分管领导审批" prop="signCreator2" required label-width="200">
 							<option-picker v-model="formData.signCreator2" :list="signCreator2Options" placeholder="请选择" />
 						</u-form-item>
-						<u-form-item label="总经理审批" prop="signCreator3" required label-width="200">
+						<u-form-item v-if="zongjingli" label="总经理审批" prop="signCreator3" required label-width="200">
 							<option-picker v-model="formData.signCreator3" :list="signCreator3Options" placeholder="请选择" />
 						</u-form-item>
 						<u-form-item label="人事部意见" prop="signCreator4" required label-width="200">
@@ -92,9 +94,20 @@ export default {
 					}
 				],
 			},
+			bumen: false, // 部门领导审批
+			fenguan: false, // 分管领导审批
+			zongjingli: false, // 总经理审批
+			/*
+			<p> 1 -> 普通员工 </p>
+			<p> 2->部门负责人 </p>
+			<p> 3->分管副总 </p>
+			*/
+			level: 1,
 		};
 	},
 	onReady() {
+		this.formData.qjstime = this.$dayjs().format('YYYY-MM-DD HH:mm:ss')
+		this.formData.qjetime = this.$dayjs().add(1, 'day').format('YYYY-MM-DD HH:mm:ss')
 		const fmtOptions = (arr) => {
 			return (arr || []).map(val => {
 				return {
@@ -103,6 +116,13 @@ export default {
 				}
 			})
 		}
+		this.doGet('/qingjia/selectdo').then(res => {
+			this.bumen = res.data.select1;
+			this.fenguan = res.data.select2;
+			this.zongjingli = res.data.select3;
+			this.level = res.data.leve;
+			this.setVisable();
+		})
 		this.doGet('/qingjia/qjtype').then(res => {
 			this.qjtypeOptions = res.data.map(val => {
 				return {
@@ -138,8 +158,6 @@ export default {
 				this.formData.signCreator4 = this.signCreator4Options[0].value;
 			}
 		});
-		this.formData.qjstime = this.$dayjs().format('YYYY-MM-DD HH:mm:ss')
-		this.formData.qjetime = this.$dayjs().add(1, 'day').format('YYYY-MM-DD HH:mm:ss')
 		this.$refs.uForm.setRules(this.rules);
 	},
 	methods: {
@@ -150,8 +168,9 @@ export default {
 					title: '正在提交',
 					mask: true
 				});
-				delete this.formData.signCreator1
-				delete this.formData.signCreator3
+				if (!this.bumen) delete this.formData.signCreator1
+				if (!this.fenguan) delete this.formData.signCreator2
+				if (!this.zongjingli) delete this.formData.signCreator3
 				this.renderModule.post(this.formData, this.files)
 			})
 		},
@@ -170,6 +189,36 @@ export default {
 		upload(files) {
 			this.files = files;
 		},
+		// 设置可见性
+		setVisable() {
+			const daysNumber = this.$dayjs(this.formData.qjetime).diff(this.formData.qjstime, 'day')
+			// 普通员工
+			if (this.level == 1) {
+				if (daysNumber < 2) {
+					this.bumen = true;
+					this.fenguan = true;
+					this.zongjingli = false;
+				} else {
+					this.bumen = true;
+					this.fenguan = true;
+					this.zongjingli = true;
+				}
+			} else if (this.level == 2) {
+				if (daysNumber < 2) {
+					this.bumen = false;
+					this.fenguan = true;
+					this.zongjingli = false;
+				} else {
+					this.bumen = false;
+					this.fenguan = true;
+					this.zongjingli = true;
+				}
+			} else if (this.level == 3) {
+				this.bumen = false;
+				this.fenguan = false;
+				this.zongjingli = true;
+			}
+		}
 	}
 };
 </script>

@@ -18,7 +18,7 @@
 				<view class="card content-card">
 					<view class="content" v-html="detailData.content"></view>
 				</view>
-				<view v-if="detailData.pdflist" class="card">
+				<view v-if="detailData.pdflist && detailData.pdflist.length" class="card">
 					<view class="card-title">
 						<view class="left">
 							<text>附件</text>

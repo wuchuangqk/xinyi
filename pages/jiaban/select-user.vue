@@ -45,7 +45,7 @@ export default {
 		getListData() {
 			this.doGet('/jiaban/QjUser').then(res => {
 				this.listData = res.data.map(val => {
-					val.checked = false
+					val.checked = this.$store.state.selectedUsers.some(v => v.userid === val.userid)
 					return val
 				})
 				this.originData = this.listData

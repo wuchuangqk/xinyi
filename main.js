@@ -10,7 +10,7 @@ import FloatButton from '@/components/float-button'
 import PageEmpty from '@/components/page-empty'
 import uView from 'uview-ui';
 import FileUploader from '@/components/file-uploader.vue';
-import { setFileUrl } from '@/util/index'
+import { setFileUrl, notNull } from '@/util/index'
 import DatePicker from '@/components/date-picker.vue';
 import OptionPicker from '@/components/option-picker.vue';
 
@@ -23,6 +23,7 @@ Vue.prototype.$hasPermission = hasPermission // 挂载权限验证函数
 Vue.prototype.doGet = doGet
 Vue.prototype.doPost = doPost
 Vue.prototype.setFileUrl = setFileUrl
+Vue.prototype.notNull = notNull
 App.mpType = 'app'
 
 const app = new Vue({

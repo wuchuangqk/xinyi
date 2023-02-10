@@ -19,7 +19,7 @@ export default {
   },
   props: {
     modelValue: {
-      type: String,
+      type: [String, Number],
       required: true
     },
     list: {
@@ -38,19 +38,22 @@ export default {
     }
   },
   watch: {
-    modelValue() {
-      if (this.value === '' && this.modelValue) {
-        const temp = this.list.find(val => val.value === this.modelValue)
-        if (temp) {
-          this.value = temp.label
+    modelValue: {
+      handler() {
+        if (this.value === '' && this.notNull(this.modelValue)) {
+          const temp = this.list.find(val => val.value === this.modelValue)
+          if (temp) {
+            this.value = temp.label
+          }
         }
-      }
+      },
+      immediate: true
     }
   },
   methods: {
     change(data) {
       this.value = data[0].label
-      this.$emit(data[0].value)
+      this.$emit('update:modelValue', data[0].value)
     }
   }
 }
