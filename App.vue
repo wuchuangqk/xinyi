@@ -37,7 +37,7 @@ ul {
 .card {
   padding: 15rpx;
   background-color: white;
-  margin: 10rpx;
+  margin: 10px 8px 0;
   border-radius: 8rpx;
 
   .card-title {

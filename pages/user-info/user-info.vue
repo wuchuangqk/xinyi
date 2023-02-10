@@ -20,7 +20,7 @@
 					<u-cell-item icon="setting" title="版本号" :value="appVersion" :arrow="false"></u-cell-item>
 				</u-cell-group>
 				<view class="btn-wrap">
-					<u-button @click="showModel = true">退出登录</u-button>
+					<u-button type="error" @click="showConfirm = true">退出登录</u-button>
 				</view>
 			</scroll-view>
 		</view>
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { logOut } from '@/api/user.js';
 export default {
 	data() {
 		return {

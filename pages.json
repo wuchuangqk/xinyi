@@ -6,7 +6,7 @@
 		{
 			"path": "pages/tabbar/tabbar1",
 			"style": {
-				"navigationBarTitleText": "首页",
+				"navigationBarTitleText": "新沂城投内部办公平台",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -97,22 +97,13 @@
 			"path": "pages/notice/notice",
 			"style": {
 				"navigationBarTitleText": "通知公告",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						"buttons": [
-							{
-								"type": "menu"
-							}
-						]
-					}
-				}
+				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path": "pages/noticeDetail/noticeDetail",
 			"style": {
-				"navigationBarTitleText": "通知详情",
+				"navigationBarTitleText": "通知公告详情",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -185,6 +176,13 @@
 			"path": "pages/jiaban/detail",
 			"style": {
 				"navigationBarTitleText": "加班详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/common/ReadRecords",
+			"style": {
+				"navigationBarTitleText": "阅览详情",
 				"enablePullDownRefresh": false
 			}
 		}

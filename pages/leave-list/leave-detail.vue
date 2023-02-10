@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import FileViewer from '@/components/file-viewer.vue';
+import FileViewer from '@/components/image-viewer.vue';
 import ApprovalTimeLine from '@/components/approval-timeline.vue';
 
 export default {

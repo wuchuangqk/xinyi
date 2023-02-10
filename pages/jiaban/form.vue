@@ -31,12 +31,6 @@
 						</uni-forms-item>
 					</view>
 					<view class="card">
-						<view class="card-title">
-							<view class="left"><text>附件</text></view>
-						</view>
-						<file-viewer @change="upload"></file-viewer>
-					</view>
-					<view class="card">
 						<view class="card-title" style="margin-bottom: 20px;">
 							<view class="left"><text>审批人</text></view>
 						</view>
@@ -76,10 +70,9 @@
 
 <script>
 import AppSelect from '@/components/app-select.vue';
-import FileViewer from '@/components/file-viewer.vue';
 
 export default {
-	components: { AppSelect, FileViewer },
+	components: { AppSelect },
 	data() {
 		return {
 			formData: {

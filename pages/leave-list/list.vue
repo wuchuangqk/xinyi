@@ -1,7 +1,7 @@
 <template>
   <view class="app-page">
     <view class="list-search-wrap">
-      <u-search placeholder="搜索请假原因" v-model="params.title" :show-action="false" @search="search"
+      <u-search placeholder="输入请假原因搜索" v-model="params.title" :show-action="false" @search="search"
         @clear="search"></u-search>
     </view>
     <view class="page-main">

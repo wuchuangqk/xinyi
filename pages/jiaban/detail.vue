@@ -18,7 +18,7 @@
 					<view class="card-title">
 						<view class="left"><text>上传{{ isStart === '0' ? '开始' : '结束' }}加班照片</text></view>
 					</view>
-					<file-uploader @change="upload"></file-uploader>
+					<file-uploader :album="false" @change="upload"></file-uploader>
 				</view>
 			</scroll-view>
 		</view>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import FileViewer from '@/components/file-viewer.vue';
+import FileViewer from '@/components/image-viewer.vue';
 import ApprovalTimeLine from '@/components/approval-timeline.vue';
 import FileUploader from '@/components/file-uploader.vue';
 

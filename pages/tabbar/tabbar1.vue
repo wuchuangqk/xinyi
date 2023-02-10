@@ -78,6 +78,12 @@ export default {
 					url: '/pages/jiaban/list',
 					color: '#f9a202',
 				},
+				{
+					name: '通知公告',
+					icon: 'icon-liucheng',
+					url: '/pages/notice/notice',
+					color: '#fe8007',
+				},
 			],
 			noticeList: [], // 通知公告
 		}
@@ -103,7 +109,12 @@ export default {
 			this.doGet('/notices/list').then(res => {
 				this.noticeList = (res.data || []).slice(0, 5)
 			})
-		}
+		},
+		navToDetail(id) {
+			uni.navigateTo({
+				url: `/pages/noticeDetail/noticeDetail?dataId=${id}`,
+			});
+		},
 	}
 }
 </script>

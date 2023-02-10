@@ -52,10 +52,7 @@ export default {
 					this.$emit('change', this.files)
 				},
 				fail: () => {
-					uni.showToast({
-						title: '未知错误',
-						icon: 'none'
-					})
+					// 用户点击取消
 				}
 			})
 		},

@@ -1,33 +1,31 @@
 <template>
-	<view class="page">
-		<view class="tab">
-			<view class="tab-item" :class="{active: activeTabIndex === 0}" @click="activeTabIndex = 0">
-				<text>未读人员</text>
-				<text v-if="readList.unRead.length !==0">({{readList.unRead.length}})</text>
-				<view class="line"></view>
-			</view>
-			<view class="tab-item" :class="{active: activeTabIndex === 1}" @click="activeTabIndex = 1">
-				<text>已读人员</text>
-				<text v-if="readList.hasRead.length !==0">({{readList.hasRead.length}})</text>
-				<view class="line"></view>
-			</view>
-		</view>
-		<swiper class="swiper" :current="activeTabIndex" @change="swiperChange">
-			<swiper-item>
-				<scroll-view :scroll-y="true" style="height: 100%;">
-					<view class="card">
-						<view v-for="(item,index) in readList.unRead" :key="index" class="list-item">
-							<text class="user-name">{{item.displayName}}</text>
+	<view class="app-page">
+		<u-tabs-swiper ref="uTabs" :list="list" :is-scroll="false" :current="current" :offset="[5, 80]" @change="tabsChange"></u-tabs-swiper>
+		<swiper style="height: 100%;" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;">
+					<view class="list-wrap">
+						<view v-for="item in readList.hasRead" :key="item.username" class="app-list-item">
+							<view class="app-flex-between">
+								<text>{{ item.username }}</text>
+								<text class="color-gray">{{ item.departname }}</text>
+							</view>
+							<view class="color-gray item-sub">
+								<text>阅读时间：</text>
+								<text>{{ item.readtime }}</text>
+							</view>
 						</view>
 					</view>
 				</scroll-view>
 			</swiper-item>
-			<swiper-item style="height: 100%;">
-				<scroll-view :scroll-y="true" style="height: 100%;">
-					<view class="card">
-						<view v-for="(item,index) in readList.hasRead" :key="index" class="list-item">
-							<text class="user-name">{{item.displayName}}</text>
-							<text class="read-time">{{item.readTime}}</text>
+			<swiper-item class="swiper-item">
+				<scroll-view scroll-y style="height: 100%;">
+					<view class="list-wrap">
+						<view v-for="item in readList.hasRead" :key="item.username" class="app-list-item">
+							<view class="app-flex-between">
+								<text>{{ item.username }}</text>
+								<text class="color-gray">{{ item.departname }}</text>
+							</view>
 						</view>
 					</view>
 				</scroll-view>
@@ -37,101 +35,59 @@
 </template>
 
 <script>
-	import {
-		getReadingList
-	} from '@/api/office/other.js'
-	import dayjs from 'dayjs'
-	export default {
-		data() {
-			return {
-				readList: {
-					hasRead: [],
-					unRead: []
+export default {
+	data() {
+		return {
+			list: [
+				{
+					name: '已读人员',
+					count: 0
 				},
-				activeTabIndex: 0,
-			}
-		},
-		// type: 2=通知公告
-		onLoad({
-			type,
-			id
-		}) {
-			getReadingList(id, type).then(res => {
-				res.records = res.records || []
-				res.records.forEach((val) => {
-					val.readTime = val.readTime ? dayjs(val.readTime).format('YYYY-MM-DD HH:mm') : null
-					if (+val.isReads === 0) {
-						this.readList.unRead.push(val)
-					} else {
-						this.readList.hasRead.push(val)
-					}
-				});
-			})
-		},
-		methods: {
-			swiperChange(e) {
-				this.activeTabIndex = e.detail.current
+				{
+					name: '未读人员',
+					count: 1
+				},
+			],
+			current: 0,
+			swiperCurrent: 0,
+			readList: {
+				hasRead: [],
+				unRead: []
 			},
 		}
+	},
+	// type: 2=通知公告
+	onLoad({ dataId }) {
+		this.doGet('/notices/GetRead/' + dataId).then(res => {
+			this.readList.hasRead = res.data.hasreader.map(val => {
+				val.readtime = this.$dayjs(val.readtime).format('YYYY-MM-DD HH:mm:ss')
+				return val
+			})
+			this.readList.unRead = res.data.noreader
+			this.list[0].count = this.readList.hasRead.length
+			this.list[1].count = this.readList.unRead.length
+		})
+	},
+	methods: {
+		tabsChange(index) {
+			this.swiperCurrent = index;
+		},
+		transition(e) {
+			let dx = e.detail.dx;
+			this.$refs.uTabs.setDx(dx);
+		},
+		animationfinish(e) {
+			let current = e.detail.current;
+			this.$refs.uTabs.setFinishCurrent(current);
+			this.swiperCurrent = current;
+			this.current = current;
+		},
 	}
+}
 </script>
 
 <style lang="scss" scoped>
-	.page {
-		min-height: 100%;
-		background-color: $-bg-color;
-		display: flex;
-		flex-direction: column;
-
-		.swiper {
-			flex: 1;
-		}
-	}
-
-	.tab {
-		display: flex;
-		width: 100%;
-		justify-content: space-evenly;
-		margin: 10px 0;
-
-		.tab-item {
-			flex: 1;
-			position: relative;
-			color: #8c8c8c;
-			text-align: center;
-			font-size: 15px;
-
-			&.active {
-				color: #1989fa;
-
-				.line {
-					display: block;
-				}
-			}
-		}
-
-		.line {
-			display: none;
-			position: absolute;
-			background-color: #1989fa;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 25%;
-			height: 3px;
-			border-radius: 2px;
-			bottom: -5px
-		}
-	}
-
-	.list-item {
-		display: flex;
-		justify-content: space-between;
-		font-size: 15px;
-		padding: 10px 0;
-
-		.read-time {
-			font-size: 14px;
-			color: #9c9c9c;
-		}
-	}
+.list-wrap {
+	padding-top: 8px;
+}
 </style>
