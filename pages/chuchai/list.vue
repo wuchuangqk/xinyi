@@ -13,7 +13,7 @@
                 [{{ item.qjstate }}]
               </text>
               <text>{{ item.title }}</text>
-              <view v-if="item.hg" class="btn">
+              <view v-if="item.hg && activeTabIndex === 0" class="btn">
                 <u-button plain size="mini" type="primary" @click="startJiaBan(item.id)">出差情况说明</u-button>
               </view>
             </view>

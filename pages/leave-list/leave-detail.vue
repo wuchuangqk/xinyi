@@ -8,14 +8,12 @@
 						<text class="label">{{ item.label }}</text>
 						<text class="value" v-html="item.field"></text>
 					</view>
-					<view v-if="isJiaBan" class="detail-item">
-						<text class="label">核定天数</text>
-						<!-- <text class="value" v-html="item.field"></text> -->
+				</view>
+				<view v-if="isChuchai" class="card">
+					<view class="card-title">
+						<view class="left"><text>出差地点</text></view>
 					</view>
-					<view v-if="isJiaBan" class="detail-item">
-						<text class="label">核定小时</text>
-						<!-- <text class="value" v-html="item.field"></text> -->
-					</view>
+					<view v-html="context"></view>
 				</view>
 				<!-- 照片附件 -->
 				<view v-if="files && files.length" class="card">
@@ -29,7 +27,7 @@
 					<view class="card-title">
 						<view class="left"><text>审批流程</text></view>
 					</view>
-					<approval-time-line :flowList="flowList"></approval-time-line>
+					<approval-time-line :flowList="flowList" :currentStep="currentStep"></approval-time-line>
 				</view>
 				<!-- 审批意见 -->
 				<view v-if="isApprove === '1'" class="card">
@@ -66,19 +64,24 @@ export default {
 			dataId: '', // 主键id
 			flowList: [], // 审批流程
 			files: [], // 图片附件
-			currentStep: null, // 当前步骤
+			currentStep: 0, // 当前步骤
 			hdts: '', // 加班核定天数
 			hdxs: '', // 加班核定小时
 			isApprove: '', // 是否有审批
 			comment: '', // 审批意见
 			isReject: '', // 是否有驳回
 			showConfirm: false, // 驳回确认
+			context: '', // 出差地点
 		};
 	},
 	computed: {
 		// 加班
 		isJiaBan() {
 			return this.url === '/jiaban/shenpi_detail' && this.currentStep === 2
+		},
+		// 出差
+		isChuchai() {
+			return this.url === '/waichu/shenpi_detail' && this.context
 		}
 	},
 	onLoad({ url, dataId, isApprove, isReject, }) {
@@ -97,6 +100,7 @@ export default {
 				this.flowList = res.data.sign
 				this.files = res.data.pdflist
 				this.currentStep = res.data.currentStep
+				this.context = res.data.context
 			})
 		},
 		/**

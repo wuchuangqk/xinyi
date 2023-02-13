@@ -94,13 +94,16 @@ export default {
 			noticeList: [], // 通知公告
 		}
 	},
-	onLoad() {
+	onInit() {
 		// 检查是否登录
 		if (uni.getStorageSync(this.$const.IS_LOGIN) !== 1) {
 			uni.reLaunch({
 				url: '/pages/login/login'
 			});
 		}
+	},
+	onLoad() {
+
 	},
 	onShow() {
 		this.getNoticeList()

@@ -1,6 +1,6 @@
 <template>
 	<view class="approval-line">
-		<view class="flow-step" v-for="flow in flowList">
+		<view class="flow-step" v-for="(flow, index) in flowList">
 			<view class="step-name">{{ flow.username }}</view>
 			<view class="step-section">
 				<view class="head-photo">{{ getName(flow.username) }}</view>
@@ -8,12 +8,12 @@
 					<view class="arrow"></view>
 					<view class="top">
 						<view class="step-state">
-							<image :src="stateImg.get(flow.Signed ? 1 : 0)" alt=""></image>
+							<image :src="setStateImg(index, flow)" alt=""></image>
 						</view>
 						<view class="s1">
 							<text>{{ flow.Comments }}</text>
 						</view>
-						<text class="step-time">{{ flow.Signed ? flow.Created : '' }}</text>
+						<text class="step-time">{{ flow.Signed ? flow.Created : index === currentStep ? '正在审批' : '等待审批' }}</text>
 					</view>
 				</view>
 			</view>
@@ -32,15 +32,19 @@ export default {
 			default: () => {
 				return []
 			}
+		},
+		currentStep: {
+			type: Number,
+			required: true
 		}
 	},
 	data() {
 		return {
 			flowStateNameMap: new Map([[1, '审批中'], [2, '已审批'], [0, '待审批'], [3, '退回']]),
 			stateImg: new Map([
-				[0, '/static/img/wait1.png'], // 等待办理
-				// [0, '/static/img/doing1.png'], // 正在办待中
-				[1, '/static/img/complete1.png'], // 已完成
+				['wait', '/static/img/wait1.png'], // 等待办理
+				['current', '/static/img/doing1.png'], // 正在办待中
+				['done', '/static/img/complete1.png'], // 已完成
 				// [4, '/static/img/reject.png'] // 退回
 			]),
 			defaultImg: '/static/img/default.jpg'
@@ -56,6 +60,19 @@ export default {
 				return name
 			}
 			return name.substring(name.length - 2)
+		},
+		setStateImg(index, flow) {
+			// 已审批
+			if (flow.Signed) {
+				return this.stateImg.get('done')
+			} else {
+				// 审批中
+				if (index === this.currentStep) {
+					return this.stateImg.get('current')
+				} else {
+					return this.stateImg.get('wait')
+				}
+			}
 		}
 	}
 };
@@ -179,7 +196,7 @@ export default {
 		position: absolute;
 		top: -6px;
 		left: -18px;
-		background-color: #f29797;
+		background-color: #3980fc;
 		color: white;
 		display: flex;
 		align-items: center;

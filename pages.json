@@ -41,7 +41,7 @@
 		{
 			"path": "pages/leave-list/leave-detail",
 			"style": {
-				"navigationBarTitleText": "请假详情",
+				"navigationBarTitleText": "详情",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -167,7 +167,7 @@
 		{
 			"path": "pages/chuchai/detail",
 			"style": {
-				"navigationBarTitleText": "出差想起",
+				"navigationBarTitleText": "出差详情",
 				"enablePullDownRefresh": false
 			}
 		}

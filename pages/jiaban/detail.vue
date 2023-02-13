@@ -12,7 +12,7 @@
 					<view class="card-title">
 						<view class="left"><text>审批流程</text></view>
 					</view>
-					<approval-time-line :flowList="flowList"></approval-time-line>
+					<approval-time-line :flowList="flowList" :currentStep="currentStep"></approval-time-line>
 				</view>
 				<view class="card">
 					<view class="card-title">
@@ -45,7 +45,7 @@ export default {
 			dataId: '', // 主键id
 			flowList: [], // 审批流程
 			files: [], // 图片附件
-			currentStep: null, // 当前步骤
+			currentStep: 0, // 当前步骤
 			isStart: null, // 0=开始加班，1=结束加班
 			files: [], // 加班照片
 		};

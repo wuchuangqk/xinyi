@@ -10,9 +10,15 @@
 				</view>
 				<view class="card">
 					<view class="card-title">
+						<view class="left"><text>出差地点</text></view>
+					</view>
+					<view v-html="context"></view>
+				</view>
+				<view class="card">
+					<view class="card-title">
 						<view class="left"><text>审批流程</text></view>
 					</view>
-					<approval-time-line :flowList="flowList"></approval-time-line>
+					<approval-time-line :flowList="flowList" :currentStep="currentStep"></approval-time-line>
 				</view>
 				<view class="card">
 					<view class="card-title">
@@ -45,6 +51,8 @@ export default {
 			dataId: '', // 主键id
 			flowList: [], // 审批流程
 			option: '', // 出差情况说明
+			currentStep: 0,
+			context: '', // 出差地点
 		};
 	},
 	onLoad({ dataId, }) {
@@ -58,6 +66,8 @@ export default {
 			this.doGet('/waichu/shenpi_detail/' + this.dataId).then(res => {
 				this.detailList = res.data.info
 				this.flowList = res.data.sign
+				this.currentStep = res.data.currentStep
+				this.context = res.data.context
 			})
 		},
 		submit() {
