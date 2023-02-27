@@ -39,11 +39,4 @@ export const events = {
 	UPDATE_CERTIFICATE_STATE: 'UPDATE_CERTIFICATE_STATE', // 更新证照管理状态
 }
 
-// 初始化数字角标对象
-uni.setStorageSync(storageKeys.BADGE_COUNT,{
-	notice: 0, // 通知公告
-	todo_work: 0, // 待办事项
-	todo_read: 0, // 待阅事项
-	schedule: 0, // 日程
-	exchange: 0 // 工作交流
-})
+export const BASE_URL = 'https://36q635g350.zicp.fun'

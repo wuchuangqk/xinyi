@@ -1,4 +1,4 @@
-import constants from './constants.js'
+import { BASE_URL } from './constants.js'
 const permissionMap = {
 	'OA_PERMISSION': null,
 	'PROJECT_PERMISSION': null
@@ -91,10 +91,11 @@ export function matchLabel(value, arr, multiple = false) {
 }
 
 export const setFileUrl = (url) => {
-	if (url.startsWith('http://36q635g350.zicp.fun:8326')) {
-		return url.replace('http://36q635g350.zicp.fun:8326', 'https://36q635g350.zicp.fun')
+	const index = url.indexOf('/upload')
+	if (index === -1) {
+		return url
 	}
-	return url
+	return BASE_URL + url.substring(index)
 }
 
 export const notNull = (val) => {

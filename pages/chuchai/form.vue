@@ -63,6 +63,7 @@
 		<view class="app-page-footer">
 			<button class="btn" @click="submit">提交</button>
 		</view>
+		<view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
 	</view>
 </template>
 
@@ -113,6 +114,7 @@ export default {
 			},
 			isNeedFenGuan: false, // 分管领导
 			leadText: '',
+			renderParams: null,
 		};
 	},
 	onReady() {
@@ -153,14 +155,17 @@ export default {
 					mask: true
 				});
 				if (!this.isNeedFenGuan) delete this.formData.signCreator2
-				this.renderModule.post(this.formData)
+				this.renderParams = {
+					data: this.setPostData(this.formData),
+				}
 			})
 		},
-		callback(success, res) {
+		callback({ success, res }) {
 			uni.hideLoading();
 			if (success) {
 				uni.navigateBack();
 			} else {
+				this.renderParams = null
 				uni.showToast({
 					title: res.status === 500 ? '未知错误' : res.data.msg,
 					icon: 'none'
@@ -172,15 +177,23 @@ export default {
 </script>
 <script module="renderModule" lang="renderjs">
 import axios from 'axios'
+import { doPost } from '@/util/post.js'
 export default {
   methods: {
-    post(data) {
-      this.doPost('/waichu/waichu_add', data, axios).then(res => {
-				this.callback(true)
-      }).catch(err => {
-				this.callback(false, err.response)
-      })
-    }
+		change(renderParams) {
+			if (renderParams !== null) {
+				doPost('/waichu/waichu_add', renderParams.data, axios).then(res => {
+					this.$ownerInstance.callMethod('callback', {
+						success: true,
+					})
+				}).catch(err => {
+					this.$ownerInstance.callMethod('callback', {
+						success: false,
+						res: err.response
+					})
+				})
+			}
+		}
   },
 }
 </script>

@@ -45,6 +45,7 @@
 			<button class="btn" @click="submit(1)">同意</button>
 		</view>
 		<u-modal v-model="showConfirm" content="确认驳回吗" show-cancel-button @confirm="submit(0)"></u-modal>
+		<view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
 	</view>
 </template>
 
@@ -72,6 +73,7 @@ export default {
 			isReject: '', // 是否有驳回
 			showConfirm: false, // 驳回确认
 			context: '', // 出差地点
+			renderParams: null,
 		};
 	},
 	computed: {
@@ -139,18 +141,22 @@ export default {
 					submitUrl = '/waichu/shenpi_save'
 					break;
 			}
-			this.renderModule.post(submitUrl, {
-				option: this.comment,
-				id: this.dataId,
-				Pass: isPass,
-				staff_ids: [],
-			})
+			this.renderParams = {
+				data: this.setPostData({
+					option: this.comment,
+					id: this.dataId,
+					Pass: isPass,
+					staff_ids: [],
+				}),
+				url: submitUrl
+			}
 		},
-		callback(success, res) {
+		callback({ success, res }) {
 			uni.hideLoading();
 			if (success) {
 				uni.navigateBack();
 			} else {
+				this.renderParams = null
 				uni.showToast({
 					title: res.status === 500 ? '未知错误' : res.data.msg,
 					icon: 'none'
@@ -162,15 +168,23 @@ export default {
 </script>
 <script module="renderModule" lang="renderjs">
 import axios from 'axios'
+import { doPost } from '@/util/post.js'
 export default {
   methods: {
-    post(url, data, files) {
-      this.doPost(url, data, axios, files).then(res => {
-				this.callback(true)
-      }).catch(err => {
-				this.callback(false, err.response)
-      })
-    }
+		change(renderParams) {
+			if (renderParams !== null) {
+				doPost(renderParams.url, renderParams.data, axios).then(res => {
+					this.$ownerInstance.callMethod('callback', {
+						success: true,
+					})
+				}).catch(err => {
+					this.$ownerInstance.callMethod('callback', {
+						success: false,
+						res: err.response
+					})
+				})
+			}
+		}
   },
 }
 </script>

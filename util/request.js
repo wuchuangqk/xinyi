@@ -1,8 +1,7 @@
 import sryptoJs from 'crypto-js';
-import { storageKeys } from './constants.js'
+import { storageKeys, BASE_URL } from './constants.js'
 
 const SECERET_KEY = 'com.8bpm.yuansong.keys.2020.05.89' // 加密参数
-const BASE_URL = 'https://36q635g350.zicp.fun/api/v2'
 
 const sortAndEncrypt = (paramValues, SECERET_KEY) => {
   let paramsStr = sortParams(paramValues);
@@ -52,6 +51,23 @@ const sortParams = (params) => {
   return finalStr;
 }
 
+export const setPostData = (data) => {
+  const token = uni.getStorageSync(storageKeys.TOKEN)
+  if (token) {
+    data.access_token = token
+  }
+
+  // 添加时间戳
+  data.timestamp = new Date().getTime() + '';
+  // 加密参数
+  const signature = hamcsha1(sortParams(data), SECERET_KEY);
+  data.signature = signature;
+  for (const key in data) {
+    data[key] = encodeURIComponent(data[key])
+  }
+  return data
+}
+
 /**
  * Get请求，使用uni.request
  * @param {*} url 接口路径，以“/”开头
@@ -67,13 +83,23 @@ export const doGet = (url, data = {}) => {
     data.timestamp = new Date().getTime() + ''
     const queryString = '?' + sortAndEncrypt(data, SECERET_KEY)
     uni.request({
-      url: BASE_URL + url + queryString,
+      url: BASE_URL + '/api' + url + queryString,
       method: 'GET',
       success: (res) => {
-        if (res.data.status_code === '200') {
-          resolved(res.data)
+        // 404兼容处理
+        if (res.statusCode === 404) {
+          handleError({
+            status_code: '30000',
+            msg: '请重新登录'
+          }, rejected)
+          return
+        }
+        // 处理正常返回的结果
+        const data = res.data
+        if (data.status_code === '200') {
+          resolved(data)
         } else {
-          handleError(res.data, rejected)
+          handleError(data, rejected)
         }
       },
       fail: (err) => {
@@ -83,35 +109,39 @@ export const doGet = (url, data = {}) => {
   })
 }
 
-/**
- * Post请求，使用ajax传formData
- * @param {*} url 接口路径，以“/”开头
- * @param {*} data 
- * @param {*} axios
- * @param {*} files 文件
- */
-export const doPost = (url, data, axios, files = []) => {
-  const token = uni.getStorageSync(storageKeys.TOKEN)
-  if (token) {
-    data.access_token = token
-  }
-
-  // 添加时间戳
-  data.timestamp = new Date().getTime() + '';
-  // 加密参数
-  const signature = hamcsha1(sortParams(data), SECERET_KEY);
-  data.signature = signature;
-
-  // 转成formData
-  const formData = new FormData();
-  for (const i in data) {
-    formData.append(i, encodeURIComponent(data[i]));
-  }
-  files.forEach(file => {
-    formData.append('file', file.file);
+export const doPost = (url, data, files = []) => {
+  return new Promise((resolved, rejected) => {
+    uni.uploadFile({
+      url: BASE_URL + '/api' + url,
+      files: files.map(val => {
+        return {
+          name: 'file',
+          uri: val.url
+        }
+      }),
+      formData: setPostData(data),
+      success(res) {
+        if (res.statusCode === 404) {
+          handleError({
+            status_code: '30000',
+            msg: '请重新登录'
+          }, rejected)
+          return
+        }
+        if (res.data.status_code === '200') {
+          resolved(res.data)
+        } else {
+          handleError(res.data, rejected)
+        }
+      },
+      fail(err) {
+        rejected(err)
+      },
+      complete() {
+        uni.hideLoading();
+      }
+    })
   })
-
-  return axios.post(BASE_URL + url, formData)
 }
 
 const handleError = (res, rejected) => {
@@ -129,7 +159,12 @@ const handleError = (res, rejected) => {
         url: '/pages/login/login'
       });
       break
+    // 其他错误，例如缺少必填字段等
     default:
+      uni.showToast({
+        title: res.msg,
+        icon: 'none'
+      });
       rejected(res)
   }
 }

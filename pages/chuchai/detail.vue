@@ -33,6 +33,7 @@
 		<view class="app-page-footer">
 			<button class="btn" @click="submit">提交</button>
 		</view>
+		<view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
 	</view>
 </template>
 
@@ -53,6 +54,7 @@ export default {
 			option: '', // 出差情况说明
 			currentStep: 0,
 			context: '', // 出差地点
+			renderParams: null
 		};
 	},
 	onLoad({ dataId, }) {
@@ -82,13 +84,16 @@ export default {
 				title: '正在提交',
 				mask: true,
 			});
-			this.renderModule.post({ id: this.dataId, option: this.option })
+			this.renderParams = {
+				data: this.setPostData({ id: this.dataId, option: this.option }),
+			}
 		},
-		callback(success, res) {
+		callback({ success, res }) {
 			uni.hideLoading();
 			if (success) {
 				uni.navigateBack();
 			} else {
+				this.renderParams = null
 				uni.showToast({
 					title: res.status === 500 ? '未知错误' : res.data.msg,
 					icon: 'none'
@@ -100,15 +105,23 @@ export default {
 </script>
 <script module="renderModule" lang="renderjs">
 import axios from 'axios'
+import { doPost } from '@/util/post.js'
 export default {
   methods: {
-    post(data) {
-      this.doPost('/waichu/updateInfo', data, axios).then(res => {
-				this.callback(true)
-      }).catch(err => {
-				this.callback(false, err.response)
-      })
-    }
+		change(renderParams) {
+			if (renderParams !== null) {
+				doPost('/waichu/updateInfo', renderParams.data, axios).then(res => {
+					this.$ownerInstance.callMethod('callback', {
+						success: true,
+					})
+				}).catch(err => {
+					this.$ownerInstance.callMethod('callback', {
+						success: false,
+						res: err.response
+					})
+				})
+			}
+		}
   },
 }
 </script>

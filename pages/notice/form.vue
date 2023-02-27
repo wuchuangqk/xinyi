@@ -21,6 +21,7 @@
     <view class="app-page-footer">
       <button class="btn" @click="submit">提交</button>
     </view>
+    <view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
   </view>
 </template>
 
@@ -41,6 +42,7 @@ export default {
         noticetitle: [{ required: true, message: '请输入标题', trigger: 'blur' }],
         noticecontent: [{ required: true, message: '请输入内容', trigger: 'blur' }],
       },
+      renderParams: null
     };
   },
   onReady() {
@@ -54,14 +56,18 @@ export default {
           title: '正在提交',
           mask: true
         });
-        this.renderModule.post(this.formData, this.files)
+        this.renderParams = {
+					data: this.setPostData(this.formData),
+					files: this.files
+				}
       });
     },
-    callback(success, res) {
+    callback({ success, res }) {
       uni.hideLoading();
       if (success) {
         uni.navigateBack();
       } else {
+        this.renderParams = null
         uni.showToast({
           title: res.status === 500 ? '未知错误' : res.data.msg,
           icon: 'none'
@@ -77,15 +83,23 @@ export default {
 </script>
 <script module="renderModule" lang="renderjs">
 import axios from 'axios'
+import { doPost } from '@/util/post.js'
 export default {
   methods: {
-    post(data, files) {
-      this.doPost('/notices/notices_add', data, axios, files).then(res => {
-				this.callback(true)
-      }).catch(err => {
-				this.callback(false, err.response)
-      })
-    }
+		change(renderParams) {
+			if (renderParams !== null) {
+				doPost('/notices/notices_add', renderParams.data, axios, renderParams.files).then(res => {
+					this.$ownerInstance.callMethod('callback', {
+						success: true,
+					})
+				}).catch(err => {
+					this.$ownerInstance.callMethod('callback', {
+						success: false,
+						res: err.response
+					})
+				})
+			}
+		}
   },
 }
 </script>

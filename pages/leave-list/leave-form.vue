@@ -103,6 +103,7 @@ export default {
 			<p> 3->分管副总 </p>
 			*/
 			level: 1,
+			renderParams: null,
 		};
 	},
 	onReady() {
@@ -171,19 +172,10 @@ export default {
 				if (!this.bumen) delete this.formData.signCreator1
 				if (!this.fenguan) delete this.formData.signCreator2
 				if (!this.zongjingli) delete this.formData.signCreator3
-				this.renderModule.post(this.formData, this.files)
+				this.doPost('/qingjia/qingjia_add', this.formData, this.files).then(() => {
+					uni.navigateBack();
+				})
 			})
-		},
-		callback(success, res) {
-			uni.hideLoading();
-			if (success) {
-				uni.navigateBack();
-			} else {
-				uni.showToast({
-					title: res.status === 500 ? '未知错误' : res.data.msg,
-					icon: 'none'
-				});
-			}
 		},
 		// 上传附件
 		upload(files) {
@@ -222,21 +214,5 @@ export default {
 	}
 };
 </script>
-<script module="renderModule" lang="renderjs">
-import axios from 'axios'
-export default {
-  methods: {
-    post(data, files) {
-      this.doPost('/qingjia/qingjia_add', data, axios, files).then(res => {
-				this.callback(true)
-      }).catch(err => {
-				this.callback(false, err.response)
-      })
-    }
-  },
-}
-</script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

@@ -4,7 +4,7 @@ import store from './store'
 import { storageKeys, events } from './util/constants.js'
 import dayjs from 'dayjs'
 import { hasPermission } from '@/util/index.js'
-import { doGet, doPost } from '@/util/request'
+import { doGet, setPostData, doPost } from '@/util/request'
 import ListTabbar from '@/components/list-tabbar'
 import FloatButton from '@/components/float-button'
 import PageEmpty from '@/components/page-empty'
@@ -22,6 +22,7 @@ Vue.prototype.$dayjs = dayjs // 挂载时间格式化工具库
 Vue.prototype.$hasPermission = hasPermission // 挂载权限验证函数
 Vue.prototype.doGet = doGet
 Vue.prototype.doPost = doPost
+Vue.prototype.setPostData = setPostData
 Vue.prototype.setFileUrl = setFileUrl
 Vue.prototype.notNull = notNull
 App.mpType = 'app'
