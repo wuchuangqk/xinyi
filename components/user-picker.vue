@@ -24,6 +24,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    url: {
+      type: String,
+      default: '/pages/jiaban/select-user'
     }
   },
   data() {
@@ -35,7 +39,7 @@ export default {
     navToSelect() {
       if (this.disabled) return
       uni.navigateTo({
-        url: '/pages/jiaban/select-user'
+        url: this.url
       });
     }
   }

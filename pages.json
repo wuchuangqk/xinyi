@@ -170,6 +170,27 @@
 				"navigationBarTitleText": "出差详情",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/zonghe/list",
+			"style": {
+				"navigationBarTitleText": "综合审批",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/zonghe/form",
+			"style": {
+				"navigationBarTitleText": "综合申请",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/zonghe/select-user",
+			"style": {
+				"navigationBarTitleText": "选择用户",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {

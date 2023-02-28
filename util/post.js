@@ -10,7 +10,7 @@ export const doPost = (url, data, axios) => {
     // 转成formData
     const formData = new FormData();
     for (const i in data) {
-      formData.append(i, encodeURIComponent(data[i]));
+      formData.append(i, data[i]);
     }
     axios.post(BASE_URL + '/api' + url, formData).then(res => {
       // 兼容404

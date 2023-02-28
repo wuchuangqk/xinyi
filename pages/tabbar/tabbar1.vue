@@ -90,6 +90,12 @@ export default {
 					url: '/pages/chuchai/list',
 					color: '#14bd82',
 				},
+				{
+					name: '综合审批',
+					icon: 'icon-waiqin1',
+					url: '/pages/zonghe/list',
+					color: '#14bd82',
+				},
 			],
 			noticeList: [], // 通知公告
 		}
@@ -158,6 +164,7 @@ export default {
 
 .row {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .col {

@@ -52,12 +52,14 @@
 <script>
 import FileViewer from '@/components/image-viewer.vue';
 import ApprovalTimeLine from '@/components/approval-timeline.vue';
+import renderMixin from '@/mixin/render'
 
 export default {
 	components: {
 		FileViewer,
 		ApprovalTimeLine,
 	},
+	mixins: [renderMixin],
 	data() {
 		return {
 			detailList: [], // 详情字段
@@ -73,7 +75,6 @@ export default {
 			isReject: '', // 是否有驳回
 			showConfirm: false, // 驳回确认
 			context: '', // 出差地点
-			renderParams: null,
 		};
 	},
 	computed: {
@@ -140,6 +141,10 @@ export default {
 				case '/waichu/shenpi_detail':
 					submitUrl = '/waichu/shenpi_save'
 					break;
+				// 综合审批
+				case '/zhsp/zhsp_detail':
+					submitUrl = '/zhsp/shenpi_save'
+					break;
 			}
 			this.renderParams = {
 				data: this.setPostData({
@@ -149,18 +154,6 @@ export default {
 					staff_ids: [],
 				}),
 				url: submitUrl
-			}
-		},
-		callback({ success, res }) {
-			uni.hideLoading();
-			if (success) {
-				uni.navigateBack();
-			} else {
-				this.renderParams = null
-				uni.showToast({
-					title: res.status === 500 ? '未知错误' : res.data.msg,
-					icon: 'none'
-				});
 			}
 		},
 	}
@@ -173,14 +166,14 @@ export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost(renderParams.url, renderParams, axios).then(res => {
+				doPost(renderParams.url, renderParams.data, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})
 				}).catch(err => {
 					this.$ownerInstance.callMethod('callback', {
 						success: false,
-						res: err.response
+						res: err
 					})
 				})
 			}
