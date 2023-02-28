@@ -68,7 +68,9 @@
 </template>
 
 <script>
+import renderMixin from '@/mixin/render'
 export default {
+	mixins: [renderMixin],
 	data() {
 		return {
 			formData: {
@@ -114,7 +116,6 @@ export default {
 			},
 			isNeedFenGuan: false, // 分管领导
 			leadText: '',
-			renderParams: null,
 		};
 	},
 	onReady() {
@@ -155,22 +156,8 @@ export default {
 					mask: true
 				});
 				if (!this.isNeedFenGuan) delete this.formData.signCreator2
-				this.renderParams = {
-					data: this.setPostData(this.formData),
-				}
+				this.renderParams = this.setPostData(this.formData)
 			})
-		},
-		callback({ success, res }) {
-			uni.hideLoading();
-			if (success) {
-				uni.navigateBack();
-			} else {
-				this.renderParams = null
-				uni.showToast({
-					title: res.status === 500 ? '未知错误' : res.data.msg,
-					icon: 'none'
-				});
-			}
 		},
 	}
 };
@@ -189,7 +176,7 @@ export default {
 				}).catch(err => {
 					this.$ownerInstance.callMethod('callback', {
 						success: false,
-						res: err.response
+						res: err
 					})
 				})
 			}

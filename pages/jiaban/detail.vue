@@ -25,7 +25,6 @@
 		<view class="app-page-footer">
 			<button class="btn" @click="submit">提交</button>
 		</view>
-		<view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
 	</view>
 </template>
 
@@ -49,7 +48,6 @@ export default {
 			currentStep: 0, // 当前步骤
 			isStart: null, // 0=开始加班，1=结束加班
 			files: [], // 加班照片
-			renderParams: null,
 		};
 	},
 	onLoad({ isStart, dataId, }) {
@@ -82,48 +80,12 @@ export default {
 			uni.showLoading({
 				title: '正在提交',
 			});
-			this.renderParams = {
-				data: this.setPostData({ id: this.dataId }),
-				url,
-				files: this.files
-			}
-		},
-		callback({ success, res }) {
-			uni.hideLoading();
-			if (success) {
+			this.doPost(url, { id: this.dataId }, this.files).then(() => {
 				uni.navigateBack();
-			} else {
-				this.renderParams = null
-				uni.showToast({
-					title: res.status === 500 ? '未知错误' : res.data.msg,
-					icon: 'none'
-				});
-			}
+			})
 		},
 	}
 };
-</script>
-<script module="renderModule" lang="renderjs">
-import axios from 'axios'
-import { doPost } from '@/util/post.js'
-export default {
-  methods: {
-		change(renderParams) {
-			if (renderParams !== null) {
-				doPost(renderParams.url, renderParams, axios).then(res => {
-					this.$ownerInstance.callMethod('callback', {
-						success: true,
-					})
-				}).catch(err => {
-					this.$ownerInstance.callMethod('callback', {
-						success: false,
-						res: err.response
-					})
-				})
-			}
-		}
-  },
-}
 </script>
 <style scoped lang="scss">
 @import '@/styles/detail.scss';

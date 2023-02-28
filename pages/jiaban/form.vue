@@ -50,8 +50,11 @@
 
 <script>
 import userPicker from '@/components/user-picker'
+import renderMixin from '@/mixin/render'
+
 export default {
 	components: { userPicker },
+	mixins: [renderMixin],
 	data() {
 		return {
 			formData: {
@@ -91,7 +94,6 @@ export default {
 			isShowFenGuan: false, // 分管领导
 			isShowZongJL: false, // 总经理
 			isLeader: false, // 是否是领导(职位是董事长、总经理、副总经理)
-			renderParams: null,
 		};
 	},
 	onShow() {
@@ -172,22 +174,8 @@ export default {
 				});
 				if (!this.isShowFenGuan) delete this.formData.signCreator2
 				if (!this.isShowZongJL) delete this.formData.signCreator3
-				this.renderParams = {
-					data: this.setPostData(this.formData),
-				}
+				this.renderParams = this.setPostData(this.formData)
 			})
-		},
-		callback({ success, res }) {
-			uni.hideLoading();
-			if (success) {
-				uni.navigateBack();
-			} else {
-				this.renderParams = null
-				uni.showToast({
-					title: res.status === 500 ? '未知错误' : res.data.msg,
-					icon: 'none'
-				});
-			}
 		},
 		selectUser() {
 			uni.navigateTo({
@@ -211,7 +199,7 @@ export default {
 				}).catch(err => {
 					this.$ownerInstance.callMethod('callback', {
 						success: false,
-						res: err.response
+						res: err
 					})
 				})
 			}

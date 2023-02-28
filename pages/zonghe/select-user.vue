@@ -7,7 +7,7 @@
     <view class="page-main">
       <scroll-view scroll-y style="height: 100%;">
         <!-- 渲染区 -->
-        <u-cell-group :title="`部门(${departs.length})`">
+        <u-cell-group v-show="departs.length > 0" :title="`部门`">
           <u-cell-item v-for="depart in departs" :key="depart.id" :arrow="true" @click="nextDepart(depart)">
             <view slot="title">
               <text>{{ depart.name }}</text>
@@ -15,7 +15,7 @@
             </view>
           </u-cell-item>
         </u-cell-group>
-        <u-cell-group :title="`人员(${staffs.length})`">
+        <u-cell-group v-show="staffs.length > 0" :title="`人员`">
           <u-cell-item v-for="user in staffs" :key="user.id" :arrow="false">
             <view slot="title">
               <text>{{ user.name }}</text>
@@ -27,7 +27,7 @@
       </scroll-view>
     </view>
     <view class="app-page-footer">
-      <view class="user-name">{{ selectedUsers.map(user => user.name).join(',') }}</view>
+      <view class="user-name">已选用户：{{ selectedUsers.map(user => user.name).join(',') }}</view>
       <button class="btn" @click="submit">确定</button>
     </view>
   </view>
@@ -94,7 +94,9 @@ export default {
 }
 
 .app-page-footer {
+  padding: 5px 8px;
   display: flex;
+  align-items: center;
   background-color: white;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
