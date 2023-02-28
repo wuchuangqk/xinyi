@@ -62,9 +62,6 @@ export const setPostData = (data) => {
   // 加密参数
   const signature = hamcsha1(sortParams(data), SECERET_KEY);
   data.signature = signature;
-  for (const key in data) {
-    data[key] = encodeURIComponent(data[key])
-  }
   return data
 }
 
@@ -88,10 +85,11 @@ export const doGet = (url, data = {}) => {
       success: (res) => {
         // 404兼容处理
         if (res.statusCode === 404) {
-          handleError({
-            status_code: '30000',
-            msg: '请重新登录'
-          }, rejected)
+          handleError({ status_code: '30000', msg: '请重新登录' }, rejected)
+          return
+        }
+        if (res.statusCode === 200 && res.data.MessageDetail) {
+          handleError({ status_code: '30000', msg: '请重新登录' }, rejected)
           return
         }
         // 处理正常返回的结果
@@ -103,6 +101,7 @@ export const doGet = (url, data = {}) => {
         }
       },
       fail: (err) => {
+        console.log('util/request.js doGet uni.request:fail回调', err)
         rejected(err)
       }
     })
@@ -110,7 +109,7 @@ export const doGet = (url, data = {}) => {
 }
 
 export const doPost = (url, data, files = []) => {
-  return new Promise((resolved, rejected) => {
+  return new Promise((resolve, rejected) => {
     uni.uploadFile({
       url: BASE_URL + '/api' + url,
       files: files.map(val => {
@@ -122,19 +121,24 @@ export const doPost = (url, data, files = []) => {
       formData: setPostData(data),
       success(res) {
         if (res.statusCode === 404) {
-          handleError({
-            status_code: '30000',
-            msg: '请重新登录'
-          }, rejected)
+          handleError({ status_code: '30000', msg: '请重新登录' }, rejected)
           return
         }
-        if (res.data.status_code === '200') {
-          resolved(res.data)
-        } else {
-          handleError(res.data, rejected)
+        try {
+          res.data = typeof (res.data) === 'string' ? JSON.parse(res.data) : res.data
+          if (res.data.status_code === '200') {
+            resolve(res.data)
+          } else {
+            console.log('util/request.js doPost 接口返回失败信息', res.data)
+            handleError(res.data, rejected)
+          }
+        } catch (e) {
+          console.log('util/request.js doPost 尝试转换JSON出错', e)
+          handleError({ status_code: '500', msg: '未知错误' }, rejected)
         }
       },
       fail(err) {
+        console.log('util/request.js doPost uni.request:fail回调', err)
         rejected(err)
       },
       complete() {
@@ -144,7 +148,7 @@ export const doPost = (url, data, files = []) => {
   })
 }
 
-const handleError = (res, rejected) => {
+export const handleError = (res, rejected) => {
   switch (res.status_code) {
     // 授权已过期
     case '30000':
@@ -165,6 +169,8 @@ const handleError = (res, rejected) => {
         title: res.msg,
         icon: 'none'
       });
-      rejected(res)
+      if (rejected) {
+        rejected(res)
+      }
   }
 }

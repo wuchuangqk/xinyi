@@ -182,7 +182,7 @@ export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost('/waichu/waichu_add', renderParams.data, axios).then(res => {
+				doPost('/waichu/waichu_add', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})

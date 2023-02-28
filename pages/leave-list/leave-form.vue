@@ -51,14 +51,17 @@
 		<view class="app-page-footer">
 			<button class="btn" @click="submit">提交</button>
 		</view>
+		<view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
 	</view>
 </template>
 
 <script>
 import FileViewer from '@/components/file-uploader.vue';
+import renderMixin from '@/mixin/render'
 
 export default {
 	components: { FileViewer },
+	mixins: [renderMixin],
 	data() {
 		return {
 			formData: {
@@ -103,7 +106,6 @@ export default {
 			<p> 3->分管副总 </p>
 			*/
 			level: 1,
-			renderParams: null,
 		};
 	},
 	onReady() {
@@ -172,9 +174,14 @@ export default {
 				if (!this.bumen) delete this.formData.signCreator1
 				if (!this.fenguan) delete this.formData.signCreator2
 				if (!this.zongjingli) delete this.formData.signCreator3
-				this.doPost('/qingjia/qingjia_add', this.formData, this.files).then(() => {
-					uni.navigateBack();
-				})
+				if (this.files.length) {
+					this.doPost('/qingjia/qingjia_add', this.formData, this.files).then(() => {
+						uni.navigateBack();
+					})
+				} else {
+					this.renderParams = this.setPostData(this.formData)
+				}
+
 			})
 		},
 		// 上传附件
@@ -210,9 +217,30 @@ export default {
 				this.fenguan = false;
 				this.zongjingli = true;
 			}
-		}
+		},
 	}
 };
 </script>
-
+<script module="renderModule" lang="renderjs">
+import axios from 'axios'
+import { doPost } from '@/util/post.js'
+export default {
+  methods: {
+		change(renderParams) {
+			if (renderParams !== null) {
+				doPost('/qingjia/qingjia_add', renderParams, axios).then(res => {
+					this.$ownerInstance.callMethod('callback', {
+						success: true,
+					})
+				}).catch(err => {
+					this.$ownerInstance.callMethod('callback', {
+						success: false,
+						res: err
+					})
+				})
+			}
+		}
+  },
+}
+</script>
 <style scoped lang="scss"></style>

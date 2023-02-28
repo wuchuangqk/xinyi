@@ -28,9 +28,11 @@
 <script>
 import AppSelect from '@/components/app-select.vue';
 import FileViewer from '@/components/file-uploader.vue';
+import renderMixin from '@/mixin/render'
 
 export default {
   components: { AppSelect, FileViewer },
+  mixins: [renderMixin],
   data() {
     return {
       formData: {
@@ -42,7 +44,6 @@ export default {
         noticetitle: [{ required: true, message: '请输入标题', trigger: 'blur' }],
         noticecontent: [{ required: true, message: '请输入内容', trigger: 'blur' }],
       },
-      renderParams: null
     };
   },
   onReady() {
@@ -56,23 +57,16 @@ export default {
           title: '正在提交',
           mask: true
         });
-        this.renderParams = {
-					data: this.setPostData(this.formData),
-					files: this.files
-				}
+        if (this.files.length) {
+          this.doPost('/notices/notices_add', this.formData, this.files).then(() => {
+            uni.navigateBack();
+          }).catch(err => {
+            
+          })
+        } else {
+          this.renderParams = this.setPostData(this.formData)
+        }
       });
-    },
-    callback({ success, res }) {
-      uni.hideLoading();
-      if (success) {
-        uni.navigateBack();
-      } else {
-        this.renderParams = null
-        uni.showToast({
-          title: res.status === 500 ? '未知错误' : res.data.msg,
-          icon: 'none'
-        });
-      }
     },
     // 上传附件
     upload(files) {
@@ -88,14 +82,14 @@ export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost('/notices/notices_add', renderParams.data, axios, renderParams.files).then(res => {
+				doPost('/notices/notices_add', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})
 				}).catch(err => {
 					this.$ownerInstance.callMethod('callback', {
 						success: false,
-						res: err.response
+						res: err
 					})
 				})
 			}
@@ -104,6 +98,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

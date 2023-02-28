@@ -173,7 +173,7 @@ export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost(renderParams.url, renderParams.data, axios).then(res => {
+				doPost(renderParams.url, renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})

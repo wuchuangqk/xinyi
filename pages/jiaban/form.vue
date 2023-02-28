@@ -204,7 +204,7 @@ export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost('/jiaban/jiaban_add', renderParams.data, axios).then(res => {
+				doPost('/jiaban/jiaban_add', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})

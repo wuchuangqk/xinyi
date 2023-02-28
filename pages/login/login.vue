@@ -88,10 +88,6 @@ export default {
 				});
 			}).catch(err => {
 				uni.hideLoading();
-				uni.showToast({
-					title: err.msg,
-					icon: 'none'
-				});
 			});
 		},
 		checkLogin() {

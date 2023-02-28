@@ -110,7 +110,7 @@ export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost('/waichu/updateInfo', renderParams.data, axios).then(res => {
+				doPost('/waichu/updateInfo', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})
