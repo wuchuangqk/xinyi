@@ -101,6 +101,10 @@ export const doGet = (url, data = {}) => {
         }
       },
       fail: (err) => {
+        uni.showToast({
+          title: '未知错误',
+          icon: 'none'
+        });
         console.log('util/request.js doGet uni.request:fail回调', err)
         rejected(err)
       }
@@ -112,9 +116,9 @@ export const doPost = (url, data, files = []) => {
   return new Promise((resolve, rejected) => {
     uni.uploadFile({
       url: BASE_URL + '/api' + url,
-      files: files.map(val => {
+      files: files.map((val, index) => {
         return {
-          name: 'file',
+          name: 'file' + index,
           uri: val.url
         }
       }),

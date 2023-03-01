@@ -29,6 +29,10 @@ export default {
       type: String,
       default: '请选择'
     },
+    mode: {
+      type: String,
+      default: 'time'
+    }
   },
   data() {
     return {
@@ -37,8 +41,8 @@ export default {
         year: true,
         month: true,
         day: true,
-        hour: true,
-        minute: true,
+        hour: this.mode === 'time',
+        minute: this.mode === 'time',
         second: false
       },
       value: '',
@@ -47,14 +51,23 @@ export default {
   watch: {
     modelValue() {
       if (this.value === '' && this.modelValue) {
-        this.value = this.$dayjs(this.modelValue).format('YYYY-MM-DD HH:mm')
+        if (this.mode === 'time') {
+          this.value = this.$dayjs(this.modelValue).format('YYYY-MM-DD HH:mm')
+        } else if (this.mode === 'date') {
+          this.value = this.$dayjs(this.modelValue).format('YYYY-MM-DD')
+        }
       }
     }
   },
   methods: {
     change(data) {
-      this.value = `${data.year}-${data.month}-${data.day} ${data.hour}:${data.minute}`
-      this.$emit('update:modelValue', this.value + ':00')
+      if (this.mode === 'time') {
+        this.value = `${data.year}-${data.month}-${data.day} ${data.hour}:${data.minute}`
+        this.$emit('update:modelValue', this.value + ':00')
+      } else if (this.mode === 'date') {
+        this.value = `${data.year}-${data.month}-${data.day}`
+        this.$emit('update:modelValue', this.value)
+      }
     }
   }
 }

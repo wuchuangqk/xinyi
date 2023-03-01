@@ -40,3 +40,4 @@ export const events = {
 }
 
 export const BASE_URL = 'https://36q635g350.zicp.fun'
+// export const BASE_URL = 'http://192.168.0.3:8090'

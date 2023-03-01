@@ -61,7 +61,7 @@ export default {
           this.doPost('/notices/notices_add', this.formData, this.files).then(() => {
             uni.navigateBack();
           }).catch(err => {
-            
+
           })
         } else {
           this.renderParams = this.setPostData(this.formData)

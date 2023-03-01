@@ -91,7 +91,7 @@ export default {
 		this.url = url
 		this.dataId = dataId
 		this.isApprove = isApprove
-		// this.isReject = isReject
+		this.isReject = isReject
 	},
 	onReady() {
 		this.getDetail()
@@ -144,6 +144,18 @@ export default {
 				// 综合审批
 				case '/zhsp/zhsp_detail':
 					submitUrl = '/zhsp/shenpi_save'
+					break;
+				// 资产购置
+				case '/zhigou/zhigou_detail':
+					submitUrl = '/zhigou/shenpi_save'
+					break;
+				// 接待申请
+				case '/jiedai/detail':
+					submitUrl = '/jiedai/shenpi_save'
+					break;
+				// 用章申请
+				case '/ying/detail':
+					submitUrl = '/ying/shenpi_save'
 					break;
 			}
 			this.renderParams = {

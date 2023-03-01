@@ -60,7 +60,7 @@ export default function() {
 				uni.navigateTo({
 					url: `/uni_modules/uni-upgrade-center-app/pages/upgrade-popup?local_storage_key=${PACKAGE_INFO_KEY}`,
 					fail: (err) => {
-						console.error('更新弹框跳转失败', err)
+						// console.error('更新弹框跳转失败', err)
 						uni.removeStorageSync(PACKAGE_INFO_KEY)
 					}
 				})
@@ -68,13 +68,13 @@ export default function() {
 				return
 			} else if (code < 0) {
 				// TODO 云函数报错处理
-				console.error(message)
+				// console.error(message)
 				return reject(e)
 			}
 			return resolve(e)
 		}).catch(err => {
 			// TODO 云函数报错处理
-			console.error(err.message)
+			// console.error(err.message)
 			reject(err)
 		})
 	});
@@ -122,7 +122,7 @@ function updateUseModal(packageInfo) {
 				url,
 				success: res => {
 					if (res.statusCode !== 200) {
-						console.error('下载安装包失败', err);
+						// console.error('下载安装包失败', err);
 						return;
 					}
 					// 下载好直接安装，下次启动生效

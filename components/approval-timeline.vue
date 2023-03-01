@@ -8,12 +8,16 @@
 					<view class="arrow"></view>
 					<view class="top">
 						<view class="step-state">
-							<image :src="setStateImg(index, flow)" alt=""></image>
+							<image v-if="!isHasReject || (isHasReject && index <= currentStep)" :src="setStateImg(index, flow)"
+								alt="" />
 						</view>
 						<view class="s1">
 							<text>{{ flow.Comments }}</text>
 						</view>
-						<text class="step-time">{{ flow.Signed ? flow.Created : index === currentStep ? '正在审批' : '等待审批' }}</text>
+						<text v-if="isHasReject && index > currentStep" class="step-time">无需审批</text>
+						<text v-else class="step-time">
+							{{ flow.Signed ? flow.Created : index === currentStep ? '正在审批' : '等待审批' }}
+						</text>
 					</view>
 				</view>
 			</view>
@@ -45,9 +49,10 @@ export default {
 				['wait', '/static/img/wait1.png'], // 等待办理
 				['current', '/static/img/doing1.png'], // 正在办待中
 				['done', '/static/img/complete1.png'], // 已完成
-				// [4, '/static/img/reject.png'] // 退回
+				['reject', '/static/img/reject.png'] // 退回
 			]),
-			defaultImg: '/static/img/default.jpg'
+			defaultImg: '/static/img/default.jpg',
+			isHasReject: false, // 流程里是否出现了驳回
 		};
 	},
 	created() { },
@@ -64,7 +69,12 @@ export default {
 		setStateImg(index, flow) {
 			// 已审批
 			if (flow.Signed) {
-				return this.stateImg.get('done')
+				if (index === this.currentStep) {
+					this.isHasReject = true
+					return this.stateImg.get('reject')
+				} else {
+					return this.stateImg.get('done')
+				}
 			} else {
 				// 审批中
 				if (index === this.currentStep) {

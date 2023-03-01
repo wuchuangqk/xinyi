@@ -13,6 +13,7 @@
 							<view class="col" v-for="item in officeMenus" :key="item.name" @click="nav(item.url)">
 								<view class="icon-bg" :style="{ background: item.color }">
 									<icon-font :icon="item.icon" class="item-icon"></icon-font>
+									<view v-if="item.count" class="badge">{{ item.count }}</view>
 								</view>
 								<view class="item-name">
 									<text>{{ item.name }}</text>
@@ -64,7 +65,6 @@ export default {
 	},
 	data() {
 		return {
-			/* #fe8007 #14bd82 #0382fb #f25641 #ff4727 */
 			officeMenus: [
 				{
 					name: '请假管理',
@@ -74,7 +74,7 @@ export default {
 				},
 				{
 					name: '加班管理',
-					icon: 'icon-keshi',
+					icon: 'icon-jiaban',
 					url: '/pages/jiaban/list',
 					color: '#f9a202',
 				},
@@ -83,18 +83,44 @@ export default {
 					icon: 'icon-gonggao',
 					url: '/pages/notice/notice',
 					color: '#fe8007',
+					count: 0,
 				},
 				{
 					name: '出差管理',
-					icon: 'icon-waiqin1',
+					icon: 'icon-chucha',
 					url: '/pages/chuchai/list',
 					color: '#14bd82',
 				},
 				{
 					name: '综合审批',
-					icon: 'icon-waiqin1',
+					icon: 'icon-zongheguanli',
 					url: '/pages/zonghe/list',
+					color: '#0382fb',
+				},
+				{
+					name: '资产购置',
+					icon: 'icon-wuzicaigou',
+					url: '/pages/zichan/list',
+					color: '#f25641',
+				},
+				{
+					name: '接待申请',
+					icon: 'icon-jiedai',
+					url: '/pages/jiedai/list',
 					color: '#14bd82',
+				},
+				{
+					name: '用章申请',
+					icon: 'icon-yinzhangkezhi',
+					url: '/pages/yongzhang/list',
+					color: '#fe8007',
+				},
+				{
+					name: '待办事项',
+					icon: 'icon-daibanshixiang',
+					url: '/pages/todo/todo',
+					color: '#f9a202',
+					count: 0,
 				},
 			],
 			noticeList: [], // 通知公告
@@ -113,6 +139,7 @@ export default {
 	},
 	onShow() {
 		this.getNoticeList()
+		this.getBadge()
 	},
 	methods: {
 		nav(url) {
@@ -120,6 +147,7 @@ export default {
 				url
 			});
 		},
+		// 前5条通知公告
 		getNoticeList() {
 			this.doGet('/notices/list').then(res => {
 				this.noticeList = (res.data || []).slice(0, 5)
@@ -130,6 +158,14 @@ export default {
 				url: `/pages/noticeDetail/noticeDetail?dataId=${id}`,
 			});
 		},
+		// 角标
+		getBadge() {
+			this.doGet('/home/homecont').then(res => {
+				const { todocount, noticecount } = res.data
+				this.officeMenus.find(val => val.name === '待办事项').count = todocount
+				this.officeMenus.find(val => val.name === '通知公告').count = noticecount
+			})
+		}
 	}
 }
 </script>
@@ -184,6 +220,21 @@ export default {
 	justify-content: center;
 	align-items: center;
 	position: relative;
+
+	.badge {
+		position: absolute;
+		top: -3px;
+		right: -3px;
+		background-color: red;
+		color: white;
+		font-size: 13px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+	}
 }
 
 .item {
