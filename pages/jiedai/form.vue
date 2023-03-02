@@ -5,16 +5,16 @@
 				<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
 					<view class="card form-card">
 						<u-form-item label="宾客姓名" prop="xingming" required>
-							<u-input v-model="formData.xingming" placeholder="请输入宾客姓名" maxlength="4" />
+							<u-input v-model="formData.xingming" placeholder="请输入宾客姓名" />
 						</u-form-item>
 						<u-form-item label="单位职位" prop="zhiwu" required>
-							<u-input v-model="formData.zhiwu" placeholder="请输入单位职位" maxlength="20" />
+							<u-input v-model="formData.zhiwu" placeholder="请输入单位职位" />
 						</u-form-item>
 						<u-form-item label="申请时间" prop="docDate" required>
 							<date-picker v-model="formData.docDate" :defaultTime="formData.docDate" placeholder="请选择申请日期" />
 						</u-form-item>
 						<u-form-item label="接待事由" prop="comments" required>
-							<u-input v-model="formData.comments" placeholder="请输入接待事由" maxlength="50" />
+							<u-input v-model="formData.comments" placeholder="请输入接待事由" />
 						</u-form-item>
 						<u-form-item label="用餐人数" prop="ycrs" required>
 							<u-input v-model="formData.ycrs" type="number" placeholder="请输入用餐人数" />

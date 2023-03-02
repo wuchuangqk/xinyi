@@ -146,9 +146,10 @@ export default {
 		}
 	},
 	onLoad() {
-
+		uni.hideTabBar();
 	},
 	onShow() {
+		uni.hideTabBar();
 		this.getNoticeList()
 		this.getBadge()
 	},

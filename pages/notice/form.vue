@@ -26,12 +26,11 @@
 </template>
 
 <script>
-import AppSelect from '@/components/app-select.vue';
 import FileViewer from '@/components/file-uploader.vue';
 import renderMixin from '@/mixin/render'
 
 export default {
-  components: { AppSelect, FileViewer },
+  components: { FileViewer },
   mixins: [renderMixin],
   data() {
     return {

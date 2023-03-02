@@ -4,7 +4,6 @@ export default {
   // 应用启动时调用，应用生命周期里只执行一次
   onLaunch() {
     checkUpdate()
-    uni.hideTabBar();
   },
   onShow() {
   },

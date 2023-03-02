@@ -53,13 +53,6 @@
 			}
 		},
 		{
-			"path": "pages/user-info/user-profile",
-			"style": {
-				"navigationBarTitleText": "个人资料",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
 			"path": "pages/office/office",
 			"style": {
 				"navigationBarTitleText": "办公",

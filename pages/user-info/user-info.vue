@@ -42,6 +42,12 @@ export default {
 			appVersion: null
 		};
 	},
+	onLoad() {
+		uni.hideTabBar();
+	},
+	onShow() {
+		uni.hideTabBar();
+	},
 	onReady() {
 		this.userInfo = uni.getStorageSync(this.$const.USER_INFO)
 		if (!this.userInfo.avatar) {

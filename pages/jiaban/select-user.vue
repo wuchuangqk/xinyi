@@ -6,7 +6,6 @@
 					<u-search placeholder="输入用户姓名搜索" v-model="keyword" :show-action="false" @search="search"
 						@clear="search"></u-search>
 				</view>
-
 				<u-cell-group>
 					<u-cell-item v-for="user in listData" :key="user.userid" :title="user.displayname" :arrow="false">
 						<u-checkbox v-model="user.checked"></u-checkbox>
@@ -21,11 +20,7 @@
 </template>
 
 <script>
-import AppSelect from '@/components/app-select.vue';
-import FileViewer from '@/components/file-viewer.vue';
-
 export default {
-	components: { AppSelect, FileViewer },
 	data() {
 		return {
 			listData: [],

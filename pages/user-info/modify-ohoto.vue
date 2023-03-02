@@ -12,7 +12,6 @@
 
 <script>
 import { uploadHost } from '@/util/http.js';
-import { uploadHeadImg } from '@/api/user.js';
 export default {
 	data() {
 		return {
