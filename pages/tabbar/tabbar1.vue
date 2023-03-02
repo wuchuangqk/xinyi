@@ -54,18 +54,36 @@
 				</view>
 			</scroll-view>
 		</view>
+		<Tabbar text="首页" />
 	</view>
 </template>
 
 <script>
 import IconFont from '@/components/icon-font.vue';
+import Tabbar from '../../components/Tabbar.vue';
+
 export default {
 	components: {
-		IconFont
+		IconFont,
+		Tabbar
 	},
 	data() {
 		return {
 			officeMenus: [
+				{
+					name: '通知公告',
+					icon: 'icon-gonggao',
+					url: '/pages/notice/notice',
+					color: '#fe8007',
+					count: 0,
+				},
+				{
+					name: '待办事项',
+					icon: 'icon-daibanshixiang',
+					url: '/pages/todo/todo',
+					color: '#f9a202',
+					count: 0,
+				},
 				{
 					name: '请假管理',
 					icon: 'icon-qingjia',
@@ -77,13 +95,6 @@ export default {
 					icon: 'icon-jiaban',
 					url: '/pages/jiaban/list',
 					color: '#f9a202',
-				},
-				{
-					name: '通知公告',
-					icon: 'icon-gonggao',
-					url: '/pages/notice/notice',
-					color: '#fe8007',
-					count: 0,
 				},
 				{
 					name: '出差管理',
@@ -116,9 +127,9 @@ export default {
 					color: '#fe8007',
 				},
 				{
-					name: '待办事项',
+					name: '工作计划',
 					icon: 'icon-daibanshixiang',
-					url: '/pages/todo/todo',
+					url: '/pages/plan/list',
 					color: '#f9a202',
 					count: 0,
 				},

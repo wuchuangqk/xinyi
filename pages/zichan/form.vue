@@ -91,7 +91,11 @@ export default {
 				zgyy: [{ required: true, message: '请输入购置理由' }],
 				sign1: [{ required: true, message: '请选择部门审批人' }],
 			},
+			listPath: '/pages/zichan/list',
 		};
+	},
+	onLoad({ from }) {
+		this.from = from
 	},
 	onReady() {
 		this.$refs.uForm.setRules(this.rules);

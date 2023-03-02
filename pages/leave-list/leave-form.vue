@@ -106,7 +106,11 @@ export default {
 			<p> 3->分管副总 </p>
 			*/
 			level: 1,
+			listPath: '/pages/leave-list/list',
 		};
+	},
+	onLoad({from}) {
+		this.from = from
 	},
 	onReady() {
 		this.formData.qjstime = this.$dayjs().format('YYYY-MM-DD HH:mm:ss')
@@ -176,12 +180,11 @@ export default {
 				if (!this.zongjingli) delete this.formData.signCreator3
 				if (this.files.length) {
 					this.doPost('/qingjia/qingjia_add', this.formData, this.files).then(() => {
-						uni.navigateBack();
+						this.back()
 					})
 				} else {
 					this.renderParams = this.setPostData(this.formData)
 				}
-
 			})
 		},
 		// 上传附件

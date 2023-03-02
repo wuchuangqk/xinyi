@@ -5,11 +5,11 @@
 		<swiper style="height: 100%;" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<!-- 登记用章 -->
 			<swiper-item class="swiper-item">
-				<DangAnChaYue :yingtype="0" />
+				<DangAnChaYue :yingtype="0" :from-page="from" />
 			</swiper-item>
 			<!-- 公章外带 -->
 			<swiper-item class="swiper-item">
-				<DangAnChaYue :yingtype="1" />
+				<DangAnChaYue :yingtype="1" :from-page="from" />
 			</swiper-item>
 		</swiper>
 	</view>
@@ -28,7 +28,11 @@ export default {
 			current: 0,
 			swiperCurrent: 0,
 			selectedUsers: [],
+			from: '',
 		}
+	},
+	onLoad({ from }) {
+		this.from = from
 	},
 	methods: {
 		tabsChange(index) {

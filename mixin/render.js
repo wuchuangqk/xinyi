@@ -2,6 +2,7 @@
 const mixin = {
   data() {
     return {
+      from: '',
       renderParams: null
     }
   },
@@ -9,12 +10,21 @@ const mixin = {
     callback({ success, res }) {
       uni.hideLoading();
       if (success) {
-        uni.navigateBack();
+        this.back()
       } else {
         this.renderParams = null
         this.handleError(res)
       }
     },
+    back() {
+      if (this.from && this.from === 'shortcut') {
+        uni.redirectTo({
+          url: this.listPath
+        });
+      } else {
+        uni.navigateBack();
+      }
+    }
   }
 }
 

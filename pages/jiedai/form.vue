@@ -94,7 +94,11 @@ export default {
 				sign2: [{ required: true, message: '请选择分管副总审批人' }],
 				sign3: [{ required: true, message: '请选择综合部审批人' }],
 			},
+			listPath: '/pages/jiedai/list',
 		};
+	},
+	onLoad({ from }) {
+		this.from = from
 	},
 	onReady() {
 		this.$refs.uForm.setRules(this.rules);

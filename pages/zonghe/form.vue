@@ -5,15 +5,15 @@
 		<swiper style="height: 100%;" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 			<!-- 档案查阅 -->
 			<swiper-item class="swiper-item">
-				<DangAnChaYue type="公司档案查阅" />
+				<DangAnChaYue type="公司档案查阅" :from-page="from" />
 			</swiper-item>
 			<!-- 档案借出 -->
 			<swiper-item class="swiper-item">
-				<DangAnChaYue type="公司档案借出" />
+				<DangAnChaYue type="公司档案借出" :from-page="from" />
 			</swiper-item>
 			<!-- 事务申请 -->
 			<swiper-item class="swiper-item">
-				<ShiWuShenQing :selectedUsers="selectedUsers" />
+				<ShiWuShenQing :selectedUsers="selectedUsers" :from-page="from" />
 			</swiper-item>
 		</swiper>
 	</view>
@@ -34,7 +34,11 @@ export default {
 			current: 0,
 			swiperCurrent: 0,
 			selectedUsers: [],
+			from: '',
 		}
+	},
+	onLoad({ from }) {
+		this.from = from
 	},
 	onShow() {
 		// 读取选择的用户

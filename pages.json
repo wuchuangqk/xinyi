@@ -240,6 +240,34 @@
 				"navigationBarTitleText": "待办事项",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/plan/list",
+			"style": {
+				"navigationBarTitleText": "工作计划",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/plan/form",
+			"style": {
+				"navigationBarTitleText": "新增工作计划",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/plan/detail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/plan/report",
+			"style": {
+				"navigationBarTitleText": "工作计划填报",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {

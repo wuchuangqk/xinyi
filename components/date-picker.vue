@@ -40,7 +40,7 @@ export default {
       params: {
         year: true,
         month: true,
-        day: true,
+        day: this.mode === 'date' || this.mode === 'time',
         hour: this.mode === 'time',
         minute: this.mode === 'time',
         second: false
@@ -49,14 +49,19 @@ export default {
     }
   },
   watch: {
-    modelValue() {
-      if (this.value === '' && this.modelValue) {
-        if (this.mode === 'time') {
-          this.value = this.$dayjs(this.modelValue).format('YYYY-MM-DD HH:mm')
-        } else if (this.mode === 'date') {
-          this.value = this.$dayjs(this.modelValue).format('YYYY-MM-DD')
+    modelValue: {
+      handler() {
+        if (this.value === '' && this.modelValue) {
+          if (this.mode === 'time') {
+            this.value = this.$dayjs(this.modelValue).format('YYYY-MM-DD HH:mm')
+          } else if (this.mode === 'date') {
+            this.value = this.$dayjs(this.modelValue).format('YYYY-MM-DD')
+          } else if (this.mode === 'month') {
+            this.value = this.$dayjs(this.modelValue).format('YYYY-MM')
+          }
         }
-      }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -67,6 +72,9 @@ export default {
       } else if (this.mode === 'date') {
         this.value = `${data.year}-${data.month}-${data.day}`
         this.$emit('update:modelValue', this.value)
+      } else if (this.mode === 'month') {
+        this.value = `${data.year}-${data.month}`
+        this.$emit('update:modelValue', this.value + '-01')
       }
     }
   }

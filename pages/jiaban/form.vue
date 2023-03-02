@@ -94,12 +94,16 @@ export default {
 			isShowFenGuan: false, // 分管领导
 			isShowZongJL: false, // 总经理
 			isLeader: false, // 是否是领导(职位是董事长、总经理、副总经理)
+			listPath: '/pages/jiaban/list',
 		};
 	},
 	onShow() {
 		// 读取选择的用户
 		this.selectedUsers = this.$store.state.selectedUsers
 		this.formData.userid = this.selectedUsers.map(val => val.userid).join(',')
+	},
+	onLoad({from}) {
+		this.from = from
 	},
 	onUnload() {
 		this.$store.dispatch('selectedUsers', [])

@@ -54,7 +54,7 @@ import userPicker from '@/components/user-picker'
 export default {
 	components: { FileViewer, userPicker },
 	mixins: [renderMixin],
-	props: ['selectedUsers'],
+	props: ['selectedUsers', 'fromPage'],
 	data() {
 		return {
 			formData: {
@@ -98,6 +98,8 @@ export default {
 					}
 				],
 			},
+			listPath: '/pages/zonghe/list',
+			from: this.fromPage,
 		};
 	},
 	mounted() {
@@ -124,7 +126,7 @@ export default {
 
 				if (this.files.length) {
 					this.doPost('/zhsp/zhspadd', this.formData, this.files).then(() => {
-						uni.navigateBack();
+						this.back()
 					})
 				} else {
 					this.renderParams = this.setPostData(this.formData)

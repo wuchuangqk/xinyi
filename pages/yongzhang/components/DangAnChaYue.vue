@@ -51,6 +51,9 @@ export default {
 	props: {
 		yingtype: {
 			type: Number
+		},
+		fromPage: {
+			type: String
 		}
 	},
 	data() {
@@ -74,6 +77,8 @@ export default {
 			},
 			docDateLabel: '',
 			docTitleLabel: '',
+			listPath: '/pages/yongzhang/list',
+			from: this.fromPage,
 		};
 	},
 	mounted() {

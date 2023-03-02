@@ -57,6 +57,9 @@ export default {
 	props: {
 		type: {
 			type: String
+		},
+		fromPage: {
+			type: String
 		}
 	},
 	data() {
@@ -87,6 +90,8 @@ export default {
 			},
 			qjstimeLabel: '',
 			qjyyLabel: '',
+			listPath: '/pages/zonghe/list',
+			from: this.fromPage,
 		};
 	},
 	mounted() {
@@ -134,7 +139,7 @@ export default {
 				this.formData.staff_ids = [this.formData.auditor, this.formData.zonghebu].join(',')
 				if (this.files.length) {
 					this.doPost('/zhsp/zhspadd', this.formData, this.files).then(() => {
-						uni.navigateBack();
+						this.back()
 					})
 				} else {
 					this.renderParams = this.setPostData(this.formData)

@@ -116,7 +116,11 @@ export default {
 			},
 			isNeedFenGuan: false, // 分管领导
 			leadText: '',
+			listPath: '/pages/chuchai/list',
 		};
+	},
+	onLoad({from}) {
+		this.from = from
 	},
 	onReady() {
 		const fmtOptions = (arr) => {
