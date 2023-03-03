@@ -160,7 +160,7 @@ export default {
 .step-state {
 	width: 14px;
 	height: 14px;
-	margin: 0 5px;
+	margin: 2px 5px 0;
 	flex-shrink: 0;
 
 	image {

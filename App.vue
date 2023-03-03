@@ -106,6 +106,7 @@ page {
 .page-main {
   flex: 1;
   overflow: hidden;
+  padding-top: 1px;
 }
 
 .list-wrap {

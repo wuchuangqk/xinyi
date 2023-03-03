@@ -5,7 +5,7 @@
 				<view class="card">
 					<view v-for="item in detailList" :key="item.label" class="detail-item">
 						<text class="label">{{ item.label }}</text>
-						<text class="value" v-html="item.field"></text>
+						<text class="value" v-html="setFiledContent(item)"></text>
 					</view>
 				</view>
 				<view class="card">
@@ -32,12 +32,14 @@
 import FileViewer from '@/components/image-viewer.vue';
 import ApprovalTimeLine from '@/components/approval-timeline.vue';
 import FileUploader from '@/components/file-uploader.vue';
+import detailMixin from '@/mixin/detail'
 
 export default {
 	components: {
 		FileViewer,
 		ApprovalTimeLine,
 	},
+	mixins: [detailMixin],
 	data() {
 		return {
 			detailList: [], // 详情字段

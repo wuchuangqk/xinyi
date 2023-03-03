@@ -31,13 +31,17 @@ const mixin = {
           url = '/waichu/shenpi_detail'
           break
         // 接待审批
-        case 'chucawdo':
+        case 'jiedaisp':
           url = '/jiedai/detail'
           break
       }
-      uni.navigateTo({
-        url: `/pages/leave-list/leave-detail?dataId=${id}&url=${url}&isApprove=1&&isReject=${isReject}`,
-      });
+      if (url !== '') {
+        uni.navigateTo({
+          url: `/pages/leave-list/leave-detail?dataId=${id}&url=${url}&isApprove=1&&isReject=${isReject}`,
+        });
+      } else {
+        this.$u.toast('该功能正在开发中')
+      }
     }
   }
 }

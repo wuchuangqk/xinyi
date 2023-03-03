@@ -80,6 +80,8 @@ export default {
 		position: relative;
 		background-color: #f7f8fa;
 		margin-right: 20rpx;
+		border-radius: 2px;
+		overflow: hidden;
 
 		&:last-of-type {
 			margin-right: 0;

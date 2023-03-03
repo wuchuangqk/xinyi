@@ -10,7 +10,7 @@
 							<text>办公</text>
 						</view>
 						<view class="row">
-							<view class="col" v-for="item in officeMenus" :key="item.name" @click="nav(item.url)">
+							<view class="col" v-for="item in permissionOfficeMenus" :key="item.name" @click="nav(item.url)">
 								<view class="icon-bg" :style="{ background: item.color }">
 									<icon-font :icon="item.icon" class="item-icon"></icon-font>
 									<view v-if="item.count" class="badge">{{ item.count }}</view>
@@ -21,6 +21,8 @@
 							</view>
 						</view>
 					</view>
+					<!-- 每周菜谱 -->
+					<CaiPu />
 					<!-- 通知公告 -->
 					<view class="home-card">
 						<view class="card-title notice">
@@ -61,14 +63,17 @@
 <script>
 import IconFont from '@/components/icon-font.vue';
 import Tabbar from '../../components/Tabbar.vue';
+import CaiPu from './components/CaiPu.vue';
 
 export default {
 	components: {
 		IconFont,
-		Tabbar
+		Tabbar,
+		CaiPu,
 	},
 	data() {
 		return {
+			permissionOfficeMenus: [],
 			officeMenus: [
 				{
 					name: '通知公告',
@@ -89,42 +94,49 @@ export default {
 					icon: 'icon-qingjia',
 					url: '/pages/leave-list/list',
 					color: '#0188fd',
+					permission: 'leave',
 				},
 				{
 					name: '加班管理',
 					icon: 'icon-jiaban',
 					url: '/pages/jiaban/list',
 					color: '#f9a202',
+					permission: 'overtime-work',
 				},
 				{
 					name: '出差管理',
 					icon: 'icon-chucha',
 					url: '/pages/chuchai/list',
 					color: '#14bd82',
+					permission: 'go-out',
 				},
 				{
 					name: '综合审批',
 					icon: 'icon-zongheguanli',
 					url: '/pages/zonghe/list',
 					color: '#0382fb',
+					permission: 'synthesize',
 				},
 				{
 					name: '资产购置',
 					icon: 'icon-wuzicaigou',
 					url: '/pages/zichan/list',
 					color: '#f25641',
+					permission: 'property',
 				},
 				{
 					name: '接待申请',
 					icon: 'icon-jiedai',
 					url: '/pages/jiedai/list',
 					color: '#14bd82',
+					permission: 'deng-ji-jie-dai',
 				},
 				{
 					name: '用章申请',
 					icon: 'icon-yinzhangkezhi',
 					url: '/pages/yongzhang/list',
 					color: '#fe8007',
+					permission: 'yong-zhang-shen-qing',
 				},
 				{
 					name: '工作计划',
@@ -132,6 +144,7 @@ export default {
 					url: '/pages/plan/list',
 					color: '#f9a202',
 					count: 0,
+					permission: 'ge-ren-ban-gong/month-plan/index',
 				},
 			],
 			noticeList: [], // 通知公告
@@ -147,6 +160,7 @@ export default {
 	},
 	onLoad() {
 		uni.hideTabBar();
+		this.getPermission()
 	},
 	onShow() {
 		uni.hideTabBar();
@@ -176,6 +190,18 @@ export default {
 				const { todocount, noticecount } = res.data
 				this.officeMenus.find(val => val.name === '待办事项').count = todocount
 				this.officeMenus.find(val => val.name === '通知公告').count = noticecount
+			})
+		},
+		// 获取菜单入口权限
+		getPermission() {
+			Promise.all([
+				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 1 }),
+				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 2 })
+			]).then(([res1, res2]) => {
+				let arr = res1.data.concat(res2.data).map(val => val.Name)
+				this.permissionOfficeMenus = this.officeMenus.filter(val => {
+					return val.permission === undefined || arr.includes(val.permission)
+				})
 			})
 		}
 	}
