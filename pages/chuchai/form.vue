@@ -74,7 +74,7 @@ export default {
 	data() {
 		return {
 			formData: {
-				qjtype: '是', // 是否带车
+				qjtype: '1', // 是否带车
 				signCreator1: '', // 部门领导审批
 				signCreator2: '', // 分管领导审批
 				qjstime: '', // 出差开始时间
@@ -92,8 +92,8 @@ export default {
 				addr8: ""
 			},
 			qjtypeOptions: [
-				{ label: '是', value: '是' },
-				{ label: '否', value: '否' }
+				{ label: '是', value: '1' },
+				{ label: '否', value: '0' }
 			],
 			signCreator1Options: [],
 			signCreator2Options: [],

@@ -13,6 +13,8 @@ const mixin = {
     setFiledContent({ label, field }) {
       if (label === '加班开始附件' || label === '加班结束附件') {
         return setFileUrl(field)
+      } else if (label === '是否带车') {
+        return field ? field : '不带车'
       } else {
         return field
       }
