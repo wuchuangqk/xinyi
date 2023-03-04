@@ -14,10 +14,10 @@
 				<u-cell-group>
 					<u-cell-item icon="grid" title="部门" :value="userInfo.depart" :arrow="false"></u-cell-item>
 					<u-cell-item icon="account" title="职位" :value="userInfo.position" :arrow="false"></u-cell-item>
+					<u-cell-item icon="setting" title="版本号" :value="appVersion" :arrow="false"></u-cell-item>
 					<!-- <u-cell-item icon="thumb-up" title="绩效加分" @click="developing"></u-cell-item> -->
 					<!-- <u-cell-item icon="thumb-down" title="绩效减分" @click="developing"></u-cell-item> -->
 					<u-cell-item icon="lock" title="修改密码" @click="modifyPwd"></u-cell-item>
-					<u-cell-item icon="setting" title="版本号" :value="appVersion" :arrow="false"></u-cell-item>
 					<u-cell-item icon="info-circle" title="退出登录" @click="showConfirm = true"></u-cell-item>
 				</u-cell-group>
 				<view style="height: 10px"></view>
