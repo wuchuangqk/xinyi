@@ -6,7 +6,10 @@
 				<view class="card">
 					<view v-for="item in detailList" :key="item.label" class="detail-item">
 						<text class="label">{{ item.label }}</text>
-						<text class="value" v-html="setFiledContent(item)"></text>
+						<view v-if="isFileUrl(item.label) && item.field">
+							<file-viewer :files="getRelativePath(item.field)" size="small"></file-viewer>
+						</view>
+						<text v-else class="value" v-html="setFiledContent(item)"></text>
 					</view>
 				</view>
 				<view v-if="isChuchai" class="card">

@@ -5,7 +5,10 @@
 				<view class="card">
 					<view v-for="item in detailList" :key="item.label" class="detail-item">
 						<text class="label">{{ item.label }}</text>
-						<text class="value" v-html="setFiledContent(item)"></text>
+						<view v-if="isFileUrl(item.label) && item.field">
+							<file-viewer :files="getRelativePath(item.field)" size="small"></file-viewer>
+						</view>
+						<text v-else class="value" v-html="setFiledContent(item)"></text>
 					</view>
 				</view>
 				<view class="card">
@@ -18,7 +21,7 @@
 					<view class="card-title">
 						<view class="left"><text>上传{{ isStart === '0' ? '开始' : '结束' }}加班照片</text></view>
 					</view>
-					<file-uploader :album="false" @change="upload"></file-uploader>
+					<file-uploader :album="false" :limit="1" @change="upload"></file-uploader>
 				</view>
 			</scroll-view>
 		</view>

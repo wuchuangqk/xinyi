@@ -1,6 +1,6 @@
 <template>
 	<view class="pic-wrap">
-		<view v-for="(file, index) in files" class="pic-item">
+		<view v-for="(file, index) in files" class="pic-item" :class="size">
 			<image class="img" mode="aspectFill" :src="setUrl(file.fileurl)" alt="" @click="preview(file)"></image>
 		</view>
 	</view>
@@ -12,6 +12,10 @@ export default {
 		files: {
 			type: Array
 		},
+		size: {
+			type: String,
+			default: 'normal', // normal|small
+		}
 	},
 	data() {
 		return {
@@ -36,14 +40,22 @@ export default {
 	display: flex;
 
 	.pic-item {
-		width: 160rpx;
-		height: 160rpx;
 		position: relative;
 		background-color: #f7f8fa;
 		margin-right: 20rpx;
 
 		&:last-of-type {
 			margin-right: 0;
+		}
+
+		&.normal {
+			width: 160rpx;
+			height: 160rpx;
+		}
+
+		&.small {
+			width: 80rpx;
+			height: 80rpx;
 		}
 	}
 

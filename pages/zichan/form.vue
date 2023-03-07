@@ -45,7 +45,7 @@
 							<option-picker v-model="formData.sign3" :list="sign3Options" placeholder="请选择" />
 						</u-form-item>
 						<u-form-item label="总经理审批" label-width="200">
-							<option-picker v-model="formData.sign4" :list="sign3Options" placeholder="请选择" />
+							<option-picker v-model="formData.sign4" :list="sign4Options" placeholder="请选择" />
 						</u-form-item>
 					</view>
 				</u-form>
