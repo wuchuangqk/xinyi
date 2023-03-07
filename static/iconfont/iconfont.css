@@ -9,6 +9,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-gerenzhuye-xxdaocaipux:before {
+  content: "\e65b";
+}
+
 .icon-jiayouqiachongzhi:before {
   content: "\e60e";
 }
@@ -308,3 +312,4 @@
 .icon-yonghu1:before {
   content: "\e652";
 }
+

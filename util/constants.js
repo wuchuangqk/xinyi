@@ -39,5 +39,8 @@ export const events = {
 	UPDATE_CERTIFICATE_STATE: 'UPDATE_CERTIFICATE_STATE', // 更新证照管理状态
 }
 
+// dev(https)
 export const BASE_URL = 'https://36q635g350.zicp.fun'
-// export const BASE_URL = 'http://192.168.0.3:8090'
+
+// prod(http)
+// export const BASE_URL = 'http://58.218.148.154:8326'

@@ -140,7 +140,7 @@ export default {
 				},
 				{
 					name: '工作计划',
-					icon: 'icon-daibanshixiang',
+					icon: 'icon-gongzuojihua',
 					url: '/pages/plan/list',
 					color: '#f9a202',
 					count: 0,

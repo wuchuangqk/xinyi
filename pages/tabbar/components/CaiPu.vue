@@ -2,7 +2,7 @@
   <view class="home-card">
     <view class="card-title notice">
       <view>
-        <u-icon name="bell" style="margin-right: 4px;" />
+				<icon-font icon="icon-gerenzhuye-xxdaocaipux" class="item-icon" color="#303133" style="margin-right: 4px;"></icon-font>
         <text>每周菜谱</text>
       </view>
       <!-- <text class="state" :class="subscribeStatus ? 'active' : 'normal'" @click="showConfirm = true">
@@ -37,7 +37,11 @@
 </template>
 
 <script>
+import IconFont from '@/components/icon-font.vue';
 export default {
+	components: {
+		IconFont,
+	},
   data() {
     return {
       dateArr: [],
