@@ -128,6 +128,7 @@ page {
 
   .state {
     margin-right: 16rpx;
+    flex-shrink: 0;
   }
 
   .item-title {

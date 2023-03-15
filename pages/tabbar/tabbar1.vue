@@ -138,14 +138,14 @@ export default {
 					color: '#fe8007',
 					permission: 'yong-zhang-shen-qing',
 				},
-				{
-					name: '工作计划',
-					icon: 'icon-gongzuojihua',
-					url: '/pages/plan/list',
-					color: '#f9a202',
-					count: 0,
-					permission: 'ge-ren-ban-gong/month-plan/index',
-				},
+				// {
+				// 	name: '工作计划',
+				// 	icon: 'icon-gongzuojihua',
+				// 	url: '/pages/plan/list',
+				// 	color: '#f9a202',
+				// 	count: 0,
+				// 	permission: 'ge-ren-ban-gong/month-plan/index',
+				// },
 			],
 			noticeList: [], // 通知公告
 		}

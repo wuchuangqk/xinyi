@@ -2,7 +2,8 @@
   <view class="home-card">
     <view class="card-title notice">
       <view>
-				<icon-font icon="icon-gerenzhuye-xxdaocaipux" class="item-icon" color="#303133" style="margin-right: 4px;"></icon-font>
+        <icon-font icon="icon-gerenzhuye-xxdaocaipux" class="item-icon" color="#303133"
+          style="margin-right: 4px;"></icon-font>
         <text>每周菜谱</text>
       </view>
       <!-- <text class="state" :class="subscribeStatus ? 'active' : 'normal'" @click="showConfirm = true">
@@ -39,9 +40,9 @@
 <script>
 import IconFont from '@/components/icon-font.vue';
 export default {
-	components: {
-		IconFont,
-	},
+  components: {
+    IconFont,
+  },
   data() {
     return {
       dateArr: [],
@@ -79,6 +80,12 @@ export default {
           lunch: this.foodMenuList.lunch[index - 1]['Lunch_' + (index)].replace(/\r\n/g, '\t')
         })
       }
+      this.$nextTick(() => {
+        const day = this.$dayjs().day()
+        if (day - 1 !== -1) {
+          this.swiperCurrent = day - 1
+        }
+      })
     })
     this.getSubscribeInfo()
   },
