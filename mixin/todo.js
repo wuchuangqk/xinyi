@@ -34,6 +34,14 @@ const mixin = {
         case 'jiedaisp':
           url = '/jiedai/detail'
           break
+        // 加油审核
+        case 'jiayoushenhe':
+          // url = '/jiedai/detail'
+          break
+        // 车辆维修
+        case 'carsp':
+          // url = '/jiedai/detail'
+          break
       }
       if (url !== '') {
         uni.navigateTo({

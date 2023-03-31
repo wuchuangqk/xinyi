@@ -138,6 +138,27 @@ export default {
 					color: '#fe8007',
 					permission: 'yong-zhang-shen-qing',
 				},
+				{
+					name: '车辆列表',
+					icon: 'icon-yinzhangkezhi',
+					url: '/pages/car/car-list',
+					color: '#fe8007',
+					permission: 'yong-zhang-shen-qing',
+				},
+				{
+					name: '派车管理',
+					icon: 'icon-yinzhangkezhi',
+					url: '/pages/car/paiche/list',
+					color: '#fe8007',
+					permission: 'yong-zhang-shen-qing',
+				},
+				{
+					name: '维修申请',
+					icon: 'icon-yinzhangkezhi',
+					url: '/pages/car/weixiu/list',
+					color: '#fe8007',
+					permission: 'yong-zhang-shen-qing',
+				},
 				// {
 				// 	name: '工作计划',
 				// 	icon: 'icon-gongzuojihua',

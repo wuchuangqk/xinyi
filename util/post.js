@@ -5,7 +5,7 @@ import { BASE_URL } from './constants.js'
  * @param {*} data 
  * @param {*} axios
  */
-export const doPost = (url, data, axios) => {
+export const axiosRequest = (url, data, axios) => {
   return new Promise((resolve, reject) => {
     // 转成formData
     const formData = new FormData();
@@ -25,11 +25,11 @@ export const doPost = (url, data, axios) => {
           reject({ status_code: data.status_code, msg: data.msg })
         }
       } catch (e) {
-        console.log('util/post.js doPost 尝试转换JSON出错', e)
+        console.log('util/post.js axiosRequest 尝试转换JSON出错', e)
         reject({ status_code: '500', msg: '未知错误' })
       }
     }).catch(err => {
-      console.log('util/post.js doPost 请求出错', err)
+      console.log('util/post.js axiosRequest 请求出错', err)
       reject({ status_code: '500', msg: '未知错误' })
     })
   })

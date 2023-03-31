@@ -123,7 +123,7 @@ export default {
 				});
 				this.formData.staff_ids = this.selectedUsers.map(val => val.id).join(',')
 				if (this.files.length) {
-					this.doPost('/month/add', this.formData, this.files).then(() => [
+					this.uploadFile('/month/add', this.formData, this.files).then(() => [
 						uni.navigateBack()
 					])
 				} else {
@@ -140,12 +140,12 @@ export default {
 </script>
 <script module="renderModule" lang="renderjs">
 import axios from 'axios'
-import { doPost } from '@/util/post.js'
+import { axiosRequest } from '@/util/post.js'
 export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost('/month/add', renderParams, axios).then(res => {
+				axiosRequest('/month/add', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})

@@ -17,80 +17,116 @@
 					</view>
 					<approval-time-line :flowList="flowList" :currentStep="currentStep"></approval-time-line>
 				</view>
-				<view class="card">
-					<view class="card-title">
-						<view class="left"><text>上传{{ isStart === '0' ? '开始' : '结束' }}加班照片</text></view>
-					</view>
-					<file-uploader :album="false" :limit="1" @change="upload"></file-uploader>
-				</view>
 			</scroll-view>
 		</view>
 		<view class="app-page-footer">
-			<button class="btn" @click="submit">提交</button>
+			<button class="btn" @click="submit">{{ btnText }}</button>
 		</view>
+		<view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
 	</view>
 </template>
 
 <script>
 import FileViewer from '@/components/image-viewer.vue';
 import ApprovalTimeLine from '@/components/approval-timeline.vue';
-import FileUploader from '@/components/file-uploader.vue';
 import detailMixin from '@/mixin/detail'
+import renderMixin from '@/mixin/render'
 
 export default {
 	components: {
 		FileViewer,
 		ApprovalTimeLine,
 	},
-	mixins: [detailMixin],
+	mixins: [detailMixin, renderMixin],
 	data() {
 		return {
 			detailList: [], // 详情字段
 			url: '', // 查询详情的接口
 			dataId: '', // 主键id
 			flowList: [], // 审批流程
-			files: [], // 图片附件
 			currentStep: 0, // 当前步骤
-			isStart: null, // 0=开始加班，1=结束加班
-			files: [], // 加班照片
+			type: null,
 		};
 	},
-	onLoad({ isStart, dataId, }) {
-		this.isStart = isStart
+	onLoad({ dataId, type }) {
 		this.dataId = dataId
+		this.type = type
 	},
 	onReady() {
 		this.getDetail()
 	},
+	computed: {
+		btnText() {
+			// 审核1 审批2 还车3
+			switch (this.type) {
+				case '1':
+					return '同意'
+				case '2':
+					return '提交'
+				case '3':
+					return '还车'
+			}
+			return ''
+		}
+	},
 	methods: {
 		getDetail() {
-			this.doGet('/jiaban/shenpi_detail/' + this.dataId).then(res => {
+			this.doGet('/CarMileages/detail/' + this.dataId).then(res => {
 				this.detailList = res.data.info
 				this.flowList = res.data.sign
-				this.currentStep = res.data.currentStep
+				this.currentStep = res.data.currentStep - 1
 			})
 		},
-		upload(files) {
-			this.files = files
-		},
 		submit() {
-			if (this.files.length === 0) {
-				uni.showToast({
-					title: '请上传照片',
-					icon: 'none'
-				});
-				return
-			}
-			const url = this.isStart === '0' ? '/jiaban/jiaban_start' : '/jiaban/jiaban_end'
 			uni.showLoading({
 				title: '正在提交',
 			});
-			this.uploadFile(url, { id: this.dataId }, this.files).then(() => {
-				uni.navigateBack();
-			})
+			switch (this.type) {
+				// 审核
+				case '1':
+					this.renderParams = { url: '/CarMileages/DoShenHe', data: this.setPostData({ id: this.dataId }) }
+					break
+				// 审批
+				case '2':
+
+					break
+				// 还车
+				case '3':
+					this.renderParams = { url: '/CarMileages/DoHuanChe', data: this.setPostData({ docId: this.dataId }) }
+					// this.renderParams = {
+					// 	url: '/CarMileages/DoShenPi', data: this.setPostData({
+					// 		id: this.dataId,
+					// 		Vehicle: this.cars.find(v => v.Pilot == this.Vehicle).value,
+					// 		JiaShiYuan: this.JiaShiYuan
+					// 	})
+					// }
+					break
+			}
 		},
 	}
 };
+</script>
+<script module="renderModule" lang="renderjs">
+import axios from 'axios'
+import { axiosRequest } from '@/util/post.js'
+export default {
+  methods: {
+		change(renderParams) {
+			if (renderParams !== null) {
+				axiosRequest(renderParams.url, renderParams.data, axios).then(res => {
+					this.$ownerInstance.callMethod('callback', {
+						success: true,
+					})
+				}).catch(err => {
+					this.$ownerInstance.callMethod('callback', {
+						success: false,
+						res: err
+					})
+				})
+			}
+		}
+  },
+}
 </script>
 <style scoped lang="scss">
 @import '@/styles/detail.scss';

@@ -261,6 +261,62 @@
 				"navigationBarTitleText": "工作计划填报",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/car/car-list",
+			"style": {
+				"navigationBarTitleText": "车辆列表",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/car-detail",
+			"style": {
+				"navigationBarTitleText": "车辆详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/paiche/list",
+			"style": {
+				"navigationBarTitleText": "派车管理",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/paiche/form",
+			"style": {
+				"navigationBarTitleText": "派车申请",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/paiche/detail",
+			"style": {
+				"navigationBarTitleText": "派车详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/weixiu/list",
+			"style": {
+				"navigationBarTitleText": "维修管理",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/weixiu/form",
+			"style": {
+				"navigationBarTitleText": "维修申请",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/weixiu/detail",
+			"style": {
+				"navigationBarTitleText": "维修详情",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {

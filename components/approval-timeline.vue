@@ -16,7 +16,7 @@
 						</view>
 						<text v-if="isHasReject && index > currentStep" class="step-time">无需审批</text>
 						<text v-else class="step-time">
-							{{ flow.Signed ? flow.Created : index === currentStep ? '正在审批' : '等待审批' }}
+							{{ flow.Signed ? fmtTime(flow.Created) : index === currentStep ? '正在审批' : '等待审批' }}
 						</text>
 					</view>
 				</view>
@@ -82,6 +82,9 @@ export default {
 					return this.stateImg.get('wait')
 				}
 			}
+		},
+		fmtTime(time) {
+			return this.$dayjs(time).format('YYYY-MM-DD HH:mm:ss')
 		}
 	}
 };

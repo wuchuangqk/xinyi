@@ -112,7 +112,7 @@ export const doGet = (url, data = {}) => {
   })
 }
 
-export const doPost = (url, data, files = []) => {
+export const uploadFile = (url, data, files = []) => {
   return new Promise((resolve, rejected) => {
     uni.uploadFile({
       url: BASE_URL + '/api' + url,
@@ -133,16 +133,16 @@ export const doPost = (url, data, files = []) => {
           if (res.data.status_code === '200') {
             resolve(res.data)
           } else {
-            console.log('util/request.js doPost 接口返回失败信息', res.data)
+            console.log('util/request.js uploadFile 接口返回失败信息', res.data)
             handleError(res.data, rejected)
           }
         } catch (e) {
-          console.log('util/request.js doPost 尝试转换JSON出错', e)
+          console.log('util/request.js uploadFile 尝试转换JSON出错', e)
           handleError({ status_code: '500', msg: '未知错误' }, rejected)
         }
       },
       fail(err) {
-        console.log('util/request.js doPost uni.request:fail回调', err)
+        console.log('util/request.js uploadFile uni.request:fail回调', err)
         rejected(err)
       },
       complete() {

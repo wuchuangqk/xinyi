@@ -93,12 +93,12 @@ export default {
 </script>
 <script module="renderModule" lang="renderjs">
 import axios from 'axios'
-import { doPost } from '@/util/post.js'
+import { axiosRequest } from '@/util/post.js'
 export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost('/waichu/updateInfo', renderParams, axios).then(res => {
+				axiosRequest('/waichu/updateInfo', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})

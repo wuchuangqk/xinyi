@@ -17,6 +17,7 @@ const mixin = {
       }
     },
     back() {
+      // 如果是从快捷申请进来的，返回的时候跳到列表页面
       if (this.from && this.from === 'shortcut') {
         uni.redirectTo({
           url: this.listPath

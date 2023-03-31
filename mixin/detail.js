@@ -1,5 +1,3 @@
-import { BASE_URL } from '@/util/constants.js'
-
 const mixin = {
   methods: {
     setFiledContent({ label, field }) {

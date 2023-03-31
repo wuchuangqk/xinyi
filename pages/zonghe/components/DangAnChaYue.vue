@@ -138,7 +138,7 @@ export default {
 				});
 				this.formData.staff_ids = [this.formData.auditor, this.formData.zonghebu].join(',')
 				if (this.files.length) {
-					this.doPost('/zhsp/zhspadd', this.formData, this.files).then(() => {
+					this.uploadFile('/zhsp/zhspadd', this.formData, this.files).then(() => {
 						this.back()
 					})
 				} else {
@@ -155,12 +155,12 @@ export default {
 </script>
 <script module="renderModule" lang="renderjs">
 import axios from 'axios'
-import { doPost } from '@/util/post.js'
+import { axiosRequest } from '@/util/post.js'
 export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				doPost('/zhsp/zhspadd', renderParams, axios).then(res => {
+				axiosRequest('/zhsp/zhspadd', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})
