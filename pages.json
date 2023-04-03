@@ -317,6 +317,62 @@
 				"navigationBarTitleText": "维修详情",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/car/jiayou/list",
+			"style": {
+				"navigationBarTitleText": "加油管理",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/jiayou/form",
+			"style": {
+				"navigationBarTitleText": "加油申请",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/jiayou-jilu/list",
+			"style": {
+				"navigationBarTitleText": "加油记录",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/jiayou-jilu/detail",
+			"style": {
+				"navigationBarTitleText": "加油记录详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/jiayou/jiayoudan",
+			"style": {
+				"navigationBarTitleText": "填写加油单",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/huanka/list",
+			"style": {
+				"navigationBarTitleText": "还卡处理",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/huanka/detail",
+			"style": {
+				"navigationBarTitleText": "还卡详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/car/jiayou/shenhe",
+			"style": {
+				"navigationBarTitleText": "加油审核",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {

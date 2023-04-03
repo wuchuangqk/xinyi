@@ -5,20 +5,28 @@
 				<view class="card-wrap">
 					<!-- 办公 -->
 					<view class="home-card">
-						<view class="card-title">
+						<view class="card-title menu-title">
 							<u-icon name="grid" style="margin-right: 4px;" />
 							<text>办公</text>
 						</view>
-						<view class="row">
-							<view class="col" v-for="item in permissionOfficeMenus" :key="item.name" @click="nav(item.url)">
-								<view class="icon-bg" :style="{ background: item.color }">
-									<icon-font :icon="item.icon" class="item-icon"></icon-font>
-									<view v-if="item.count" class="badge">{{ item.count }}</view>
+						<swiper :current="swiperCurrent" @animationfinish="animationfinish" style="height: 196px;">
+							<swiper-item v-for="group in menuGroup" :key="group.key" class="swiper-item">
+								<view class="row">
+									<view class="col" v-for="item in group.data" :key="item.name" @click="nav(item.url)">
+										<view class="icon-bg" :style="{ background: item.color }">
+											<icon-font :icon="item.icon" class="item-icon"></icon-font>
+											<view v-if="item.count" class="badge">{{ item.count }}</view>
+										</view>
+										<view class="item-name">
+											<text>{{ item.name }}</text>
+										</view>
+									</view>
 								</view>
-								<view class="item-name">
-									<text>{{ item.name }}</text>
-								</view>
-							</view>
+							</swiper-item>
+						</swiper>
+						<view class="indicator-wrap">
+							<view v-for="(group, index) in menuGroup" :key="group.key" class="indicator"
+								:class="{ active: index === swiperCurrent }"></view>
 						</view>
 					</view>
 					<!-- 每周菜谱 -->
@@ -140,24 +148,45 @@ export default {
 				},
 				{
 					name: '车辆列表',
-					icon: 'icon-yinzhangkezhi',
+					icon: 'icon-cheliangjiance',
 					url: '/pages/car/car-list',
-					color: '#fe8007',
-					permission: 'yong-zhang-shen-qing',
+					color: '#0188fd',
+					permission: 'cars/car-list',
 				},
 				{
 					name: '派车管理',
-					icon: 'icon-yinzhangkezhi',
+					icon: 'icon--cheliang',
 					url: '/pages/car/paiche/list',
-					color: '#fe8007',
-					permission: 'yong-zhang-shen-qing',
+					color: '#14bd82',
+					permission: 'pai-che',
 				},
 				{
 					name: '维修申请',
-					icon: 'icon-yinzhangkezhi',
+					icon: 'icon-cheliangweixiubaoyang',
 					url: '/pages/car/weixiu/list',
+					color: '#f9a202',
+					permission: 'cars/weixiu',
+				},
+				{
+					name: '加油管理',
+					icon: 'icon-jiayou1',
+					url: '/pages/car/jiayou/list',
+					color: '#0188fd',
+					permission: 'cars/jiayou-list',
+				},
+				{
+					name: '还卡处理',
+					icon: 'icon-card',
+					url: '/pages/car/huanka/list',
+					color: '#f9a202',
+					permission: 'cars/huan-ka',
+				},
+				{
+					name: '加油记录',
+					icon: 'icon-jiayoujilu',
+					url: '/pages/car/jiayou-jilu/list',
 					color: '#fe8007',
-					permission: 'yong-zhang-shen-qing',
+					permission: 'cars/jiayou-jilu',
 				},
 				// {
 				// 	name: '工作计划',
@@ -169,6 +198,7 @@ export default {
 				// },
 			],
 			noticeList: [], // 通知公告
+			swiperCurrent: 0,
 		}
 	},
 	onInit() {
@@ -187,6 +217,24 @@ export default {
 		uni.hideTabBar();
 		this.getNoticeList()
 		this.getBadge()
+	},
+	computed: {
+		menuGroup() {
+			const times = this.permissionOfficeMenus.length / 8
+			const groups = []
+			for (let i = 0; i <= times; i++) {
+				const offset = (i * 8)
+				const limit = (i + 1) * 8
+				const arr = this.permissionOfficeMenus.slice(offset, limit)
+				if (arr.length) {
+					groups.push({
+						key: Symbol(),
+						data: arr
+					})
+				}
+			}
+			return groups
+		}
 	},
 	methods: {
 		nav(url) {
@@ -216,15 +264,19 @@ export default {
 		// 获取菜单入口权限
 		getPermission() {
 			Promise.all([
-				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 1 }),
-				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 2 })
-			]).then(([res1, res2]) => {
-				let arr = res1.data.concat(res2.data).map(val => val.Name)
+				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 1 }), // 办公
+				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 2 }), // 审批
+				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 6 }), // 车辆管理
+			]).then(([res1, res2, res3]) => {
+				let arr = [...res1.data, ...res2.data, ...res3.data].map(val => val.Name)
 				this.permissionOfficeMenus = this.officeMenus.filter(val => {
 					return val.permission === undefined || arr.includes(val.permission)
 				})
 			})
-		}
+		},
+		animationfinish(e) {
+			this.swiperCurrent = e.detail.current;
+		},
 	}
 }
 </script>
@@ -245,6 +297,10 @@ export default {
 		justify-content: space-between;
 		margin-bottom: 8px;
 	}
+
+	&.menu-title {
+		margin-bottom: 0;
+	}
 }
 
 .home-card {
@@ -260,6 +316,7 @@ export default {
 .row {
 	display: flex;
 	flex-wrap: wrap;
+	padding-top: 18px;
 }
 
 .col {
@@ -320,5 +377,24 @@ export default {
 
 .notice-list {
 	padding: 0 8px;
+}
+
+.indicator-wrap {
+	display: flex;
+	justify-content: center;
+	padding-bottom: 18px;
+
+	.indicator {
+		height: 4px;
+		width: 16px;
+		border-radius: 2px;
+		background-color: rgba(0, 0, 0, 0.1);
+		margin: 0 4px;
+		transition: all 0.1s;
+
+		&.active {
+			background-color: #3880ff;
+		}
+	}
 }
 </style>

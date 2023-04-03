@@ -36,8 +36,22 @@ const mixin = {
           break
         // 加油审核
         case 'jiayoushenhe':
-          // url = '/jiedai/detail'
-          break
+          uni.navigateTo({
+            url: `/pages/car/jiayou/shenhe?dataId=${id}`
+          });
+          return
+        // 加油单
+        case 'jiayoudan':
+          uni.navigateTo({
+            url: `/pages/car/jiayou/jiayoudan?dataId=${id}`
+          });
+          return
+        // 还卡处理
+        case 'jiayouhk':
+          uni.navigateTo({
+            url: `/pages/car/huanka/detail?dataId=${id}&type=huanka`
+          });
+          return
         // 车辆维修
         case 'carsp':
           // url = '/jiedai/detail'

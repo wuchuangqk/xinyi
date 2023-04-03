@@ -9,6 +9,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-card:before {
+  content: "\e61b";
+}
+
+.icon-cheliangjiance:before {
+  content: "\e616";
+}
+
+.icon-weituofangziliaoshenhe:before {
+  content: "\e615";
+}
+
+.icon-jiayou1:before {
+  content: "\e609";
+}
+
+.icon-cheliangweixiubaoyang:before {
+  content: "\e669";
+}
+
+.icon-jiayoujilu:before {
+  content: "\e65f";
+}
+
 .icon-gerenzhuye-xxdaocaipux:before {
   content: "\e65b";
 }
