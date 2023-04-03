@@ -49,7 +49,6 @@
 			</scroll-view>
 		</view>
 		<view class="app-page-footer">
-			<button @click="test">测试</button>
 			<button class="btn" @click="submit">提交</button>
 		</view>
 		<view style="display: none;" :renderParams="renderParams" :change:renderParams="renderModule.change"></view>
@@ -124,12 +123,6 @@ export default {
 				this.renderParams = this.setPostData(this.formData)
 			})
 		},
-		test() {
-			this.$refs.uForm.validate(valid => {
-				if (!valid) return
-				console.log(this.formData)
-			})
-		}
 	}
 };
 </script>

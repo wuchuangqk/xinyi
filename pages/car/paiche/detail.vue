@@ -17,6 +17,20 @@
 					</view>
 					<approval-time-line :flowList="flowList" :currentStep="currentStep"></approval-time-line>
 				</view>
+				<view v-if="type === '2'" class="card">
+					<view class="card-title">
+						<view class="left"><text>审批</text></view>
+					</view>
+					<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
+						<u-form-item label="指派车辆" required prop="Vehicle">
+							<option-picker v-model="formData.Vehicle" :list="carList" placeholder="请选择指派车辆"
+								@update:modelValue="vehicleChange" />
+						</u-form-item>
+						<u-form-item label="指派驾驶员" required prop="JiaShiYuan">
+							<option-picker v-model="formData.JiaShiYuan" :list="jiaShiYuanList" placeholder="请选择指派驾驶员" />
+						</u-form-item>
+					</u-form>
+				</view>
 			</scroll-view>
 		</view>
 		<view class="app-page-footer">
@@ -46,14 +60,29 @@ export default {
 			flowList: [], // 审批流程
 			currentStep: 0, // 当前步骤
 			type: null,
+			carList: [], // 车辆列表
+			jiaShiYuanList: [], // 驾驶员列表
+			formData: {
+				id: '',
+				Vehicle: '', // 直排车辆
+				JiaShiYuan: '', // 驾驶员
+			},
+			rules: {
+				Vehicle: [{ required: true, message: '请选择指派车辆' }],
+				JiaShiYuan: [{ required: true, message: '请选择指派驾驶员' }],
+			},
 		};
 	},
 	onLoad({ dataId, type }) {
 		this.dataId = dataId
 		this.type = type
+		this.formData.id = dataId
 	},
 	onReady() {
 		this.getDetail()
+		if (this.type === '2') {
+			this.$refs.uForm.setRules(this.rules);
+		}
 	},
 	computed: {
 		btnText() {
@@ -76,6 +105,18 @@ export default {
 				this.flowList = res.data.sign
 				this.currentStep = res.data.currentStep - 1
 			})
+			this.doGet('/CarMileages/GetCheLiangAndVehicle').then(res => {
+				this.carList = (res.data.carList || []).map(val => {
+					return { label: val.label, value: val.Pilot, _value: val.value }
+				})
+				this.jiaShiYuanList = (res.data.jiaShiYuanList || []).map(val => {
+					return { label: val.label, value: val.Id }
+				})
+				if (this.carList.length) {
+					this.formData.Vehicle = this.carList[0].value
+					this.vehicleChange(this.formData.Vehicle)
+				}
+			})
 		},
 		submit() {
 			uni.showLoading({
@@ -88,21 +129,29 @@ export default {
 					break
 				// 审批
 				case '2':
-
+					this.$refs.uForm.validate(valid => {
+						if (!valid) {
+							uni.hideLoading();
+							return
+						}
+						this.renderParams = {
+							url: '/CarMileages/DoShenPi', data: this.setPostData({
+								id: this.formData.id,
+								Vehicle: this.carList.find(v => v.value == this.formData.Vehicle)._value,
+								JiaShiYuan: this.formData.JiaShiYuan
+							})
+						}
+					})
 					break
 				// 还车
 				case '3':
 					this.renderParams = { url: '/CarMileages/DoHuanChe', data: this.setPostData({ docId: this.dataId }) }
-					// this.renderParams = {
-					// 	url: '/CarMileages/DoShenPi', data: this.setPostData({
-					// 		id: this.dataId,
-					// 		Vehicle: this.cars.find(v => v.Pilot == this.Vehicle).value,
-					// 		JiaShiYuan: this.JiaShiYuan
-					// 	})
-					// }
 					break
 			}
 		},
+		vehicleChange(val) {
+			this.formData.JiaShiYuan = val
+		}
 	}
 };
 </script>
