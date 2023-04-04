@@ -2,7 +2,7 @@
 	<view class="app-page">
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
-				<div style="height: 1px;"></div>
+				<view style="height: 1px;"></view>
 				<view class="card">
 					<view class="detail-item">
 						<text class="label">车牌号</text>

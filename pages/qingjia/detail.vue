@@ -2,8 +2,9 @@
 	<view class="app-page">
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
+				<view style="height: 1px;"></view>
 				<!-- 申请详情 -->
-				<view class="card">
+				<view v-if="detailList.length" class="card">
 					<view v-for="item in detailList" :key="item.label" class="detail-item">
 						<text class="label">{{ item.label }}</text>
 						<view v-if="isFileUrl(item.label) && item.field">
@@ -26,7 +27,7 @@
 					<file-viewer :files="files"></file-viewer>
 				</view>
 				<!-- 审批流程 -->
-				<view class="card">
+				<view v-if="flowList.length" class="card">
 					<view class="card-title">
 						<view class="left"><text>审批流程</text></view>
 					</view>
@@ -102,12 +103,17 @@ export default {
 	},
 	methods: {
 		getDetail() {
+			uni.showLoading({
+				title: '加载中'
+			});
 			this.doGet(this.url + '/' + this.dataId).then(res => {
 				this.detailList = res.data.info
 				this.flowList = res.data.sign
 				this.files = res.data.pdflist
 				this.currentStep = res.data.currentStep
 				this.context = res.data.context
+			}).finally(() => {
+				uni.hideLoading();
 			})
 		},
 		/**

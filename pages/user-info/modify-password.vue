@@ -2,6 +2,7 @@
 	<view class="app-page">
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
+				<view style="height: 1px;"></view>
 				<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
 					<view class="card form-card">
 						<u-form-item label="旧密码" prop="old_password" required>

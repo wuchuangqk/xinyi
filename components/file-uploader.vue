@@ -51,8 +51,19 @@ export default {
 					})
 					this.$emit('change', this.files)
 				},
-				fail: () => {
-					// 用户点击取消
+				fail: (err) => {
+					if (!err) return
+					switch (err.errMsg) {
+						case 'chooseImage:fail No Permission':
+							if (err.errCode === 11) {
+								// 没有使用相机的权限
+								this.$u.toast('请在设置中允许应用使用手机相机')
+							} else if (err.errCode === 12) {
+								// 没有访问相册的权限
+								this.$u.toast('请在设置中允许应用访问手机相册')
+							}
+							break
+					}
 				}
 			})
 		},

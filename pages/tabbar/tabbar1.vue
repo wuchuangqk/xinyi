@@ -100,7 +100,7 @@ export default {
 				{
 					name: '请假管理',
 					icon: 'icon-qingjia',
-					url: '/pages/leave-list/list',
+					url: '/pages/qingjia/list',
 					color: '#0188fd',
 					permission: 'leave',
 				},
@@ -149,7 +149,7 @@ export default {
 				{
 					name: '车辆列表',
 					icon: 'icon-cheliangjiance',
-					url: '/pages/car/car-list',
+					url: '/pages/car/info/list',
 					color: '#0188fd',
 					permission: 'cars/car-list',
 				},
@@ -250,7 +250,7 @@ export default {
 		},
 		navToDetail(id) {
 			uni.navigateTo({
-				url: `/pages/noticeDetail/noticeDetail?dataId=${id}`,
+				url: `/pages/notice/detail?dataId=${id}`,
 			});
 		},
 		// 角标
@@ -263,15 +263,20 @@ export default {
 		},
 		// 获取菜单入口权限
 		getPermission() {
+			uni.showLoading({
+				title: '加载中'
+			});
 			Promise.all([
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 1 }), // 办公
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 2 }), // 审批
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 6 }), // 车辆管理
 			]).then(([res1, res2, res3]) => {
-				let arr = [...res1.data, ...res2.data, ...res3.data].map(val => val.Name)
+				const names = [...res1.data, ...res2.data, ...res3.data].map(val => val.Name)
 				this.permissionOfficeMenus = this.officeMenus.filter(val => {
-					return val.permission === undefined || arr.includes(val.permission)
+					return val.permission === undefined || names.includes(val.permission)
 				})
+			}).finally(() => {
+				uni.hideLoading();
 			})
 		},
 		animationfinish(e) {

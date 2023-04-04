@@ -2,6 +2,7 @@
 	<view class="app-page">
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
+				<view style="height: 1px;"></view>
 				<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
 					<view class="card form-card">
 						<u-form-item label="请假原因" prop="qjyy" required>
@@ -106,7 +107,7 @@ export default {
 			<p> 3->分管副总 </p>
 			*/
 			level: 1,
-			listPath: '/pages/leave-list/list',
+			listPath: '/pages/qingjia/list',
 		};
 	},
 	onLoad({from}) {

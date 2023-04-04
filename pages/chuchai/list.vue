@@ -72,7 +72,7 @@ export default {
       // 待办有审批
       const isApprove = this.activeTabIndex === 1 ? '1' : '0'
       uni.navigateTo({
-        url: `/pages/leave-list/leave-detail?dataId=${id}&url=/waichu/shenpi_detail&isApprove=${isApprove}`,
+        url: `/pages/qingjia/detail?dataId=${id}&url=/waichu/shenpi_detail&isApprove=${isApprove}`,
       });
     },
     startJiaBan(id) {

@@ -26,20 +26,13 @@
 			}
 		},
 		{
-			"path": "pages/tabbar/tabbar",
-			"style": {
-				"navigationBarTitleText": "首页",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
-			"path": "pages/leave-list/leave-detail",
+			"path": "pages/qingjia/detail",
 			"style": {
 				"navigationBarTitleText": "详情",
 				"enablePullDownRefresh": false
@@ -53,13 +46,6 @@
 			}
 		},
 		{
-			"path": "pages/office/office",
-			"style": {
-				"navigationBarTitleText": "办公",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
 			"path": "pages/notice/notice",
 			"style": {
 				"navigationBarTitleText": "通知公告",
@@ -67,23 +53,16 @@
 			}
 		},
 		{
-			"path": "pages/noticeDetail/noticeDetail",
+			"path": "pages/notice/detail",
 			"style": {
 				"navigationBarTitleText": "通知公告详情",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/leave-list/list",
+			"path": "pages/qingjia/list",
 			"style": {
 				"navigationBarTitleText": "请假管理",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/user-info/modify-ohoto",
-			"style": {
-				"navigationBarTitleText": "修改头像",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -95,7 +74,7 @@
 			}
 		},
 		{
-			"path": "pages/leave-list/leave-form",
+			"path": "pages/qingjia/form",
 			"style": {
 				"navigationBarTitleText": "请假申请",
 				"enablePullDownRefresh": false
@@ -130,7 +109,7 @@
 			}
 		},
 		{
-			"path": "pages/common/ReadRecords",
+			"path": "pages/notice/read-records",
 			"style": {
 				"navigationBarTitleText": "阅览详情",
 				"enablePullDownRefresh": false
@@ -263,14 +242,14 @@
 			}
 		},
 		{
-			"path": "pages/car/car-list",
+			"path": "pages/car/info/list",
 			"style": {
 				"navigationBarTitleText": "车辆列表",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
-			"path": "pages/car/car-detail",
+			"path": "pages/car/info/detail",
 			"style": {
 				"navigationBarTitleText": "车辆详情",
 				"enablePullDownRefresh": false

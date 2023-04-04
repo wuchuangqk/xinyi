@@ -3,6 +3,7 @@
 		<view class="notice">注：2000元以下提交至副书记（王局）审批，2000元以上含2000元提交至总经理（王总）审批。</view>
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
+				<view style="height: 1px;"></view>
 				<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
 					<view class="card form-card">
 						<u-form-item label="申请部门" required>

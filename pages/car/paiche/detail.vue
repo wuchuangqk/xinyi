@@ -2,6 +2,7 @@
 	<view class="app-page">
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
+				<view style="height: 1px;"></view>
 				<view class="card">
 					<view v-for="item in detailList" :key="item.label" class="detail-item">
 						<text class="label">{{ item.label }}</text>

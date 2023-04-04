@@ -2,6 +2,7 @@
   <view class="app-page">
     <view class="page-main">
       <scroll-view scroll-y style="height: 100%;">
+        <view style="height: 1px;"></view>
         <u-form :model="formData" ref="uForm" :error-type="['toast']">
           <view class="card form-card">
             <u-form-item label="标题" prop="noticetitle" required><u-input v-model="formData.noticetitle"

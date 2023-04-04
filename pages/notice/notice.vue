@@ -55,7 +55,7 @@ export default {
 		},
 		navToDetail(id) {
 			uni.navigateTo({
-				url: `/pages/noticeDetail/noticeDetail?dataId=${id}`,
+				url: `/pages/notice/detail?dataId=${id}`,
 			});
 		},
 	}

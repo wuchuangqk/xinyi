@@ -46,7 +46,7 @@ export default {
   methods: {
     navToDetail(id) {
       uni.navigateTo({
-        url: `/pages/car/car-detail?dataId=${id}`,
+        url: `/pages/car/info/detail?dataId=${id}`,
       });
     },
   }

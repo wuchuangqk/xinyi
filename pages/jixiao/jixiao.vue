@@ -7,7 +7,10 @@
             <view class="item-title">
               <text>{{ item.Score_Matter }}</text>
               <view class="tag-wrap">
-                <view class="tag" :class="{ bad: type === '2' }">{{ item.Score || 0 }}分</view>
+                <view class="tag" :class="{ bad: type === '2' }">
+                  <text v-if="type === '1'">+</text>
+                  <text>{{ item.Score || 0 }}分</text>
+                </view>
               </view>
             </view>
             <view class="app-flex-between color-gray">
@@ -43,12 +46,14 @@ export default {
   },
   onLoad({ type }) {
     this.pathList[0] = type === '1' ? '/jixiao/maxdetail' : '/jixiao/mindetail'
-    uni.setNavigationBarTitle({
-      title: type === '1' ? '绩效加分' : '绩效减分'
-    })
     this.type = type
     const userInfo = uni.getStorageSync(this.$const.USER_INFO)
     this.params.userid = userInfo.id
+  },
+  onReady() {
+    uni.setNavigationBarTitle({
+      title: this.type === '1' ? '绩效加分' : '绩效减分'
+    })
   },
   onShow() {
     this.listData = []

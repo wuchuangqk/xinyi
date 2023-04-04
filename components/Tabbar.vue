@@ -65,7 +65,7 @@ export default {
         {
           name: '请假申请',
           icon: 'icon-qingjia',
-          url: '/pages/leave-list/leave-form',
+          url: '/pages/qingjia/form',
           color: '#0188fd',
         },
         {

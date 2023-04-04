@@ -2,6 +2,7 @@
 	<view class="app-page">
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
+				<view style="height: 1px;"></view>
 				<view class="notice">
 					<view class="title">{{ detailData.title }}</view>
 					<view class="app-flex-between color-gray item-sub">
@@ -71,7 +72,7 @@ export default {
 		},
 		goReadRecords() {
 			uni.navigateTo({
-				url: `/pages/common/ReadRecords?dataId=` + this.dataId
+				url: `/pages/notice/read-records?dataId=` + this.dataId
 			})
 		}
 	}
