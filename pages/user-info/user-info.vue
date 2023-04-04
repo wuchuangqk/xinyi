@@ -15,8 +15,10 @@
 					<u-cell-item icon="grid" title="部门" :value="userInfo.depart" :arrow="false"></u-cell-item>
 					<u-cell-item icon="account" title="职位" :value="userInfo.position" :arrow="false"></u-cell-item>
 					<u-cell-item icon="setting" title="版本号" :value="appVersion" :arrow="false"></u-cell-item>
-					<!-- <u-cell-item icon="thumb-up" title="绩效加分" @click="developing"></u-cell-item> -->
-					<!-- <u-cell-item icon="thumb-down" title="绩效减分" @click="developing"></u-cell-item> -->
+					<u-cell-item icon="thumb-up" title="绩效加分" :value="(jixiao.max || 0) + '分'"
+						@click="navToJiXiao(1)"></u-cell-item>
+					<u-cell-item icon="thumb-down" title="绩效减分" :value="(jixiao.min || 0) + '分'"
+						@click="navToJiXiao(2)"></u-cell-item>
 					<u-cell-item icon="lock" title="修改密码" @click="modifyPwd"></u-cell-item>
 					<u-cell-item icon="info-circle" title="退出登录" @click="showConfirm = true"></u-cell-item>
 				</u-cell-group>
@@ -39,7 +41,8 @@ export default {
 		return {
 			userInfo: {},
 			showConfirm: false,
-			appVersion: null
+			appVersion: null,
+			jixiao: {},
 		};
 	},
 	onLoad() {
@@ -58,6 +61,7 @@ export default {
 			this.appVersion = widgetInfo.version;
 		});
 		// #endif
+		this.getJiXiao()
 	},
 	methods: {
 		exit() {
@@ -92,6 +96,17 @@ export default {
 		modifyPwd() {
 			uni.navigateTo({
 				url: '/pages/user-info/modify-password'
+			});
+		},
+		// 获取绩效
+		getJiXiao() {
+			this.doGet('/jixiao/myjixiao').then(res => {
+				this.jixiao = res.data
+			})
+		},
+		navToJiXiao(type) {
+			uni.navigateTo({
+				url: `/pages/jixiao/jixiao?type=${type}`
 			});
 		}
 	}

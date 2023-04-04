@@ -9,7 +9,7 @@
         <view class="list-wrap">
           <view v-for="item in listData" :key="item.id" class="app-list-item" @click="navToDetail(item.DocId)">
             <view class="item-title">
-              <text v-if="item.DocStateName" :class="{ primary: item.DocStateName !== '已审批' }" class="state">
+              <text v-if="item.DocStateName" :class="{ primary: item.DocStateName !== '归档' }" class="state">
                 [{{ item.DocStateName }}]
               </text>
               <text>{{ item.DocTitle }}</text>

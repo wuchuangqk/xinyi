@@ -161,7 +161,7 @@ export default {
 					permission: 'pai-che',
 				},
 				{
-					name: '维修申请',
+					name: '维修管理',
 					icon: 'icon-cheliangweixiubaoyang',
 					url: '/pages/car/weixiu/list',
 					color: '#f9a202',

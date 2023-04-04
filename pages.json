@@ -373,6 +373,13 @@
 				"navigationBarTitleText": "加油审核",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/jixiao/jixiao",
+			"style": {
+				"navigationBarTitleText": "绩效考核",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {

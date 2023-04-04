@@ -54,8 +54,10 @@ const mixin = {
           return
         // 车辆维修
         case 'carsp':
-          // url = '/jiedai/detail'
-          break
+          uni.navigateTo({
+            url: `/pages/car/weixiu/detail?dataId=${id}&isApprove=1`,
+          });
+          return
       }
       if (url !== '') {
         uni.navigateTo({

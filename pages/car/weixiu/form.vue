@@ -2,47 +2,26 @@
 	<view class="app-page">
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
+				<view style="height: 1px;"></view>
 				<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
 					<view class="card form-card">
 						<u-form-item label="申请人">
 							<text>{{ userInfo.name }}</text>
 						</u-form-item>
-						<u-form-item label="部室">
-							<text>{{ userInfo.depart }}</text>
+						<u-form-item label="维修车辆" required prop="Vehicle">
+							<option-picker v-model="formData.Vehicle" :list="VehicleOptions" placeholder="请选择维修车辆" />
 						</u-form-item>
-						<u-form-item label="派车时间" required>
-							<date-picker v-model="formData.DocDate" :defaultTime="formData.DocDate" placeholder="请选择开始时间" />
+						<u-form-item label="维修时间" required>
+							<date-picker v-model="formData.docDate" :defaultTime="formData.docDate" placeholder="请选择维修时间" />
 						</u-form-item>
-						<u-form-item label="是否带驾驶员" required>
-							<option-picker v-model="formData.zijia" :list="zijiaOptions" placeholder="请选择是否带驾驶员" />
+						<u-form-item label="修理厂" required prop="XiuLiChang">
+							<u-input v-model="formData.XiuLiChang" placeholder="请输入修理厂" />
 						</u-form-item>
-						<u-form-item label="派车事由" prop="comments" required>
-							<u-input v-model="formData.comments" placeholder="请输入派车事由" />
+						<u-form-item label="申请维修项目及预算费用" required prop="comments">
+							<u-input v-model="formData.comments" placeholder="请输入申请维修项目及预算费用" type="textarea" auto-height />
 						</u-form-item>
-						<u-form-item label="随行人">
-							<u-input v-model="formData.SuiXing" placeholder="请输入随行人" />
-						</u-form-item>
-					</view>
-					<view class="card">
-						<view class="card-title" style="margin-bottom: 0;">
-							<view class="left"><text>起止地点</text></view>
-						</view>
-						<view class="addr-wrap">
-							<u-input v-model="formData.DiDianCurr" :border="true" placeholder="请输入" />
-							<text class="text">至</text>
-							<u-input v-model="formData.DiDianCurrEnd" :border="true" placeholder="请输入" />
-						</view>
-					</view>
-					<!-- 审批人 -->
-					<view class="card">
-						<view class="card-title" style="margin-bottom: 0;">
-							<view class="left"><text>审批人</text></view>
-						</view>
-						<u-form-item label="部门审核人" prop="auditor" required label-width="200">
-							<option-picker v-model="formData.auditor" :list="auditorOptions" placeholder="请选择" />
-						</u-form-item>
-						<u-form-item label="综合部审批人" prop="zonghebu" required label-width="200">
-							<option-picker v-model="formData.zonghebu" :list="zonghebuOptions" placeholder="请选择" />
+						<u-form-item label="维修流程模板" required  prop="templateid">
+							<option-picker v-model="formData.templateid" :list="templateidOptions" placeholder="请选择维修流程模板" />
 						</u-form-item>
 					</view>
 				</u-form>
@@ -62,25 +41,19 @@ export default {
 	data() {
 		return {
 			formData: {
-				SuiXing: '', // 随行人
-				zijia: '0', // 是否带驾驶员（默认不带）
-				DiDianCurr: '', // 起止地点-起
-				DiDianCurrEnd: '', // 起止地点-止
-				comments: '', // 派车事由
-				DocDate: '', // 派车时间
-				auditor: '', // 部门审核人
-				zonghebu: '', // 综合部审批人
+				Vehicle: '', // 修理车辆
+				XiuLiChang: '', // 修理厂
+				docDate: '', // 车辆维修时间
+				comments: '', // 申请维修及预算费用
+				templateid: '', // 维修流程模板
 			},
-			zijiaOptions: [
-				{ label: '是', value: '1' },
-				{ label: '否', value: '0' }
-			],
-			auditorOptions: [],
-			zonghebuOptions: [],
+			VehicleOptions: [],
+			templateidOptions: [],
 			rules: {
-				comments: [{ required: true, message: '请输入派车事由' }],
-				auditor: [{ required: true, message: '请选择部门审核人' }],
-				zonghebu: [{ required: true, message: '请选择综合部审批人' }],
+				Vehicle: [{ required: true, message: '请选择维修车辆' }],
+				XiuLiChang: [{ required: true, message: '请输入修理厂' }],
+				comments: [{ required: true, message: '请输入申请维修及预算费用' }],
+				templateid: [{ required: true, message: '请选择维修流程模板' }],
 			},
 			// listPath: '/pages/chuchai/list',
 			userInfo: {}, // 用户信息
@@ -93,22 +66,24 @@ export default {
 		const fmtOptions = (arr) => {
 			return (arr || []).map(val => {
 				return {
-					label: val.DisplayName,
-					value: val.UserID,
+					label: val.name,
+					value: val.id,
 				}
 			})
 		}
-		this.doGet("/CarMileages/getShenHeRen").then((res) => {
-			this.auditorOptions = fmtOptions(res.data.buMenShenHeList)
-			this.zonghebuOptions = fmtOptions(res.data.zongHeBulist)
-			if (this.auditorOptions.length > 0) {
-				this.formData.auditor = this.auditorOptions[0].value;
-			}
-			if (this.zonghebuOptions.length > 0) {
-				this.formData.zonghebu = this.zonghebuOptions[0].value;
+		this.doGet("/car/carlist").then((res) => {
+			this.VehicleOptions = fmtOptions(res.data)
+			if (this.VehicleOptions.length > 0) {
+				this.formData.Vehicle = this.VehicleOptions[0].value;
 			}
 		});
-		this.formData.DocDate = this.$dayjs().format('YYYY-MM-DD HH:mm:ss')
+		this.doGet("/car/templatelist").then((res) => {
+			this.templateidOptions = fmtOptions(res.data)
+			if (this.templateidOptions.length > 0) {
+				this.formData.templateid = this.templateidOptions[0].value;
+			}
+		});
+		this.formData.docDate = this.$dayjs().format('YYYY-MM-DD HH:mm:ss')
 		this.$refs.uForm.setRules(this.rules);
 		this.userInfo = uni.getStorageSync(this.$const.USER_INFO)
 	},
@@ -133,7 +108,7 @@ export default {
   methods: {
 		change(renderParams) {
 			if (renderParams !== null) {
-				axiosRequest('/CarMileages/add', renderParams, axios).then(res => {
+				axiosRequest('/car/add', renderParams, axios).then(res => {
 					this.$ownerInstance.callMethod('callback', {
 						success: true,
 					})
