@@ -50,7 +50,7 @@
 						<u-form-item label="审批意见" prop="option" required>
 							<u-input v-model="formData.option" placeholder="请输入审批意见" type="textarea" autoHeight></u-input>
 						</u-form-item>
-						<u-form-item label="申请人">
+						<u-form-item label="添加名单">
 							<userPicker :selectedUsers="selectedUsers" url="/pages/zonghe/select-user" />
 						</u-form-item>
 					</view>

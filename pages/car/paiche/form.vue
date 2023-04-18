@@ -12,7 +12,7 @@
 							<text>{{ userInfo.depart }}</text>
 						</u-form-item>
 						<u-form-item label="派车时间" required>
-							<date-picker v-model="formData.DocDate" :defaultTime="formData.DocDate" placeholder="请选择开始时间" />
+							<date-picker v-model="formData.DocDate" :defaultTime="formData.DocDate" mode="date" placeholder="请选择开始时间" />
 						</u-form-item>
 						<u-form-item label="是否带驾驶员" required>
 							<option-picker v-model="formData.zijia" :list="zijiaOptions" placeholder="请选择是否带驾驶员" />
@@ -109,7 +109,7 @@ export default {
 				this.formData.zonghebu = this.zonghebuOptions[0].value;
 			}
 		});
-		this.formData.DocDate = this.$dayjs().format('YYYY-MM-DD HH:mm:ss')
+		this.formData.DocDate = this.$dayjs().format('YYYY-MM-DD')
 		this.$refs.uForm.setRules(this.rules);
 		this.userInfo = uni.getStorageSync(this.$const.USER_INFO)
 	},

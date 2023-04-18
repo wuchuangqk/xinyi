@@ -21,7 +21,7 @@
               </view>
               <view>
                 <text class="label">派车时间：</text>
-                <text class="value">{{ item.DocDate }}</text>
+                <text class="value">{{ fmtDate(item.DocDate) }}</text>
               </view>
             </view>
             <view class="app-flex-between color-gray item-sub">
@@ -94,6 +94,9 @@ export default {
         url: `/pages/car/paiche/detail?dataId=${id}&type=${this.activeTabIndex}`,
       });
     },
+    fmtDate(date) {
+      return date ? this.$dayjs(date).format('YYYY-MM-DD') : date
+    }
   }
 }
 </script>

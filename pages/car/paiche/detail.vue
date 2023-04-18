@@ -152,7 +152,14 @@ export default {
 		},
 		vehicleChange(val) {
 			this.formData.JiaShiYuan = val
-		}
+		},
+		setFiledContent({ label, field }) {
+      if (label === '派车时间') {
+        return field ? this.$dayjs(field).format('YYYY-MM-DD') : field
+      } else {
+        return field
+      }
+    },
 	}
 };
 </script>
