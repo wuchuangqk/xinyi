@@ -71,8 +71,8 @@ export default {
       ],
       pathList: [
         "/CarMileages/MyList",
+				"/CarMileages/MyShenHeList",
         "/CarMileages/MyShenPiList",
-        "/CarMileages/MyShenHeList",
         "/CarMileages/HuanCheList",
         "/CarMileages/monitor_List"
       ]

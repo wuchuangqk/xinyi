@@ -45,7 +45,7 @@
 			</scroll-view>
 		</view>
 		<view v-if="isApprove === '1'" class="page-footer">
-			<button v-if="isReject === '1'" class="btn danger" @click="showConfirm = true">驳回</button>
+			<button v-if="isReject === '1'" class="btn danger" @click="reject">驳回</button>
 			<button class="btn" @click="submit(1)">同意</button>
 		</view>
 		<u-modal v-model="showConfirm" content="确认驳回吗" show-cancel-button @confirm="submit(0)"></u-modal>
@@ -121,18 +121,8 @@ export default {
 		 * @param {*} isPass 1=同意，0=驳回
 		 */
 		submit(isPass) {
-			if (isPass === 0) {
-				if (this.comment.trim() === '') {
-					uni.showToast({
-						title: '请输入审批意见',
-						icon: 'none'
-					});
-					return
-				}
-			} else {
-				if (this.comment.trim() === '') {
-					this.comment = '同意'
-				}
+			if (isPass === 1 && this.comment.trim() === '') {
+				this.comment = '同意'
 			}
 			uni.showLoading({
 				title: '正在提交',
@@ -178,6 +168,16 @@ export default {
 				url: submitUrl
 			}
 		},
+		reject() {
+			if (this.comment.trim() === '') {
+				uni.showToast({
+					title: '请输入审批意见',
+					icon: 'none'
+				});
+				return
+			}
+			this.showConfirm = true
+		}
 	}
 };
 </script>

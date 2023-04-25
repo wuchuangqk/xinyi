@@ -8,7 +8,7 @@ export const storageKeys = {
 }
 
 // dev(https)
-export const BASE_URL = 'https://36q635g350.zicp.fun'
+// export const BASE_URL = 'https://36q635g350.zicp.fun'
 
 // prod(http)
-// export const BASE_URL = 'http://58.218.148.154:8090'
+export const BASE_URL = 'http://58.218.148.154:8090'
