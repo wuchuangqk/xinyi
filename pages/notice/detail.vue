@@ -3,20 +3,20 @@
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
 				<view style="height: 1px;"></view>
-				<view class="notice">
-					<view class="title">{{ detailData.title }}</view>
-					<view class="app-flex-between color-gray item-sub">
-						<view>
-							<text class="label">发布人：</text>
-							<text class="value">{{ detailData.username }}</text>
-						</view>
-						<view>
-							<text class="label">发布时间：</text>
-							<text class="value">{{ detailData.time }}</text>
+				<view class="card content-card">
+					<view class="notice">
+						<view class="title">{{ detailData.title }}</view>
+						<view class="app-flex-between sub-title">
+							<view>
+								<text class="label">发布人：</text>
+								<text class="value">{{ detailData.username }}</text>
+							</view>
+							<view>
+								<text class="label">发布时间：</text>
+								<text class="value">{{ detailData.time }}</text>
+							</view>
 						</view>
 					</view>
-				</view>
-				<view class="card content-card">
 					<view class="content" v-html="detailData.content"></view>
 				</view>
 				<view v-if="detailData.pdflist && detailData.pdflist.length" class="card">
@@ -87,22 +87,28 @@ export default {
 }
 
 .notice {
-	padding: 0 12px;
 
 	.title {
 		font-size: 18px;
-		text-align: center;
-		padding: 10px 0;
+		text-align: left;
+		font-weight: bold;
+	}
+
+	.sub-title {
+		color: #999;
+		margin-top: 10px;
+		font-size: 13px;
 	}
 }
 
 .content {
 	text-indent: 2em;
+	margin-top: 50px;
+	line-height: 1.7;
 }
 
 .content-card {
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding: 20px 15px 50px;
 }
 
 /deep/ .u-cell {

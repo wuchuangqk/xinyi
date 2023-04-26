@@ -188,14 +188,38 @@ export default {
 					color: '#fe8007',
 					permission: 'cars/jiayou-jilu',
 				},
-				// {
-				// 	name: '工作计划',
-				// 	icon: 'icon-gongzuojihua',
-				// 	url: '/pages/plan/list',
-				// 	color: '#f9a202',
-				// 	count: 0,
-				// 	permission: 'ge-ren-ban-gong/month-plan/index',
-				// },
+				{
+					name: '工作计划',
+					icon: 'icon-gongzuojihua',
+					url: '/pages/plan/list',
+					color: '#f9a202',
+					count: 0,
+					permission: 'ge-ren-ban-gong/month-plan/index',
+				},
+				{
+					name: '食品',
+					icon: 'icon-gongzuojihua',
+					url: '/pages/shitang/good?type=food',
+					color: '#f9a202',
+				},
+				{
+					name: '日用品',
+					icon: 'icon-gongzuojihua',
+					url: '/pages/shitang/good?type=daily',
+					color: '#f9a202',
+				},
+				{
+					name: '我的订单',
+					icon: 'icon-gongzuojihua',
+					url: '/pages/shitang/myorder',
+					color: '#f9a202',
+				},
+				{
+					name: '商品台账',
+					icon: 'icon-gongzuojihua',
+					url: '/pages/shitang/tai-zhang',
+					color: '#f9a202',
+				},
 			],
 			noticeList: [], // 通知公告
 			swiperCurrent: 0,
@@ -390,9 +414,9 @@ export default {
 	padding-bottom: 18px;
 
 	.indicator {
-		height: 4px;
-		width: 16px;
-		border-radius: 2px;
+		height: 6px;
+		width: 6px;
+		border-radius: 50%;
 		background-color: rgba(0, 0, 0, 0.1);
 		margin: 0 4px;
 		transition: all 0.1s;

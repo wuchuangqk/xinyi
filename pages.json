@@ -359,6 +359,34 @@
 				"navigationBarTitleText": "绩效考核",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/shitang/good",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/shitang/order-detail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/shitang/myorder",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/shitang/tai-zhang",
+			"style": {
+				"navigationBarTitleText": "商品台账",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {
