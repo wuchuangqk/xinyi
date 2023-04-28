@@ -387,6 +387,20 @@
 				"navigationBarTitleText": "商品台账",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/shitang/good-manage",
+			"style": {
+				"navigationBarTitleText": "商品列表",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/shitang/good-form",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {

@@ -220,6 +220,12 @@ export default {
 					url: '/pages/shitang/tai-zhang',
 					color: '#f9a202',
 				},
+				{
+					name: '商品列表',
+					icon: 'icon-gongzuojihua',
+					url: '/pages/shitang/good-manage',
+					color: '#f9a202',
+				},
 			],
 			noticeList: [], // 通知公告
 			swiperCurrent: 0,
