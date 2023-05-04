@@ -147,6 +147,13 @@ export default {
 					permission: 'yong-zhang-shen-qing',
 				},
 				{
+					name: '外出管理',
+					icon: 'icon-waiqin1',
+					url: '/pages/waichu/list',
+					color: '#f25641',
+					permission: 'wai-chu',
+				},
+				{
 					name: '车辆列表',
 					icon: 'icon-cheliangjiance',
 					url: '/pages/car/info/list',
@@ -197,34 +204,53 @@ export default {
 					permission: 'ge-ren-ban-gong/month-plan/index',
 				},
 				{
+					name: '商品列表',
+					icon: 'icon-shangpin',
+					url: '/pages/shitang/good-manage',
+					color: '#f25641',
+					permission: 'canteen/splist'
+				},
+				{
 					name: '食品',
-					icon: 'icon-gongzuojihua',
+					icon: 'icon-hanbao',
 					url: '/pages/shitang/good?type=food',
-					color: '#f9a202',
+					color: '#0188fd',
+					permission: 'canteen/foodlist'
 				},
 				{
 					name: '日用品',
-					icon: 'icon-gongzuojihua',
+					icon: 'icon-riyongbaihuo',
 					url: '/pages/shitang/good?type=daily',
-					color: '#f9a202',
+					color: '#14bd82',
+					permission: 'canteen/dailylist'
+				},
+				{
+					name: '食品台账',
+					icon: 'icon-zichanguanli-zichantaizhang',
+					url: '/pages/shitang/tai-zhang?type=food',
+					color: '#0188fd',
+					permission: 'canteen/tai-zhang/1',
+				},
+				{
+					name: '日用品台账',
+					icon: 'icon-zichanguanli-zichantaizhang',
+					url: '/pages/shitang/tai-zhang?type=daily',
+					color: '#14bd82',
+					permission: 'canteen/tai-zhang/0',
 				},
 				{
 					name: '我的订单',
-					icon: 'icon-gongzuojihua',
+					icon: 'icon-gouwucheman',
 					url: '/pages/shitang/myorder',
 					color: '#f9a202',
+					permission: 'canteen/myorder'
 				},
 				{
-					name: '商品台账',
-					icon: 'icon-gongzuojihua',
-					url: '/pages/shitang/tai-zhang',
-					color: '#f9a202',
-				},
-				{
-					name: '商品列表',
-					icon: 'icon-gongzuojihua',
-					url: '/pages/shitang/good-manage',
-					color: '#f9a202',
+					name: '公告信息',
+					icon: 'icon-yuedugonggao',
+					url: '/pages/shitang/notice',
+					color: '#fe8007',
+					permission: 'canteen/gong-gao',
 				},
 			],
 			noticeList: [], // 通知公告
@@ -300,8 +326,9 @@ export default {
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 1 }), // 办公
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 2 }), // 审批
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 6 }), // 车辆管理
-			]).then(([res1, res2, res3]) => {
-				const names = [...res1.data, ...res2.data, ...res3.data].map(val => val.Name)
+				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 7 }), // 食堂系统
+			]).then(([res1, res2, res3, res4]) => {
+				const names = [...res1.data, ...res2.data, ...res3.data, ...res4.data].map(val => val.Name)
 				this.permissionOfficeMenus = this.officeMenus.filter(val => {
 					return val.permission === undefined || names.includes(val.permission)
 				})

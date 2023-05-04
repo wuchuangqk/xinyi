@@ -3,7 +3,6 @@
     <view class="page-main">
       <view v-html="tableData" class="table-wrap"></view>
     </view>
-    <list-tabbar :tab-items="tabItems" @change="changeTab" />
   </view>
 </template>
 <script>
@@ -12,34 +11,27 @@ export default {
   mixins: [listMixin],
   data() {
     return {
-      pathList: [
-        '/food/shushitaizhang',
-        '/food/dailytaizhang',
-      ],
-      tabItems: [
-        {
-          name: '食品',
-          icon: 'icon-shenqing1',
-        },
-        {
-          name: '日用品',
-          icon: 'icon-daiban',
-        },
-      ],
       tableData: '',
+      type: null,
     }
   },
-  onShow() {
-    this.tableData = ''
+  onLoad({ type }) {
+    this.type = type
+  },
+  onReady() {
+    uni.setNavigationBarTitle({
+      title: this.type === 'food' ? '食品台账' : '日用品台账'
+    })
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    fetchData() {
       uni.showLoading({
         title: '加载中',
         mask: false
       });
-      this.doGet(this.pathList[this.activeTabIndex]).then(res => {
+      const url = this.type === 'food' ? '/food/shushitaizhang' : '/food/dailytaizhang'
+      this.doGet(url).then(res => {
         this.tableData = res.data
         uni.hideLoading();
       }).catch(() => {

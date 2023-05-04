@@ -4,6 +4,9 @@
 			<scroll-view scroll-y style="height: 100%;">
 				<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
 					<view class="card form-card">
+						<u-form-item label="申请人" prop="userid" required>
+							<userPicker :selectedUsers="selectedUsers" url="/pages/zonghe/select-user" />
+						</u-form-item>
 						<u-form-item label="开始时间" prop="qjstime" required>
 							<date-picker v-model="formData.qjstime" :defaultTime="formData.qjstime" placeholder="请选择开始时间" />
 						</u-form-item>
@@ -69,8 +72,11 @@
 
 <script>
 import renderMixin from '@/mixin/render'
+import userPicker from '@/components/user-picker'
+
 export default {
 	mixins: [renderMixin],
+	components: { userPicker },
 	data() {
 		return {
 			formData: {
@@ -89,7 +95,8 @@ export default {
 				addr5: "",
 				addr6: "",
 				addr7: "",
-				addr8: ""
+				addr8: "",
+				userid: '', // 申请人
 			},
 			qjtypeOptions: [
 				{ label: '是', value: '1' },
@@ -98,6 +105,7 @@ export default {
 			signCreator1Options: [],
 			signCreator2Options: [],
 			rules: {
+				userid: [{ required: true, message: '请选择申请人' }],
 				qjyy: [{ required: true, message: '请输入出差事由' }],
 				qjtype: [{ required: true, message: '请选择是否带车' }],
 				qjstime: [{ required: true, message: '请选择出差开始时间' }],
@@ -117,10 +125,19 @@ export default {
 			isNeedFenGuan: false, // 分管领导
 			leadText: '',
 			listPath: '/pages/chuchai/list',
+			selectedUsers: [],
 		};
 	},
-	onLoad({from}) {
+	onLoad({ from }) {
 		this.from = from
+	},
+	onShow() {
+		// 读取选择的用户
+		this.selectedUsers = this.$store.state.selectedUsers
+		this.formData.userid = this.selectedUsers.map(val => val.userid).join(',')
+	},
+	onUnload() {
+		this.$store.dispatch('selectedUsers', [])
 	},
 	onReady() {
 		const fmtOptions = (arr) => {
@@ -150,6 +167,12 @@ export default {
 			this.isNeedFenGuan = res.data[0].display === '非副总经理'
 			this.leadText = res.data[0].display === '非副总经理' ? '部门领导审批' : '总经理审批'
 		})
+		
+		// 申请人默认选择自己
+		const userInfo = uni.getStorageSync(this.$const.USER_INFO)
+		this.selectedUsers = [{ displayname: userInfo.name, name: userInfo.name, id: userInfo.id, userid: userInfo.id }]
+		this.$store.dispatch('selectedUsers', this.selectedUsers)
+		this.formData.userid = this.selectedUsers.map(val => val.userid).join(',')
 	},
 	methods: {
 		submit() {

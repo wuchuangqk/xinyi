@@ -9,6 +9,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-hanbao:before {
+  content: "\e60d";
+}
+
+.icon-gouwucheman:before {
+  content: "\e60f";
+}
+
+.icon-shangpin:before {
+  content: "\e625";
+}
+
+.icon-riyongbaihuo:before {
+  content: "\e659";
+}
+
+.icon-yuedugonggao:before {
+  content: "\e62a";
+}
+
+.icon-zichanguanli-zichantaizhang:before {
+  content: "\e639";
+}
+
 .icon-card:before {
   content: "\e61b";
 }
