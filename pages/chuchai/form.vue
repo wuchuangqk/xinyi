@@ -4,7 +4,7 @@
 			<scroll-view scroll-y style="height: 100%;">
 				<u-form :model="formData" ref="uForm" :error-type="['toast']" label-width="180">
 					<view class="card form-card">
-						<u-form-item label="申请人" prop="userid" required>
+						<u-form-item label="申请人" prop="sqr" required>
 							<userPicker :selectedUsers="selectedUsers" url="/pages/zonghe/select-user" />
 						</u-form-item>
 						<u-form-item label="开始时间" prop="qjstime" required>
@@ -96,7 +96,7 @@ export default {
 				addr6: "",
 				addr7: "",
 				addr8: "",
-				userid: '', // 申请人
+				sqr: '', // 申请人
 			},
 			qjtypeOptions: [
 				{ label: '是', value: '1' },
@@ -105,7 +105,7 @@ export default {
 			signCreator1Options: [],
 			signCreator2Options: [],
 			rules: {
-				userid: [{ required: true, message: '请选择申请人' }],
+				sqr: [{ required: true, message: '请选择申请人' }],
 				qjyy: [{ required: true, message: '请输入出差事由' }],
 				qjtype: [{ required: true, message: '请选择是否带车' }],
 				qjstime: [{ required: true, message: '请选择出差开始时间' }],
@@ -134,7 +134,7 @@ export default {
 	onShow() {
 		// 读取选择的用户
 		this.selectedUsers = this.$store.state.selectedUsers
-		this.formData.userid = this.selectedUsers.map(val => val.userid).join(',')
+		this.formData.sqr = this.selectedUsers.map(val => val.userid).join(',')
 	},
 	onUnload() {
 		this.$store.dispatch('selectedUsers', [])
@@ -172,7 +172,7 @@ export default {
 		const userInfo = uni.getStorageSync(this.$const.USER_INFO)
 		this.selectedUsers = [{ displayname: userInfo.name, name: userInfo.name, id: userInfo.id, userid: userInfo.id }]
 		this.$store.dispatch('selectedUsers', this.selectedUsers)
-		this.formData.userid = this.selectedUsers.map(val => val.userid).join(',')
+		this.formData.sqr = this.selectedUsers.map(val => val.userid).join(',')
 	},
 	methods: {
 		submit() {

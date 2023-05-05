@@ -38,6 +38,9 @@
 						<u-form-item label="分管副总审批" required prop="sign2" label-width="200">
 							<option-picker v-model="formData.sign2" :list="sign2Options" placeholder="请选择" />
 						</u-form-item>
+						<u-form-item label="总经理审批" required prop="sign4" label-width="200">
+							<option-picker v-model="formData.sign4" :list="sign4Options" placeholder="请选择" />
+						</u-form-item>
 						<u-form-item label="综合部审批" required prop="sign3" label-width="200">
 							<option-picker v-model="formData.sign3" :list="sign3Options" placeholder="请选择" />
 						</u-form-item>
@@ -79,11 +82,16 @@ export default {
 				// 分管副总审批
 				sign2: '',
 				// 综合部审批
-				sign3: ''
+				sign3: '',
+				// 总经理审批
+				sign4: '1596',
 			},
 			sign1Options: [],
 			sign2Options: [],
 			sign3Options: [],
+			sign4Options: [
+				{ label: '王振和', value: '1596' }
+			],
 			rules: {
 				xingming: [{ required: true, message: '请输入宾客姓名' }],
 				zhiwu: [{ required: true, message: '请输入单位职位' }],
@@ -93,6 +101,7 @@ export default {
 				biaozhun: [{ required: true, message: '请输入用餐标准' }],
 				sign1: [{ required: true, message: '请选择部门审批人' }],
 				sign2: [{ required: true, message: '请选择分管副总审批人' }],
+				sign4: [{ required: true, message: '请选择总经理审批' }],
 				sign3: [{ required: true, message: '请选择综合部审批人' }],
 			},
 			listPath: '/pages/jiedai/list',
