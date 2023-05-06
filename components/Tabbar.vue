@@ -104,6 +104,12 @@ export default {
           url: '/pages/yongzhang/form',
           color: '#fe8007',
         },
+        {
+          name: '外出申请',
+          icon: 'icon-waiqin1',
+          url: '/pages/waichu/form?type=add',
+          color: '#f25641',
+        },
       ],
     };
   },
@@ -117,8 +123,9 @@ export default {
     },
     nav(url) {
       this.show = false
+      const query = url.indexOf('?') === -1 ? '?from=shortcut' : '&from=shortcut'
       uni.navigateTo({
-        url: url + '?from=shortcut'
+        url: url + query
       });
     },
   }

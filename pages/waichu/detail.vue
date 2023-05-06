@@ -9,6 +9,12 @@
 						<text class="value">{{ detailData[item.field] }}</text>
 					</view>
 				</view>
+				<view v-if="files && files.length" class="card">
+					<view class="card-title">
+						<view class="left"><text>附件</text></view>
+					</view>
+					<file-viewer :files="files"></file-viewer>
+				</view>
 				<view v-if="type === 'backtime'" class="card">
 					<view class="card-title">
 						<view class="left"><text>返回时间</text></view>
@@ -56,6 +62,7 @@ export default {
 			type: '',
 			EndDate: '', // 返回时间
 			showConfirm: false,
+			files: [],
 		}
 	},
 	onLoad({ dataId, type }) {
@@ -65,6 +72,7 @@ export default {
 	onShow() {
 		this.doGet('/beout/info/', { id: this.dataId }).then(res => {
 			this.detailData = res.data
+			this.files = res.data.pdfurl || []
 		})
 	},
 	onReady() {

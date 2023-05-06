@@ -18,12 +18,12 @@
               <u-input v-model="formData.Remarks" placeholder="请输入备注" />
             </u-form-item>
           </view>
-          <view class="card">
+          <!-- <view class="card">
             <view class="card-title">
               <view class="left"><text>附件</text></view>
             </view>
             <FileUploader :limit="1" @change="upload"></FileUploader>
-          </view>
+          </view> -->
         </u-form>
       </scroll-view>
     </view>
@@ -68,6 +68,9 @@ export default {
     this.dataId = dataId
   },
   onReady() {
+    uni.setNavigationBarTitle({
+      title: this.type === 'add' ? '添加商品' : '编辑商品'
+    })
     this.$refs.uForm.setRules(this.rules);
     if (this.type === 'edit') {
       this.getDetail()

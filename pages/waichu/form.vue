@@ -52,13 +52,18 @@ export default {
       },
       type: null,
       dataId: null,
+      listPath: '/pages/waichu/list',
     };
   },
-  onLoad({ dataId, type }) {
+  onLoad({ dataId, type, from }) {
     this.dataId = dataId
     this.type = type
+    this.from = from
   },
   onReady() {
+    uni.setNavigationBarTitle({
+      title: this.type === 'add' ? '外出申请' : '修改外出申请'
+    })
     this.$refs.uForm.setRules(this.rules);
     if (this.type === 'edit') {
       this.doGet('/beout/info', { id: this.dataId }).then(res => {
@@ -82,7 +87,7 @@ export default {
         const url = this.type === 'add' ? '/beout/add' : '/beout/update'
         if (this.files.length) {
           this.uploadFile(url, this.formData, this.files).then(() => {
-            uni.navigateBack();
+            this.back()
           })
         } else {
           this.renderParams = {
