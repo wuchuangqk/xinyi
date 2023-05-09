@@ -429,6 +429,13 @@
 				"navigationBarTitleText": "外出详情",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/tabbar/more",
+			"style": {
+				"navigationBarTitleText": "更多",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {
@@ -442,6 +449,12 @@
 				"iconPath": "static/img/tabBarIco/home.png",
 				"selectedIconPath": "static/img/tabBarIco/home_.png",
 				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tabbar/more",
+				"iconPath": "static/img/tabBarIco/office.png",
+				"selectedIconPath": "static/img/tabBarIco/office_.png",
+				"text": "更多"
 			},
 			{
 				"pagePath": "pages/user-info/user-info",

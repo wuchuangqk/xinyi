@@ -9,28 +9,18 @@
 							<u-icon name="grid" style="margin-right: 4px;" />
 							<text>办公</text>
 						</view>
-						<swiper :current="swiperCurrent" @animationfinish="animationfinish" style="height: 196px;">
-							<swiper-item v-for="group in menuGroup" :key="group.key" class="swiper-item">
-								<view class="row">
-									<view class="col" v-for="item in group.data" :key="item.name" @click="nav(item.url)">
-										<view class="icon-bg" :style="{ background: item.color }">
-											<icon-font :icon="item.icon" class="item-icon"></icon-font>
-											<view v-if="item.count" class="badge">{{ item.count }}</view>
-										</view>
-										<view class="item-name">
-											<text>{{ item.name }}</text>
-										</view>
-									</view>
+						<view class="row">
+							<view class="col" v-for="item in permissionOfficeMenus" :key="item.name" @click="nav(item.url)">
+								<view class="icon-bg" :style="{ background: item.color }">
+									<icon-font :icon="item.icon" class="item-icon"></icon-font>
+									<view v-if="item.count" class="badge">{{ item.count }}</view>
 								</view>
-							</swiper-item>
-						</swiper>
-						<view class="indicator-wrap">
-							<view v-for="(group, index) in menuGroup" :key="group.key" class="indicator"
-								:class="{ active: index === swiperCurrent }"></view>
+								<view class="item-name">
+									<text>{{ item.name }}</text>
+								</view>
+							</view>
 						</view>
 					</view>
-					<!-- 每周菜谱 -->
-					<CaiPu />
 					<!-- 通知公告 -->
 					<view class="home-card">
 						<view class="card-title notice">
@@ -65,6 +55,23 @@
 			</scroll-view>
 		</view>
 		<Tabbar text="首页" />
+		<float-button @click="show = true" />
+		<u-popup v-model="show" mode="bottom" border-radius="30">
+			<view>
+				<view class="popup-title">快速新建</view>
+				<view class="row shortcut">
+					<view class="col" v-for="item in shortcutMenus" :key="item.name" @click="shortcutNav(item.url)">
+						<view class="icon-bg" :style="{ background: item.color }">
+							<icon-font :icon="item.icon" class="item-icon"></icon-font>
+							<view v-if="item.count" class="badge">{{ item.count }}</view>
+						</view>
+						<view class="item-name">
+							<text>{{ item.name }}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -154,46 +161,11 @@ export default {
 					permission: 'wai-chu',
 				},
 				{
-					name: '车辆列表',
-					icon: 'icon-cheliangjiance',
-					url: '/pages/car/info/list',
-					color: '#0188fd',
-					permission: 'cars/car-list',
-				},
-				{
 					name: '派车管理',
 					icon: 'icon--cheliang',
 					url: '/pages/car/paiche/list',
 					color: '#14bd82',
 					permission: 'pai-che',
-				},
-				{
-					name: '维修管理',
-					icon: 'icon-cheliangweixiubaoyang',
-					url: '/pages/car/weixiu/list',
-					color: '#f9a202',
-					permission: 'cars/weixiu',
-				},
-				{
-					name: '加油管理',
-					icon: 'icon-jiayou1',
-					url: '/pages/car/jiayou/list',
-					color: '#0188fd',
-					permission: 'cars/jiayou-list',
-				},
-				{
-					name: '还卡处理',
-					icon: 'icon-card',
-					url: '/pages/car/huanka/list',
-					color: '#f9a202',
-					permission: 'cars/huan-ka',
-				},
-				{
-					name: '加油记录',
-					icon: 'icon-jiayoujilu',
-					url: '/pages/car/jiayou-jilu/list',
-					color: '#fe8007',
-					permission: 'cars/jiayou-jilu',
 				},
 				{
 					name: '工作计划',
@@ -202,58 +174,59 @@ export default {
 					color: '#f9a202',
 					permission: 'ge-ren-ban-gong/month-plan/index',
 				},
-				{
-					name: '商品列表',
-					icon: 'icon-shangpin',
-					url: '/pages/shitang/good-manage',
-					color: '#f25641',
-					permission: 'canteen/splist'
-				},
-				{
-					name: '食品',
-					icon: 'icon-hanbao',
-					url: '/pages/shitang/good?type=food',
-					color: '#0188fd',
-					permission: 'canteen/foodlist'
-				},
-				{
-					name: '日用品',
-					icon: 'icon-riyongbaihuo',
-					url: '/pages/shitang/good?type=daily',
-					color: '#14bd82',
-					permission: 'canteen/dailylist'
-				},
-				{
-					name: '食品台账',
-					icon: 'icon-zichanguanli-zichantaizhang',
-					url: '/pages/shitang/tai-zhang?type=food',
-					color: '#0188fd',
-					permission: 'canteen/tai-zhang/1',
-				},
-				{
-					name: '日用品台账',
-					icon: 'icon-zichanguanli-zichantaizhang',
-					url: '/pages/shitang/tai-zhang?type=daily',
-					color: '#14bd82',
-					permission: 'canteen/tai-zhang/0',
-				},
-				{
-					name: '我的订单',
-					icon: 'icon-gouwucheman',
-					url: '/pages/shitang/myorder',
-					color: '#f9a202',
-					permission: 'canteen/myorder'
-				},
-				{
-					name: '公告信息',
-					icon: 'icon-yuedugonggao',
-					url: '/pages/shitang/notice',
-					color: '#fe8007',
-					permission: 'canteen/gong-gao',
-				},
 			],
 			noticeList: [], // 通知公告
-			swiperCurrent: 0,
+			show: false,
+			shortcutMenus: [
+				{
+					name: '请假申请',
+					icon: 'icon-qingjia',
+					url: '/pages/qingjia/form',
+					color: '#0188fd',
+				},
+				{
+					name: '加班申请',
+					icon: 'icon-jiaban',
+					url: '/pages/jiaban/form',
+					color: '#f9a202',
+				},
+				{
+					name: '出差申请',
+					icon: 'icon-chucha',
+					url: '/pages/chuchai/form',
+					color: '#14bd82',
+				},
+				{
+					name: '综合申请',
+					icon: 'icon-zongheguanli',
+					url: '/pages/zonghe/form',
+					color: '#0382fb',
+				},
+				{
+					name: '购置申请',
+					icon: 'icon-wuzicaigou',
+					url: '/pages/zichan/form',
+					color: '#f25641',
+				},
+				{
+					name: '接待申请',
+					icon: 'icon-jiedai',
+					url: '/pages/jiedai/form',
+					color: '#14bd82',
+				},
+				{
+					name: '用章申请',
+					icon: 'icon-yinzhangkezhi',
+					url: '/pages/yongzhang/form',
+					color: '#fe8007',
+				},
+				{
+					name: '外出申请',
+					icon: 'icon-waiqin1',
+					url: '/pages/waichu/form?type=add',
+					color: '#f25641',
+				},
+			],
 		}
 	},
 	onInit() {
@@ -271,27 +244,15 @@ export default {
 	onShow() {
 		uni.hideTabBar();
 		this.getNoticeList()
-		this.getBadge()
-	},
-	computed: {
-		menuGroup() {
-			const times = this.permissionOfficeMenus.length / 8
-			const groups = []
-			for (let i = 0; i <= times; i++) {
-				const offset = (i * 8)
-				const limit = (i + 1) * 8
-				const arr = this.permissionOfficeMenus.slice(offset, limit)
-				if (arr.length) {
-					groups.push({
-						key: Symbol(),
-						data: arr
-					})
-				}
-			}
-			return groups
-		}
 	},
 	methods: {
+		shortcutNav(url) {
+			this.show = false
+			const query = url.indexOf('?') === -1 ? '?from=shortcut' : '&from=shortcut'
+			uni.navigateTo({
+				url: url + query
+			});
+		},
 		nav(url) {
 			uni.navigateTo({
 				url
@@ -308,35 +269,30 @@ export default {
 				url: `/pages/notice/detail?dataId=${id}`,
 			});
 		},
-		// 角标
-		getBadge() {
-			this.doGet('/home/homecont').then(res => {
-				const { todocount, noticecount } = res.data
-				this.officeMenus.find(val => val.name === '待办事项').count = todocount
-				this.officeMenus.find(val => val.name === '通知公告').count = noticecount
-			})
-		},
 		// 获取菜单入口权限
-		getPermission() {
+		async getPermission() {
 			uni.showLoading({
 				title: '加载中'
 			});
+
+			// 设置角标
+			const badge = await this.doGet('/home/homecont')
+			const { todocount, noticecount } = badge.data
+			this.officeMenus.find(val => val.name === '待办事项').count = todocount
+			this.officeMenus.find(val => val.name === '通知公告').count = noticecount
+
 			Promise.all([
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 1 }), // 办公
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 2 }), // 审批
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 6 }), // 车辆管理
-				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 7 }), // 食堂系统
-			]).then(([res1, res2, res3, res4]) => {
-				const names = [...res1.data, ...res2.data, ...res3.data, ...res4.data].map(val => val.Name)
+			]).then(([res1, res2, res3]) => {
+				const names = [...res1.data, ...res2.data, ...res3.data].map(val => val.Name)
 				this.permissionOfficeMenus = this.officeMenus.filter(val => {
 					return val.permission === undefined || names.includes(val.permission)
 				})
 			}).finally(() => {
 				uni.hideLoading();
 			})
-		},
-		animationfinish(e) {
-			this.swiperCurrent = e.detail.current;
 		},
 	}
 }
@@ -378,6 +334,10 @@ export default {
 	display: flex;
 	flex-wrap: wrap;
 	padding-top: 18px;
+
+	&.shortcut {
+		padding: 0 8px 20px;
+	}
 }
 
 .col {
@@ -457,5 +417,11 @@ export default {
 			background-color: #3880ff;
 		}
 	}
+}
+
+.popup-title {
+	text-align: center;
+	padding: 15px 0 30px;
+	font-size: 18px;
 }
 </style>
