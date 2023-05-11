@@ -13,8 +13,9 @@
                 [{{ item.qjstate }}]
               </text>
               <text>{{ item.title }}</text>
-              <view v-if="item.hg && activeTabIndex === 0" class="btn">
-                <u-button plain size="mini" type="primary" @click="startJiaBan(item.id)">出差情况说明</u-button>
+              <view v-if="activeTabIndex === 0" class="btn">
+                <u-button v-if="item.hg" plain size="mini" type="primary" @click="supplementary(item.id)">出差情况说明</u-button>
+                <u-button v-if="!item.waichuimg" plain size="mini" type="primary" @click="takePhoto(item.id)">拍照证明</u-button>
               </view>
             </view>
             <view class="app-flex-between color-gray item-sub">
@@ -75,9 +76,15 @@ export default {
         url: `/pages/qingjia/detail?dataId=${id}&url=/waichu/shenpi_detail&isApprove=${isApprove}`,
       });
     },
-    startJiaBan(id) {
+    supplementary(id) {
       uni.navigateTo({
-        url: `/pages/chuchai/detail?dataId=${id}`,
+        url: `/pages/chuchai/detail?dataId=${id}&type=supplementary`,
+      });
+    },
+    // 拍照证明
+    takePhoto(id) {
+      uni.navigateTo({
+        url: `/pages/chuchai/detail?dataId=${id}&type=photo`,
       });
     }
   }
@@ -89,6 +96,9 @@ export default {
 
   .btn {
     margin-left: auto;
+    .u-btn {
+      margin-left: 10px;
+    }
   }
 }
 </style>
