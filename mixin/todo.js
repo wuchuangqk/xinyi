@@ -58,6 +58,12 @@ const mixin = {
             url: `/pages/car/weixiu/detail?dataId=${id}&isApprove=1`,
           });
           return
+        // 车辆维修
+        case 'cirinformation':
+          uni.navigateTo({
+            url: `/pages/document/detail?dataId=${id}&isHandle=1`,
+          });
+          return
       }
       if (url !== '') {
         uni.navigateTo({

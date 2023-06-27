@@ -436,6 +436,20 @@
 				"navigationBarTitleText": "更多",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/document/list",
+			"style": {
+				"navigationBarTitleText": "文件流转",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/document/detail",
+			"style": {
+				"navigationBarTitleText": "文件流转详情",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {

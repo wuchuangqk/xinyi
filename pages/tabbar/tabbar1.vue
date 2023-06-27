@@ -24,13 +24,18 @@
 					<!-- 通知公告 -->
 					<view class="home-card">
 						<view class="card-title notice">
-							<view>
-								<u-icon name="bell" style="margin-right: 4px;" />
-								<text>通知公告</text>
+							<view class="flex view1">
+								<view v-for="(item, index) in tabItems" class="tab-item" :key="item.key"
+									:class="{ active: tab === item.key }" @click="setTab(item, index)">
+									<u-icon :name="item.icon" style="margin-right: 4px;" />
+									<text>{{ item.label }}</text>
+								</view>
+								<view class="line" :style="lineStyle"></view>
 							</view>
-							<text @click="nav('/pages/notice/notice')">更多</text>
+							<text class="more1" @click="nav(tab === 'notice' ? '/pages/notice/notice' : '/pages/document/list')">更多
+								<u-icon name="arrow-right" /></text>
 						</view>
-						<view class="notice-list">
+						<view v-show="tab === 'notice'" class="notice-list">
 							<view v-for="item in noticeList" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
 								<view class="item-title">
 									<text :class="{ primary: item.read === '0' }" class="state">
@@ -46,6 +51,23 @@
 									<view>
 										<text class="label">发布日期：</text>
 										<text class="value">{{ item.date }}</text>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view v-show="tab === 'doc'" class="notice-list">
+							<view v-for="item in documentList" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
+								<view class="item-title">
+									<text>{{ item.title }}</text>
+								</view>
+								<view class="app-flex-between color-gray">
+									<view>
+										<text class="label">起草人：</text>
+										<text class="value">{{ item.creator }}</text>
+									</view>
+									<view>
+										<text class="label">提交时间：</text>
+										<text class="value">{{ item.created }}</text>
 									</view>
 								</view>
 							</view>
@@ -95,6 +117,13 @@ export default {
 					icon: 'icon-gonggao',
 					url: '/pages/notice/notice',
 					color: '#fe8007',
+					count: 0,
+				},
+				{
+					name: '文件流转',
+					icon: 'icon-liulanjilu-tianchong',
+					url: '/pages/document/list',
+					color: '#0188fd',
 					count: 0,
 				},
 				{
@@ -176,6 +205,7 @@ export default {
 				},
 			],
 			noticeList: [], // 通知公告
+			documentList: [], // 文件流转
 			show: false,
 			shortcutMenus: [
 				{
@@ -227,6 +257,16 @@ export default {
 					color: '#f25641',
 				},
 			],
+			tab: 'notice',
+			tabItems: [
+				{ label: '通知公告', icon: 'bell', key: 'notice' },
+				{ label: '文件流转', icon: 'file-text', key: 'doc' },
+			],
+			tabItemNodes: [],
+			lineStyle: {
+				left: '0',
+				width: '0'
+			}
 		}
 	},
 	onInit() {
@@ -244,8 +284,26 @@ export default {
 	onShow() {
 		uni.hideTabBar();
 		this.getNoticeList()
+		this.getDocumentList()
+	},
+	onReady() {
+		const query = uni.createSelectorQuery().in(this);
+		query.selectAll('.view1 > .tab-item').boundingClientRect(data => {
+			this.tabItemNodes = data
+			this.lineStyle = {
+				left: (data[0].left - 8) + 'px',
+				width: data[0].width + 'px',
+			}
+		}).exec();
 	},
 	methods: {
+		setTab(item, index) {
+			this.tab = item.key
+			this.lineStyle = {
+				left: (this.tabItemNodes[index].left - 8) + 'px',
+				width: this.tabItemNodes[index].width + 'px',
+			}
+		},
 		shortcutNav(url) {
 			this.show = false
 			const query = url.indexOf('?') === -1 ? '?from=shortcut' : '&from=shortcut'
@@ -264,10 +322,22 @@ export default {
 				this.noticeList = (res.data || []).slice(0, 5)
 			})
 		},
+		// 前5条文件流转
+		getDocumentList() {
+			this.doGet('/circula/monitor_list').then(res => {
+				this.documentList = (res.data || []).slice(0, 5)
+			})
+		},
 		navToDetail(id) {
-			uni.navigateTo({
-				url: `/pages/notice/detail?dataId=${id}`,
-			});
+			if (this.tab === 'notice') {
+				uni.navigateTo({
+					url: `/pages/notice/detail?dataId=${id}`,
+				});
+			} else {
+				uni.navigateTo({
+					url: `/pages/document/detail?dataId=${id}&isHandle=0`,
+				});
+			}
 		},
 		// 获取菜单入口权限
 		async getPermission() {
@@ -312,7 +382,10 @@ export default {
 	&.notice {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		margin-bottom: 8px;
+		padding: 0;
+		padding-right: 12px;
 	}
 
 	&.menu-title {
@@ -423,5 +496,32 @@ export default {
 	text-align: center;
 	padding: 15px 0 30px;
 	font-size: 18px;
+}
+
+.view1 {
+	position: relative;
+	padding: 8px 0 10px;
+
+	.line {
+		position: absolute;
+		bottom: 0;
+		height: 1px;
+		background-color: #1989fa;
+		transition: all 0.2s;
+	}
+}
+
+.tab-item {
+	margin: 0 12px;
+	transition: all 0.2s;
+
+	&.active {
+		color: #1989fa;
+	}
+}
+
+.more1 {
+	font-size: 14px;
+	color: #999;
 }
 </style>
