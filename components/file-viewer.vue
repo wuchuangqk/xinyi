@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view :class="size">
 		<view v-for="item in filesCopy" @click="clickFile(item)" class="file-item">
 			<view v-if="item.isImg" class="img-wrap">
 				<image class="img" mode="aspectFill" :src="item.url" alt="" />
@@ -21,6 +21,11 @@ export default {
 			type: Array,
 			required: true
 		},
+		size: {
+			type: String,
+			required: false,
+			default: ''
+		}
 	},
 	data() {
 		return {
@@ -163,6 +168,19 @@ export default {
 
 	&:nth-of-type(3) {
 		margin-bottom: 20px;
+	}
+}
+
+.small {
+	.file-item .file-name {
+		font-size: 12px;
+		color: #666;
+	}
+
+	.img {
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
 	}
 }
 </style>

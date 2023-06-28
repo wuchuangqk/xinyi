@@ -8,7 +8,7 @@
 						<text class="label">{{ item.label }}</text>
 						<text v-if="item.label !== '拍照证明'" class="value" v-html="setFiledContent(item)"></text>
 						<view v-else>
-							<file-viewer :files="getRelativePath(item.field)" size="small"></file-viewer>
+							<file-viewer :files="getRelativePath(item.field)" ></file-viewer>
 						</view>
 					</view>
 				</view>

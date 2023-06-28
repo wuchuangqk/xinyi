@@ -8,10 +8,10 @@
 					<view v-for="item in detailList" :key="item.label" class="detail-item">
 						<text class="label">{{ item.label }}</text>
 						<view v-if="isFileUrl(item.label) && item.field">
-							<file-viewer :files="getRelativePath(item.field)" size="small"></file-viewer>
+							<file-viewer :files="getRelativePath(item.field)" ></file-viewer>
 						</view>
 						<view v-else-if="item.label === '拍照证明'">
-							<file-viewer :files="getRelativePath(item.field, item.label)" size="small"></file-viewer>
+							<file-viewer :files="getRelativePath(item.field, item.label)" ></file-viewer>
 						</view>
 						<text v-else class="value" v-html="setFiledContent(item)"></text>
 					</view>

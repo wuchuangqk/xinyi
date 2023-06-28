@@ -57,8 +57,11 @@
 						</view>
 						<view v-show="tab === 'doc'" class="notice-list">
 							<view v-for="item in documentList" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
-								<view class="item-title">
+								<view class="item-title title1">
 									<text>{{ item.title }}</text>
+									<view v-if="item.getman === '办理'" class="btn">
+										<u-button plain size="mini" type="primary" @click="handleDoc(item.id)">办理</u-button>
+									</view>
 								</view>
 								<view class="app-flex-between color-gray">
 									<view>
@@ -121,7 +124,7 @@ export default {
 				},
 				{
 					name: '文件流转',
-					icon: 'icon-liulanjilu-tianchong',
+					icon: 'icon-liuzhuanwenjian',
 					url: '/pages/document/list',
 					color: '#0188fd',
 					count: 0,
@@ -131,6 +134,13 @@ export default {
 					icon: 'icon-daibanshixiang',
 					url: '/pages/todo/todo',
 					color: '#f9a202',
+					count: 0,
+				},
+				{
+					name: '待阅事项',
+					icon: 'icon-xiaoxi',
+					url: '/pages/toread/toread',
+					color: '#14bd82',
 					count: 0,
 				},
 				{
@@ -259,7 +269,7 @@ export default {
 			],
 			tab: 'notice',
 			tabItems: [
-				{ label: '通知公告', icon: 'bell', key: 'notice' },
+				{ label: '通知公告', icon: 'volume-up', key: 'notice' },
 				{ label: '文件流转', icon: 'file-text', key: 'doc' },
 			],
 			tabItemNodes: [],
@@ -285,6 +295,7 @@ export default {
 		uni.hideTabBar();
 		this.getNoticeList()
 		this.getDocumentList()
+		this.getBadge()
 	},
 	onReady() {
 		const query = uni.createSelectorQuery().in(this);
@@ -324,7 +335,7 @@ export default {
 		},
 		// 前5条文件流转
 		getDocumentList() {
-			this.doGet('/circula/monitor_list').then(res => {
+			this.doGet('/circula/participate_list').then(res => {
 				this.documentList = (res.data || []).slice(0, 5)
 			})
 		},
@@ -339,18 +350,16 @@ export default {
 				});
 			}
 		},
+		handleDoc(id) {
+			uni.navigateTo({
+				url: `/pages/document/detail?dataId=${id}&isHandle=1`,
+			});
+		},
 		// 获取菜单入口权限
-		async getPermission() {
+		getPermission() {
 			uni.showLoading({
 				title: '加载中'
 			});
-
-			// 设置角标
-			const badge = await this.doGet('/home/homecont')
-			const { todocount, noticecount } = badge.data
-			this.officeMenus.find(val => val.name === '待办事项').count = todocount
-			this.officeMenus.find(val => val.name === '通知公告').count = noticecount
-
 			Promise.all([
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 1 }), // 办公
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 2 }), // 审批
@@ -364,6 +373,14 @@ export default {
 				uni.hideLoading();
 			})
 		},
+		// 刷新角标
+		async getBadge() {
+			const badge = await this.doGet('/home/homecont')
+			const { todocount, noticecount, toreadcount } = badge.data
+			this.officeMenus.find(val => val.name === '待办事项').count = todocount
+			this.officeMenus.find(val => val.name === '通知公告').count = noticecount
+			this.officeMenus.find(val => val.name === '待阅事项').count = toreadcount
+		}
 	}
 }
 </script>
@@ -523,5 +540,13 @@ export default {
 .more1 {
 	font-size: 14px;
 	color: #999;
+}
+
+.title1 {
+	display: flex;
+
+	.btn {
+		margin-left: auto;
+	}
 }
 </style>

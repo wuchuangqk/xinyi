@@ -13,7 +13,14 @@
 					<view class="card-title">
 						<view class="left"><text>附件</text></view>
 					</view>
-					<file-viewer :files="files" size="small"></file-viewer>
+					<file-viewer :files="files" ></file-viewer>
+				</view>
+				<!-- 回复列表 -->
+				<view class="card">
+					<view class="card-title">
+						<view class="left"><text>回复记录</text></view>
+					</view>
+					<ReplayList :flowList="replyList" :files="files" />
 				</view>
 				<!-- 回复 -->
 				<view v-if="isHandle === '1'" class="card">
@@ -42,11 +49,13 @@ import FileViewer from '@/components/file-viewer.vue';
 import ApprovalTimeLine from '@/components/approval-timeline.vue';
 import detailMixin from '@/mixin/detail'
 import renderMixin from '@/mixin/render'
+import ReplayList from './components/reply-list.vue'
 
 export default {
 	components: {
 		FileViewer,
 		ApprovalTimeLine,
+		ReplayList,
 	},
 	mixins: [detailMixin, renderMixin],
 	data() {
@@ -54,10 +63,11 @@ export default {
 			detailList: [], // 详情字段
 			dataId: '', // 主键id
 			files: [], // 图片附件
-			comment: '',
-			isHandle: '0',
-			isNotice: true,
+			comment: '', // 回复内容
+			isHandle: '0', // 1=办理 0=仅查看
+			isNotice: true, // 是否通知起草人
 			creator: '', // 起草人
+			replyList: [], // 回复列表
 		};
 	},
 	onLoad({ dataId, isHandle }) {
@@ -74,7 +84,8 @@ export default {
 			});
 			this.doGet('/circula/info_detail/', { item_id: this.dataId }).then(res => {
 				this.detailList = res.data.info
-				this.files = res.data.infofile
+				this.files = res.data.infofile || []
+				this.replyList = res.data.fedds || []
 				const item = this.detailList.find(val => val.label === '起草人')
 				if (item) {
 					this.creator = item.field

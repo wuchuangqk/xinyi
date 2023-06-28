@@ -450,6 +450,13 @@
 				"navigationBarTitleText": "文件流转详情",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/toread/toread",
+			"style": {
+				"navigationBarTitleText": "待阅事项",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {
