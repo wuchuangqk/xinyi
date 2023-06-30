@@ -13,14 +13,14 @@
 					<view class="card-title">
 						<view class="left"><text>附件</text></view>
 					</view>
-					<file-viewer :files="files" ></file-viewer>
+					<file-viewer :files="files"></file-viewer>
 				</view>
 				<!-- 回复列表 -->
-				<view class="card">
+				<view v-if="showReply && replyList.length" class="card">
 					<view class="card-title">
 						<view class="left"><text>回复记录</text></view>
 					</view>
-					<ReplayList :flowList="replyList" :files="files" />
+					<ReplayList :flowList="replyList" />
 				</view>
 				<!-- 回复 -->
 				<view v-if="isHandle === '1'" class="card">
@@ -68,6 +68,7 @@ export default {
 			isNotice: true, // 是否通知起草人
 			creator: '', // 起草人
 			replyList: [], // 回复列表
+			showReply: false, // 是否展示回复列表
 		};
 	},
 	onLoad({ dataId, isHandle }) {
@@ -86,10 +87,20 @@ export default {
 				this.detailList = res.data.info
 				this.files = res.data.infofile || []
 				this.replyList = res.data.fedds || []
-				const item = this.detailList.find(val => val.label === '起草人')
-				if (item) {
-					this.creator = item.field
+				this.creator = this.detailList.find(val => val.label === '起草人').field
+
+				// 字段的值为true表示pc勾选“回复仅起草人可见”
+				const index = this.detailList.findIndex(val => val.label === '回复仅起草人可见')
+				const onlyCreator = this.detailList[index].field
+				if (onlyCreator) {
+					// 当勾选时，只有当前用户是起草人才可见
+					const { name } = uni.getStorageSync(this.$const.USER_INFO)
+					this.showReply = name === this.creator
+				} else {
+					// 未勾选，所有人都可见
+					this.showReply = true
 				}
+				this.detailList.splice(index, 1)
 			}).finally(() => {
 				uni.hideLoading();
 			})

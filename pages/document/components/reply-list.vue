@@ -13,12 +13,13 @@
 					<view class="arrow"></view>
 					<view class="top">
 						<view class="s1">
-							<text>{{ flow.replycontent }}{{ flow.replycontent }}{{ flow.replycontent }}</text>
+							<text>{{ flow.replycontent }}</text>
 						</view>
 
 					</view>
 				</view>
-				<file-viewer :files="files" size="small" style="margin-top: 10px"></file-viewer>
+				<file-viewer v-if="flow.feedfile.length" :files="flow.feedfile" size="small"
+					style="margin-top: 10px"></file-viewer>
 			</view>
 		</view>
 	</view>
@@ -33,13 +34,6 @@ export default {
 	},
 	props: {
 		flowList: {
-			type: Array,
-			required: true,
-			default: () => {
-				return []
-			}
-		},
-		files: {
 			type: Array,
 			required: true,
 			default: () => {

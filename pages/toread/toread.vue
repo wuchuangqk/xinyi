@@ -3,7 +3,7 @@
     <view class="page-main">
       <scroll-view v-if="listData.length" scroll-y style="height: 100%;">
         <view class="list-wrap">
-          <view v-for="item in listData" :key="item.id" class="app-list-item" @click="handleTodo(item)">
+          <view v-for="item in listData" :key="item.key" class="app-list-item" @click="handleTodo(item)">
             <view class="item-title">
               <text>{{ item.title }}</text>
             </view>
@@ -44,7 +44,10 @@ export default {
         mask: false
       });
       this.doGet('/home/ToReadlist').then(res => {
-        this.listData = res.data || []
+        this.listData = (res.data || []).map(val => {
+          val.key = Symbol()
+          return val
+        })
         uni.hideLoading();
       }).catch(() => {
         uni.hideLoading();

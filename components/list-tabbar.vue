@@ -12,12 +12,24 @@
 import IconFont from '@/components/icon-font.vue';
 export default {
   name: "list-tabbar",
-  props: ['tabItems'],
   components: { IconFont },
+  props: {
+    tabIndex: {
+      type: Number,
+      default: 0
+    },
+    tabItems: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       activeTabIndex: 0,
     };
+  },
+  created() {
+    this.activeTabIndex = this.tabIndex
   },
   methods: {
     change(tabIndex) {

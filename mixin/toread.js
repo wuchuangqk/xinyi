@@ -9,6 +9,12 @@ const mixin = {
             url: `/pages/notice/detail?dataId=${id}`,
           });
           break
+        // 文件流转
+        case 'cirreads':
+          uni.navigateTo({
+            url: `/pages/document/detail?dataId=${id}&isHandle=0`,
+          });
+          break
         default:
           this.$u.toast('该功能正在开发中')
       }

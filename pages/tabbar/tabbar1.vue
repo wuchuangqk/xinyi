@@ -32,7 +32,7 @@
 								</view>
 								<view class="line" :style="lineStyle"></view>
 							</view>
-							<text class="more1" @click="nav(tab === 'notice' ? '/pages/notice/notice' : '/pages/document/list')">更多
+							<text class="more1" @click="nav(tab === 'notice' ? '/pages/notice/notice' : '/pages/document/list?tabName=我参与的')">更多
 								<u-icon name="arrow-right" /></text>
 						</view>
 						<view v-show="tab === 'notice'" class="notice-list">
@@ -54,6 +54,7 @@
 									</view>
 								</view>
 							</view>
+							<page-empty v-if="!noticeList.length" />
 						</view>
 						<view v-show="tab === 'doc'" class="notice-list">
 							<view v-for="item in documentList" :key="item.id" class="app-list-item" @click="navToDetail(item.id)">
@@ -74,6 +75,7 @@
 									</view>
 								</view>
 							</view>
+							<page-empty v-if="!documentList.length" />
 						</view>
 					</view>
 				</view>

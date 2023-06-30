@@ -29,7 +29,7 @@
       </scroll-view>
       <page-empty v-else />
     </view>
-    <list-tabbar :tab-items="tabItems" @change="changeTab" />
+    <list-tabbar :tab-index="activeTabIndex" :tab-items="tabItems" @change="changeTab" />
   </view>
 </template>
 <script>
@@ -57,6 +57,12 @@ export default {
           icon: 'icon-liucheng1',
         },
       ],
+    }
+  },
+  onLoad({ tabName }) {
+    const index = this.tabItems.findIndex(val => val.name === tabName)
+    if (index !== -1) {
+      this.activeTabIndex = index
     }
   },
   onShow() {
