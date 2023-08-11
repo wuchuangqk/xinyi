@@ -8,8 +8,8 @@ export const storageKeys = {
 }
 
 // dev(https)
-// export const BASE_URL = 'https://36q635g350.zicp.fun'
+export const BASE_URL = 'https://36q635g350.zicp.fun'
 // export const BASE_URL = 'https://32736d0b.r5.cpolar.top'
 
 // prod(http)
-export const BASE_URL = 'http://58.218.148.154:8090'
+// export const BASE_URL = 'http://58.218.148.154:8090'

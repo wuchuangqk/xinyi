@@ -17,6 +17,12 @@
 								<u-input v-model="formData.comments" placeholder="请输入用章事由" />
 							</u-form-item>
 						</view>
+						<view class="card">
+							<view class="card-title">
+								<view class="left"><text>附件</text></view>
+							</view>
+							<file-viewer @change="upload"></file-viewer>
+						</view>
 						<!-- 审批人 -->
 						<view class="card">
 							<view class="card-title" style="margin-bottom: 0;">
@@ -46,9 +52,11 @@
 
 <script>
 import renderMixin from '@/mixin/render'
+import FileViewer from '@/components/file-uploader.vue';
 
 export default {
 	mixins: [renderMixin],
+	components: { FileViewer },
 	props: {
 		yingtype: {
 			type: Number
@@ -80,6 +88,7 @@ export default {
 			docTitleLabel: '',
 			listPath: '/pages/yongzhang/list',
 			from: this.fromPage,
+			files: [], // 附件
 		};
 	},
 	mounted() {
@@ -133,8 +142,20 @@ export default {
 					title: '正在提交',
 					mask: true
 				});
-				this.renderParams = this.setPostData(this.formData)
+				if (this.files.length) {
+          this.uploadFile('/ying/add', this.formData, this.files).then(() => {
+            uni.navigateBack();
+          }).catch(err => {
+
+          })
+        } else {
+          this.renderParams = this.setPostData(this.formData)
+        }
 			})
+		},
+		// 上传附件
+		upload(files) {
+			this.files = files;
 		},
 	}
 };
