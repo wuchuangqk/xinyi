@@ -87,7 +87,7 @@
 			<view>
 				<view class="popup-title">快速新建</view>
 				<view class="row shortcut">
-					<view class="col" v-for="item in shortcutMenus" :key="item.name" @click="shortcutNav(item.url)">
+					<view class="col" v-for="item in shortcutMenus2" :key="item.name" @click="shortcutNav(item.url)">
 						<view class="icon-bg" :style="{ background: item.color }">
 							<icon-font :icon="item.icon" class="item-icon"></icon-font>
 							<view v-if="item.count" class="badge">{{ item.count }}</view>
@@ -231,6 +231,7 @@ export default {
 					icon: 'icon-jiaban',
 					url: '/pages/jiaban/form',
 					color: '#f9a202',
+					permission: false,
 				},
 				{
 					name: '出差申请',
@@ -292,6 +293,7 @@ export default {
 	onLoad() {
 		uni.hideTabBar();
 		this.getPermission()
+		this.getJiaBanPermission()
 	},
 	onShow() {
 		uni.hideTabBar();
@@ -308,6 +310,13 @@ export default {
 				width: data[0].width + 'px',
 			}
 		}).exec();
+	},
+	computed: {
+		shortcutMenus2() {
+			return this.shortcutMenus.filter(menu => {
+				return menu.permission === undefined || menu.permission === true
+			})
+		}
 	},
 	methods: {
 		setTab(item, index) {
@@ -382,6 +391,12 @@ export default {
 			this.officeMenus.find(val => val.name === '待办事项').count = todocount
 			this.officeMenus.find(val => val.name === '通知公告').count = noticecount
 			this.officeMenus.find(val => val.name === '待阅事项').count = toreadcount
+		},
+		// 加班申请权限
+		async getJiaBanPermission() {
+			const res = await this.doGet('/jiaban/IsWorker')
+			const jiaBan = this.shortcutMenus.find(menu => menu.url === '/pages/jiaban/form')
+			jiaBan.permission = res.data[0].post === '非职员用户'
 		}
 	}
 }

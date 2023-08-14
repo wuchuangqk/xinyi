@@ -40,7 +40,7 @@
       <page-empty v-else />
     </view>
     <list-tabbar :tab-items="tabItems" @change="changeTab" />
-    <float-button @click="navAdd" />
+    <float-button v-if="isShowAdd" @click="navAdd" />
   </view>
 </template>
 <script>
@@ -54,8 +54,12 @@ export default {
         '/jiaban/shenpi_list',
         '/jiaban/mylist',
         '/jiaban/monitor_list'
-      ]
+      ],
+      isShowAdd: false, // 当前登录用户职位是职员没有加班申请功能
     }
+  },
+  onLoad() {
+    this.getJiaBanPermission()
   },
   onShow() {
     this.listData = []
@@ -78,7 +82,11 @@ export default {
       uni.navigateTo({
         url: `/pages/jiaban/detail?dataId=${id}&isStart=${isStart}`,
       });
-    }
+    },
+    async getJiaBanPermission() {
+			const res = await this.doGet('/jiaban/IsWorker')
+			this.isShowAdd = res.data[0].post === '非职员用户'
+		}
   }
 }
 </script>
