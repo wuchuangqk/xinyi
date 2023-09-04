@@ -15,9 +15,9 @@
               <text>{{ item.title }}</text>
               <view v-if="activeTabIndex === 0" class="btn">
                 <u-button v-if="!item.sfile" plain size="mini" type="primary"
-                  @click="startJiaBan(item.id, 0)">开始加班</u-button>
+                  @click="startJiaBan(item, 0)">开始加班</u-button>
                 <u-button v-if="!item.efile && item.sfile" plain size="mini" type="primary"
-                  @click="startJiaBan(item.id, 1)">结束加班</u-button>
+                  @click="startJiaBan(item, 1)">结束加班</u-button>
               </view>
             </view>
             <view class="app-flex-between color-gray item-sub">
@@ -45,6 +45,7 @@
 </template>
 <script>
 import listMixin from '@/mixin/list'
+import dayjs from 'dayjs';
 export default {
   mixins: [listMixin],
   data() {
@@ -78,15 +79,67 @@ export default {
         url: `/pages/qingjia/detail?dataId=${id}&url=/jiaban/shenpi_detail&isApprove=${isApprove}`,
       });
     },
-    startJiaBan(id, isStart) {
+    startJiaBan(item, isStart) {
+      if (!this.timeRangeCheck(item, isStart)) return
       uni.navigateTo({
-        url: `/pages/jiaban/detail?dataId=${id}&isStart=${isStart}`,
+        url: `/pages/jiaban/detail?dataId=${item.id}&isStart=${isStart}`,
       });
     },
     async getJiaBanPermission() {
 			const res = await this.doGet('/jiaban/IsWorker')
-			this.isShowAdd = res.data[0].post === '非职员用户'
-		}
+      const { id } = uni.getStorageSync(this.$const.USER_INFO)
+			this.isShowAdd = res.data[0].post === '非职员用户' || id === '1642'
+		},
+    // 限制上传时间
+		timeRangeCheck(item, isStart) {
+			const start = dayjs(item.qjstime).format('YYYY-MM-DD')
+			const end = dayjs(item.qjetime).format('YYYY-MM-DD')
+			const now = dayjs()
+			const today = now.format('YYYY-MM-DD') // 当天的年月日部分
+			if (item.qjtype === '工作日延时') {
+				// [] 表示包含开始和结束
+				if (!dayjs(today).isBetween(start, end, 'day', '[]')) {
+					uni.showToast({ title: '已超过规定上传时间', icon: 'none' });
+					return false
+				}
+				// 开始加班
+				if (isStart === 0) {
+					// 18:00之前
+					if (now.isAfter(`${today} 18:00:00`)) {
+						uni.showToast({ title: '请于18:00前上传加班开始照片', icon: 'none' });
+						return false
+					}
+				} else {
+					// 结束加班
+					// 21:30后
+					if (now.isBefore(`${today} 21:30:00`)) {
+						uni.showToast({ title: '请于21:30后上传加班结束照片', icon: 'none' });
+						return false
+					}
+				}
+			} else if (item.qjtype === '周六日加班') {
+				if (!dayjs(today).isBetween(start, end, 'day', '[]')) {
+					uni.showToast({ title: '已超过规定上传时间', icon: 'none' });
+					return false
+				}
+				// 开始加班
+				if (isStart === 0) {
+					// 9:00之前或12:00-14:00
+					if (now.isAfter(`${today} 09:00:00`) && !now.isBetween(`${today} 12:00:00`, `${today} 14:00:00`)) {
+						uni.showToast({ title: '请于9:00前或12:00-14:00之间上传加班开始照片', icon: 'none' });
+						return false
+					}
+				} else {
+					// 结束加班
+					// 17:00-18:00或21:30后
+					if (!now.isBetween(`${today} 17:00:00`, `${today} 18:00:00`) && now.isBefore(`${today} 21:30:00`)) {
+						uni.showToast({ title: '请于17:00-18:00间或21:30后上传加班结束照片', icon: 'none' });
+						return false
+					}
+				}
+			}
+			return true
+		},
   }
 }
 </script>

@@ -7,7 +7,7 @@
 					<view v-for="item in detailList" :key="item.label" class="detail-item">
 						<text class="label">{{ item.label }}</text>
 						<view v-if="isFileUrl(item.label) && item.field">
-							<file-viewer :files="getRelativePath(item.field)" ></file-viewer>
+							<file-viewer :files="getRelativePath(item.field)"></file-viewer>
 						</view>
 						<text v-else class="value" v-html="setFiledContent(item)"></text>
 					</view>

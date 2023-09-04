@@ -13,6 +13,8 @@ import FileUploader from '@/components/file-uploader.vue';
 import { setFileUrl, notNull } from '@/util/index'
 import DatePicker from '@/components/date-picker.vue';
 import OptionPicker from '@/components/option-picker.vue';
+var isBetween = require('dayjs/plugin/isBetween')
+dayjs.extend(isBetween)
 
 Vue.config.productionTip = false
 Vue.prototype.$store = store // 挂载vuex

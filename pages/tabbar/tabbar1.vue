@@ -32,7 +32,8 @@
 								</view>
 								<view class="line" :style="lineStyle"></view>
 							</view>
-							<text class="more1" @click="nav(tab === 'notice' ? '/pages/notice/notice' : '/pages/document/list?tabName=我参与的')">更多
+							<text class="more1"
+								@click="nav(tab === 'notice' ? '/pages/notice/notice' : '/pages/document/list?tabName=我参与的')">更多
 								<u-icon name="arrow-right" /></text>
 						</view>
 						<view v-show="tab === 'notice'" class="notice-list">
@@ -396,7 +397,8 @@ export default {
 		async getJiaBanPermission() {
 			const res = await this.doGet('/jiaban/IsWorker')
 			const jiaBan = this.shortcutMenus.find(menu => menu.url === '/pages/jiaban/form')
-			jiaBan.permission = res.data[0].post === '非职员用户'
+			const { id } = uni.getStorageSync(this.$const.USER_INFO)
+			jiaBan.permission = res.data[0].post === '非职员用户' || id === '1642'
 		}
 	}
 }
