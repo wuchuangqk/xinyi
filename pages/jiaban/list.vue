@@ -87,8 +87,7 @@ export default {
     },
     async getJiaBanPermission() {
 			const res = await this.doGet('/jiaban/IsWorker')
-      const { id } = uni.getStorageSync(this.$const.USER_INFO)
-			this.isShowAdd = res.data[0].post === '非职员用户' || id === '1642'
+			this.isShowAdd = res.data[0].post === '非职员用户'
 		},
     // 限制上传时间
 		timeRangeCheck(item, isStart) {

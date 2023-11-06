@@ -397,8 +397,7 @@ export default {
 		async getJiaBanPermission() {
 			const res = await this.doGet('/jiaban/IsWorker')
 			const jiaBan = this.shortcutMenus.find(menu => menu.url === '/pages/jiaban/form')
-			const { id } = uni.getStorageSync(this.$const.USER_INFO)
-			jiaBan.permission = res.data[0].post === '非职员用户' || id === '1642'
+			jiaBan.permission = res.data[0].post === '非职员用户'
 		}
 	}
 }

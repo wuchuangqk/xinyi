@@ -3,7 +3,10 @@ import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update
 export default {
   // 应用启动时调用，应用生命周期里只执行一次
   onLaunch() {
-    checkUpdate()
+		const platform = uni.getSystemInfoSync().platform
+		if (platform === 'android') {
+			checkUpdate()
+		}
   },
   onShow() {
   },
