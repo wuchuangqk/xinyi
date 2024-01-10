@@ -1,12 +1,12 @@
 <script>
-import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update.js'
+import APPUpdate from '@/uni_modules/zhouWei-APPUpdate/js_sdk/appUpdate';
 export default {
   // 应用启动时调用，应用生命周期里只执行一次
   onLaunch() {
-		const platform = uni.getSystemInfoSync().platform
-		if (platform === 'android') {
-			checkUpdate()
-		}
+    const platform = uni.getSystemInfoSync().platform
+    if (platform === 'android') {
+      APPUpdate()
+    }
   },
   onShow() {
   },
@@ -148,10 +148,11 @@ page {
   background-color: white;
   padding: 5px;
   margin-bottom: 8px;
+
   .app-search-expend {
-		margin-left: 10px;
-		color: $uni-color-primary;
-	}
+    margin-left: 10px;
+    color: $uni-color-primary;
+  }
 }
 
 .color-gray {
@@ -169,45 +170,51 @@ page {
     line-height: 3;
   }
 }
+
 .app-popup-header {
-	height: 40px;
-	text-align: center;
-	position: relative;
-	line-height: 40px;
-	border-bottom: 1px solid $uni-border-color;
-	.header-title {
-		font-weight: bold;
-	}
-	.close {
-		position: absolute;
-		right: 10px;
-		top: 50%;
-		transform: translateY(-50%);
-	}
+  height: 40px;
+  text-align: center;
+  position: relative;
+  line-height: 40px;
+  border-bottom: 1px solid $uni-border-color;
+
+  .header-title {
+    font-weight: bold;
+  }
+
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .app-popup-body {
-	padding: 10px;
-	.picker-group {
-		.group-title {
-			font-weight: bold;
-			margin-bottom: 10px;
-		}
-		.group-content {
-			margin-bottom: 10px;
-		}
-	}
+  padding: 10px;
+
+  .picker-group {
+    .group-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .group-content {
+      margin-bottom: 10px;
+    }
+  }
 }
 
 .app-popup-btn {
-	display: flex;
-	padding: 10px;
-	border-top: 1px solid $uni-border-color;
-	.u-btn {
-		flex: 1;
-		&:first-of-type {
-			margin-right: 10px;
-		}
-	}
-}
-</style>
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid $uni-border-color;
+
+  .u-btn {
+    flex: 1;
+
+    &:first-of-type {
+      margin-right: 10px;
+    }
+  }
+}</style>
