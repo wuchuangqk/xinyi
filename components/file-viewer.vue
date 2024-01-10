@@ -48,12 +48,13 @@ export default {
 	methods: {
 		extendFiles(fileList) {
 			return fileList.map((v, index) => {
+				const fileext = (v.fileext || '').toLowerCase()
 				return {
 					fileId: index,
-					fileName: v.filename.endsWith(v.fileext) ? v.filename : v.filename + v.fileext,
-					extend: v.fileext,
+					fileName: v.filename.endsWith(fileext) ? v.filename : v.filename + fileext,
+					extend: fileext,
 					url: this.setFileUrl(v.fileurl),
-					isImg: this.imgTyps.includes(v.fileext)
+					isImg: this.imgTyps.includes(fileext)
 				}
 			})
 		},
@@ -93,12 +94,14 @@ export default {
 								tempFilePath: filePath,
 								success: () => {
 									uni.showToast({
-										title: '下载成功'
+										title: '下载成功',
+										icon: 'none'
 									})
 								},
 								fail: () => {
 									uni.showToast({
-										title: '下载失败'
+										title: '下载失败',
+										icon: 'none'
 									})
 								}
 							});

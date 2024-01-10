@@ -9,6 +9,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-gongsi:before {
+  content: "\e86d";
+}
+
+.icon-zonghexuexi:before {
+  content: "\e610";
+}
+
 .icon-xiaoxi:before {
   content: "\e61a";
 }

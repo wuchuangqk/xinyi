@@ -3,7 +3,7 @@
 		<view class="page-main">
 			<scroll-view scroll-y style="height: 100%;">
 				<view class="card-wrap">
-					<!-- 办公 -->
+					<!-- 车辆管理 -->
 					<view class="home-card">
 						<view class="card-title menu-title">
 							<icon-font icon="icon-qiche" class="title-icon" color="#303133" style="margin-right: 4px;"></icon-font>
@@ -21,7 +21,7 @@
 							</view>
 						</view>
 					</view>
-					<!-- 食堂 -->
+					<!-- 食堂系统 -->
 					<view class="home-card">
 						<view class="card-title menu-title">
 							<icon-font icon="icon-shipin" class="title-icon" color="#303133" style="margin-right: 4px;"></icon-font>
@@ -29,6 +29,25 @@
 						</view>
 						<view class="row">
 							<view class="col" v-for="item in shiTangPermissionMenus" :key="item.name" @click="nav(item.url)">
+								<view class="icon-bg" :style="{ background: item.color }">
+									<icon-font :icon="item.icon" class="item-icon"></icon-font>
+									<view v-if="item.count" class="badge">{{ item.count }}</view>
+								</view>
+								<view class="item-name">
+									<text>{{ item.name }}</text>
+								</view>
+							</view>
+						</view>
+					</view>
+					<!-- 综合管理 -->
+					<view v-if="zongHePermissionMenus.length" class="home-card">
+						<view class="card-title menu-title">
+							<icon-font icon="icon-zonghexuexi" class="title-icon" color="#303133"
+								style="margin-right: 4px;"></icon-font>
+							<text>综合管理</text>
+						</view>
+						<view class="row">
+							<view class="col" v-for="item in zongHePermissionMenus" :key="item.name" @click="nav(item.url)">
 								<view class="icon-bg" :style="{ background: item.color }">
 									<icon-font :icon="item.icon" class="item-icon"></icon-font>
 									<view v-if="item.count" class="badge">{{ item.count }}</view>
@@ -151,6 +170,16 @@ export default {
 					permission: 'canteen/gong-gao',
 				},
 			],
+			zongHePermissionMenus: [],
+			zongHeMenus: [
+				{
+					name: '子公司管理',
+					icon: 'icon-gongsi',
+					url: '/pages/zongheguanli/zigongsi/list',
+					color: '#0188fd',
+					permission: 'zong-he',
+				},
+			],
 		}
 	},
 	onLoad() {
@@ -174,12 +203,16 @@ export default {
 			Promise.all([
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 6 }), // 车辆管理
 				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 7 }), // 食堂系统
-			]).then(([res1, res2]) => {
-				const names = [...res1.data, ...res2.data].map(val => val.Name)
+				this.doGet('/AppModule/GetModuleListByCategoryId', { categoryId: 5 }), // 食堂系统
+			]).then(([res1, res2, res3]) => {
+				const names = [...res1.data, ...res2.data, ...res3.data].map(val => val.Name)
 				this.carPermissionMenus = this.carMenus.filter(val => {
 					return val.permission === undefined || names.includes(val.permission)
 				})
 				this.shiTangPermissionMenus = this.shiTangMenus.filter(val => {
+					return val.permission === undefined || names.includes(val.permission)
+				})
+				this.zongHePermissionMenus = this.zongHeMenus.filter(val => {
 					return val.permission === undefined || names.includes(val.permission)
 				})
 			}).finally(() => {

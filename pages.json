@@ -457,6 +457,13 @@
 				"navigationBarTitleText": "待阅事项",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/zongheguanli/zigongsi/list",
+			"style": {
+				"navigationBarTitleText": "子公司管理",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"tabBar": {
